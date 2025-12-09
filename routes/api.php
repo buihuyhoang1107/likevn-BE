@@ -46,6 +46,24 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/orders/{id}', [AdminController::class, 'getOrder']);
         Route::put('/orders/{id}', [AdminController::class, 'updateOrder']);
         Route::delete('/orders/{id}', [AdminController::class, 'deleteOrder']);
+
+        // Services
+        Route::get('/services', [AdminController::class, 'getServices']);
+        Route::get('/services/{id}', [AdminController::class, 'getService']);
+        Route::post('/services', [AdminController::class, 'createService']);
+        Route::put('/services/{id}', [AdminController::class, 'updateService']);
+        Route::delete('/services/{id}', [AdminController::class, 'deleteService']);
+
+        // Servers
+        Route::get('/servers', [AdminController::class, 'getServers']);
+        Route::get('/servers/{id}', [AdminController::class, 'getServer']);
+        Route::post('/servers', [AdminController::class, 'createServer']);
+        Route::put('/servers/{id}', [AdminController::class, 'updateServer']);
+        Route::delete('/servers/{id}', [AdminController::class, 'deleteServer']);
+
+        // Settings
+        Route::get('/settings', [AdminController::class, 'getSettings']);
+        Route::put('/settings', [AdminController::class, 'updateSettings']);
     });
 });
 

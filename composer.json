@@ -1,5 +1,5 @@
 {
-    "name": "facebook-buff-api",
+    "name": "facebook-buff/api",
     "description": "Facebook Buff API System",
     "type": "project",
     "require": {

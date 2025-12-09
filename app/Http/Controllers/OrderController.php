@@ -55,18 +55,24 @@ class OrderController extends Controller
         // Calculate price
         $totalPrice = $server->price_per_unit * $request->quantity;
 
-        // Check balance
-        if ($user->balance < $totalPrice) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Số dư không đủ',
-            ], 400);
+        // Check balance (only if enabled)
+        $enableBalanceCheck = config('settings.enable_balance_check', false);
+        
+        if ($enableBalanceCheck) {
+            if ($user->balance < $totalPrice) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Số dư không đủ',
+                ], 400);
+            }
         }
 
         DB::beginTransaction();
         try {
-            // Deduct balance
-            $user->decrement('balance', $totalPrice);
+            // Deduct balance (only if enabled)
+            if ($enableBalanceCheck) {
+                $user->decrement('balance', $totalPrice);
+            }
 
             // Create order
             $order = Order::create([
@@ -105,10 +111,38 @@ class OrderController extends Controller
 
     public function myOrders(Request $request)
     {
-        $orders = Order::where('user_id', $request->user()->id)
-            ->with(['service', 'server'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $query = Order::where('user_id', $request->user()->id)
+            ->with(['service', 'server']);
+
+        // Tìm kiếm theo keyword (uid, account_name, note)
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('uid', 'like', "%{$search}%")
+                  ->orWhere('account_name', 'like', "%{$search}%")
+                  ->orWhere('note', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter theo status
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter theo service_id
+        if ($request->has('service_id') && $request->service_id) {
+            $query->where('service_id', $request->service_id);
+        }
+
+        // Filter theo date range
+        if ($request->has('date_from') && $request->date_from) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->has('date_to') && $request->date_to) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $orders = $query->orderBy('created_at', 'desc')->paginate(20);
 
         return response()->json([
             'success' => true,

@@ -10,10 +10,26 @@ class ServiceController extends Controller
 {
     public function index(Request $request)
     {
-        $services = Service::where('is_active', true)
-            ->with(['servers' => function ($query) {
+        $query = Service::where('is_active', true);
+
+        // Tìm kiếm theo keyword (name, description)
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter theo category
+        if ($request->has('category') && $request->category) {
+            $query->where('category', $request->category);
+        }
+
+        $services = $query->with(['servers' => function ($query) {
                 $query->where('is_active', true);
             }])
+            ->orderBy('name', 'asc')
             ->get();
 
         return response()->json([
@@ -34,11 +50,35 @@ class ServiceController extends Controller
         ]);
     }
 
-    public function getServers($serviceId)
+    public function getServers(Request $request, $serviceId)
     {
-        $servers = Server::where('service_id', $serviceId)
-            ->where('is_active', true)
-            ->get();
+        $query = Server::where('service_id', $serviceId)
+            ->where('is_active', true);
+
+        // Tìm kiếm theo keyword (name, code, description)
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('code', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter theo status
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter theo price range
+        if ($request->has('min_price') && $request->min_price) {
+            $query->where('price_per_unit', '>=', $request->min_price);
+        }
+        if ($request->has('max_price') && $request->max_price) {
+            $query->where('price_per_unit', '<=', $request->max_price);
+        }
+
+        $servers = $query->orderBy('price_per_unit', 'asc')->get();
 
         return response()->json([
             'success' => true,
