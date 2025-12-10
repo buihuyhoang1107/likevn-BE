@@ -52,6 +52,66 @@ class ServiceSeeder extends Seeder
                 'category' => 'share_post',
                 'description' => 'Chia sẻ bài viết',
             ],
+            [
+                'name' => 'Tăng Member Group',
+                'slug' => 'member-group',
+                'category' => 'member_group',
+                'description' => 'Tăng thành viên nhóm Facebook',
+            ],
+            [
+                'name' => 'Đánh giá 5* Fanpage',
+                'slug' => 'review-fanpage',
+                'category' => 'review_fanpage',
+                'description' => 'Tăng đánh giá 5 sao cho fanpage',
+            ],
+            [
+                'name' => 'Check-in Fanpage',
+                'slug' => 'checkin-fanpage',
+                'category' => 'checkin_fanpage',
+                'description' => 'Tăng check-in cho fanpage',
+            ],
+            [
+                'name' => 'Sự kiện Facebook',
+                'slug' => 'event-facebook',
+                'category' => 'event_facebook',
+                'description' => 'Tăng tham gia / quan tâm sự kiện',
+            ],
+            [
+                'name' => 'VIP Like theo tháng',
+                'slug' => 'vip-like-monthly',
+                'category' => 'vip_like_monthly',
+                'description' => 'Gói VIP like theo tháng',
+            ],
+            [
+                'name' => 'VIP Like group theo tháng',
+                'slug' => 'vip-like-group-monthly',
+                'category' => 'vip_like_group_monthly',
+                'description' => 'Gói VIP like group theo tháng',
+            ],
+            [
+                'name' => 'VIP Comment theo tháng',
+                'slug' => 'vip-comment-monthly',
+                'category' => 'vip_comment_monthly',
+                'description' => 'Gói VIP comment theo tháng',
+            ],
+            [
+                'name' => 'VIP Mắt theo tháng',
+                'slug' => 'vip-eye-monthly',
+                'category' => 'vip_eye_monthly',
+                'description' => 'Gói VIP mắt theo tháng',
+            ],
+            [
+                'name' => 'VIP View theo tháng',
+                'slug' => 'vip-view-monthly',
+                'category' => 'vip_view_monthly',
+                'description' => 'Gói VIP view theo tháng',
+            ],
+            [
+                'name' => 'VIP Share theo tháng',
+                'slug' => 'vip-share-monthly',
+                'category' => 'vip_share_monthly',
+                'description' => 'Gói VIP share theo tháng',
+            ],
         ];
 
         foreach ($services as $service) {

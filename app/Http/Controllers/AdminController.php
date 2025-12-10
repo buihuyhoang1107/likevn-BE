@@ -305,7 +305,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post',
+            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -331,7 +331,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post',
+            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook',
             'is_active' => 'nullable|boolean',
         ]);
 

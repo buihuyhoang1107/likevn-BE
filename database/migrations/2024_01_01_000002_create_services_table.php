@@ -20,7 +20,17 @@ class CreateServicesTable extends Migration
                 'like_fanpage',
                 'like_comment',
                 'increase_comment',
-                'share_post'
+                'share_post',
+                'member_group',
+                'review_fanpage',
+                'checkin_fanpage',
+                'event_facebook',
+                'vip_like_monthly',
+                'vip_like_group_monthly',
+                'vip_comment_monthly',
+                'vip_eye_monthly',
+                'vip_view_monthly',
+                'vip_share_monthly',
             ]);
             $table->boolean('is_active')->default(true);
             $table->timestamps();

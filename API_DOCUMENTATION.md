@@ -864,6 +864,16 @@ Tất cả các lỗi sẽ trả về format:
 - `like_comment` - Like cho bình luận
 - `increase_comment` - Tăng bình luận
 - `share_post` - Chia sẻ bài viết
+- `member_group` - Tăng member group
+- `review_fanpage` - Đánh giá 5* fanpage
+- `checkin_fanpage` - Check-in fanpage
+- `event_facebook` - Sự kiện Facebook
+- `vip_like_monthly` - VIP Like theo tháng
+- `vip_like_group_monthly` - VIP Like group theo tháng
+- `vip_comment_monthly` - VIP Comment theo tháng
+- `vip_eye_monthly` - VIP Mắt theo tháng
+- `vip_view_monthly` - VIP View theo tháng
+- `vip_share_monthly` - VIP Share theo tháng
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -900,6 +910,132 @@ Tất cả các lỗi sẽ trả về format:
 - `high` - Cao
 - `medium` - Trung bình
 - `low` - Thấp
+
+---
+
+## Danh sách dịch vụ & server (chi tiết cho Frontend)
+
+Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn dịch vụ/server, giá và min/max. Giá đã seed sẵn trong DB (đơn vị: ₫/mỗi tương tác).
+
+### 1. Like bài viết Speed (`like_post_speed`, slug: `like-post-speed`)
+- Trường cần nhập: `uid` (link bài viết), `emotion` (like/love/haha/wow/sad/angry), `quantity`, `speed` (nhanh/cham/trung_binh), `note`
+- Servers:
+  - S6: Like Việt, 26.2, status active, min 1, max (null)
+  - S1: Like Việt, 14.2, status slow, desc: Tốc độ chậm
+  - S3: Like Việt, 25, status active, desc: Tốc độ ổn
+  - S5: Like Việt, 16, status active, desc: Tốc độ trung bình
+  - S15: Like Việt, 38.2, status active
+  - S16: Like Việt, 62.2, status active
+
+### 2. Like bài viết VIP (`like_post_vip`, slug: `like-post-vip`)
+- Trường cần nhập: `uid`, `emotion`, `quantity`, `speed`, `note`
+- Servers:
+  - VIP_S1: Tăng chậm, 57.6, status active, desc: Tăng chậm, min 1
+
+### 3. Sub cá nhân & fanpage (`sub_personal_fanpage`, slug: `sub-personal-fanpage`)
+- Trường cần nhập: `uid` hoặc link, `account_name`, `quantity`, `note`
+- Servers:
+  - SUB_S3: Sub VN 2k/ngày, BH 7d, 41.8, active
+  - SUB_S4: Sub VN 1k/ngày, BH 7d, 29.6, slow
+  - SUB_S6: Sub Tây 20k/ngày, BH 7d, 36, active
+  - SUB_S7: Sub Tây 10k/ngày, BH 7d, 29.9, active
+  - SUB_S8: Sub Tây 30k/ngày, BH 7d, 16.2, active
+  - SUB_S11: Sub VN 5k/ngày, BH 7d, 25.8, stopped
+  - SUB_S12: Sub VN 10k/ngày, BH 7d, 50.4, stopped
+  - SUB_S15: Sub VN 30k/ngày, BH 7d, 65.8, stopped
+
+### 4. Like fanpage (`like_fanpage`, slug: `like-fanpage`)
+- Trường cần nhập: `uid` hoặc link page, `account_name`, `quantity`, `note`
+- Servers (min/max kèm nếu có):
+  - FP_S2: Like Ngoại 10k/ngày BH7d, 34.3, active, min 100, max 20000
+  - FP_S4: Like Random 500/ngày BH7d, 52.6, slow
+  - FP_S5: Like VN 20k/ngày BH7d, 38.2, active
+  - FP_S10: Like VN 500/ngày BH7d, 57.6, slow
+  - FP_S11: Like VN 10k/ngày, không BH, 32.4, active
+  - FP_S12: Like VN 20k/ngày, không BH, 50.4, active
+  - FP_S15: Like VN 30k/ngày, không BH, 65.8, active
+
+### 5. Like cho bình luận (`like_comment`, slug: `like-comment`)
+- Trường cần nhập: `uid` hoặc link, `emotion`, `quantity`, `speed`, `note`
+- Servers:
+  - LC_S3: 50.4, active, desc: Like Việt, min 50, max 50000, features: support_batch=true
+  - LC_S4: 27.4, active, desc: Like Việt
+  - LC_S5: 70.8, active, desc: Tốc độ tốt
+
+### 6. Tăng bình luận (`increase_comment`, slug: `increase-comment`)
+- Trường cần nhập: `uid` hoặc link bài viết, `content` (danh sách nội dung), `quantity`, `note`
+- Servers:
+  - IC_S5: 600, active, desc: VN nhanh, min 10, max 500, features: support_livestream=true
+  - IC_S6: 432, active, desc: VN ổn, min 10, max 500
+  - IC_S7: 600, active, desc: VN trung bình, min 10, max 500
+  - IC_S8: 9000, active, desc: Nick tích xanh VN, min 10, max 500
+  - IC_S9: 288, active, desc: Bình luận ẩn, min 10, max 500
+
+### 7. Chia sẻ bài viết (`share_post`, slug: `share-post`)
+- Trường cần nhập: `uid` hoặc link bài viết, `quantity`, `note`
+- Servers:
+  - SP_S2: Share Việt nhanh, 276, active, min 20, max 10000
+  - SP_S6: Share Việt siêu tốc, 348, active, min 20, max 10000
+  - SP_S7: Kèm nội dung, 360, active, min 20, max 10000
+  - SP_S5: Share ảo siêu tốc, 24, active, min 1
+
+### 8. Tăng Member Group (`member_group`, slug: `member-group`)
+- Trường cần nhập: `uid` hoặc link group, `account_name`, `quantity`, `note`
+- Servers:
+  - MG_S3: Member beta VN 30k/24h, 42.7, active, min 1000, max 30000
+  - MG_S4: Fb Via VN 5k-10k/24h, 14.4, stopped, min 1000, max 30000
+  - MG_S5: Fb Via VN 10k/24h, 41.4, active, min 1000, max 30000
+  - MG_S6: Member Beta ngoại 20k/24h, 15.6, active, min 1000, max 30000
+  - MG_S15: Fb Via VN 5k-10k/24h, 62.2, active, min 1000, max 30000
+
+### 9. Đánh giá 5* fanpage (`review_fanpage`, slug: `review-fanpage`)
+- Trường cần nhập: `uid` hoặc link fanpage, `account_name`, `content` (review tối thiểu 25 ký tự, không chứa từ cấm), `quantity`, `note`
+- Servers:
+  - RV_S5: Via Việt chất lượng tốt, 1380, active, min 1
+
+### 10. Check-in fanpage (`checkin_fanpage`, slug: `checkin-fanpage`)
+- Trường cần nhập: `uid` hoặc link fanpage, `account_name`, `quantity`, `note`
+- Servers:
+  - CI_S2: Lên nhanh, BH 30 ngày, 576, status stopped (bảo trì), min 1
+
+### 11. Sự kiện Facebook (`event_facebook`, slug: `event-facebook`)
+- Trường cần nhập: `uid` hoặc link event, `quantity`, `note`
+- Servers:
+  - EV_QT: Quan tâm event, 384, status stopped (bảo trì), min 100, max 50000
+  - EV_TG: Tham gia event, 384, status stopped (bảo trì), min 100, max 50000
+
+### 12. VIP Like theo tháng (`vip_like_monthly`, slug: `vip-like-monthly`)
+- Trường cần nhập: `uid` hoặc link tài khoản, `account_name`, chọn gói VIP, thời gian, `note` (FE thêm các option gói/thời gian)
+- Servers:
+  - VIPL_S9: Like Việt 1,260 ₫, active, thời gian 7h-23h, giới hạn 5 bài/ngày, lên 5-30p
+  - VIPL_S10: Like Việt tốt nhất 2,520 ₫, active
+  - VIPL_S11: Like Việt 1,764 ₫, active
+
+### 13. VIP Like group theo tháng (`vip_like_group_monthly`, slug: `vip-like-group-monthly`)
+- Trường cần nhập: `uid` hoặc link tài khoản, `account_name`, chọn gói VIP, thời gian, tùy chọn số bài mỗi ngày, `note`
+- Servers:
+  - VIPLG_S1: Like Via Việt tốc độ chậm 1,308 ₫, stopped
+  - VIPLG_S2: Like Via Việt tốc độ tốt 2,340 ₫, stopped
+
+### 14. VIP Comment theo tháng (`vip_comment_monthly`, slug: `vip-comment-monthly`)
+- Trường cần nhập: `uid` hoặc link tài khoản, `account_name`, chọn gói VIP, thời gian, số bài mỗi ngày, `content` (tối đa 100 cmt/lần, min/max 10/100), `note`
+- Servers:
+  - VIPC_S5: Việt Nam, tốc độ nhanh, 24,000 ₫, active, min 10, max 100
+
+### 15. VIP Mắt theo tháng (`vip_eye_monthly`, slug: `vip-eye-monthly`)
+- Trường cần nhập: `uid` hoặc link tài khoản, số lượng mắt (50-5000), thời gian, số phút mắt, số bài/tháng, giá/mắt/phút, `note`
+- Servers:
+  - VIPEYE_S2: 3.1 ₫, active, min 50, max 5000
+
+### 16. VIP View theo tháng (`vip_view_monthly`, slug: `vip-view-monthly`)
+- Trường cần nhập: `uid` hoặc link tài khoản, số lượng xem, tốc độ (bình thường/nhanh), loại view (ví dụ xem 3s), tối đa video/ngày, thời gian, `note`
+- Servers:
+  - VIPV_S1: 14.4 ₫, stopped, view 3s, tối đa 6 video/ngày (giá x1)
+
+### 17. VIP Share theo tháng (`vip_share_monthly`, slug: `vip-share-monthly`)
+- Trường cần nhập: `uid` hoặc link tài khoản, số bài mỗi ngày (tuỳ chọn), chọn gói VIP, thời gian, `note`
+- Servers:
+  - VIPS_S2: Share Việt 13,200 ₫, active, không hoàn tiền kể cả uid die
 
 ---
 
