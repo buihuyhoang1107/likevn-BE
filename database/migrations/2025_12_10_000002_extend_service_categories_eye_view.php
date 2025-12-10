@@ -30,7 +30,12 @@ class ExtendServiceCategoriesEyeView extends Migration
                 'eye_live_view_video',
                 'friend_cleanup',
                 'instagram_like',
-                'instagram_comment'
+                'instagram_comment',
+                'instagram_follow',
+                'instagram_view',
+                'instagram_live_eye',
+                'instagram_vip_like',
+                'instagram_vip_comment'
             ) NOT NULL
         ");
     }

@@ -172,6 +172,36 @@ class ServiceSeeder extends Seeder
                 'category' => 'instagram_comment',
                 'description' => 'Tăng bình luận cho bài viết Instagram (link https://www.instagram.com/p/id/)',
             ],
+            [
+                'name' => 'Follow Instagram',
+                'slug' => 'follow-instagram',
+                'category' => 'instagram_follow',
+                'description' => 'Tăng follow Instagram, sub Việt/Tây theo tốc độ từng server',
+            ],
+            [
+                'name' => 'View Instagram',
+                'slug' => 'view-instagram',
+                'category' => 'instagram_view',
+                'description' => 'Tăng view Video/REEL/IGTV/Story Instagram',
+            ],
+            [
+                'name' => 'Mắt Livestream Instagram',
+                'slug' => 'mat-livestream-instagram',
+                'category' => 'instagram_live_eye',
+                'description' => 'Mắt livestream Instagram, nhiều gói view/mắt theo ngày',
+            ],
+            [
+                'name' => 'VIP Like Instagram',
+                'slug' => 'vip-like-instagram',
+                'category' => 'instagram_vip_like',
+                'description' => 'Gói VIP like Instagram theo tháng/bài mỗi ngày',
+            ],
+            [
+                'name' => 'VIP Comment Instagram',
+                'slug' => 'vip-comment-instagram',
+                'category' => 'instagram_vip_comment',
+                'description' => 'Gói VIP comment Instagram theo tháng, chọn số cmt/bài mỗi ngày',
+            ],
         ];
 
         foreach ($services as $service) {

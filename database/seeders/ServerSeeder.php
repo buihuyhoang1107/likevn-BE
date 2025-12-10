@@ -680,33 +680,279 @@ class ServerSeeder extends Seeder
         if ($commentInstagram) {
             $servers = [
                 [
-                    'name' => 'Server 1',
-                    'code' => 'IGCMT_S1',
-                    'price_per_unit' => 1200,
-                    'status' => 'active',
-                    'description' => 'Comment nhanh',
-                    'min_quantity' => 1,
-                ],
-                [
-                    'name' => 'Server 2',
+                    'name' => 'Server 2 (Nick Việt)',
                     'code' => 'IGCMT_S2',
-                    'price_per_unit' => 1200,
+                    'price_per_unit' => 720,
                     'status' => 'active',
-                    'description' => 'Comment nhanh',
-                    'min_quantity' => 1,
+                    'description' => 'Comment Instagram nick Việt, tốc độ trung bình',
+                    'min_quantity' => 10,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'speed_options' => ['nhanh', 'trung_binh', 'cham'],
+                        'note' => 'ID: 475481',
+                    ]),
                 ],
                 [
-                    'name' => 'Server 3',
+                    'name' => 'Server 3 (Nick Ngoại)',
                     'code' => 'IGCMT_S3',
-                    'price_per_unit' => 1200,
+                    'price_per_unit' => 192,
                     'status' => 'active',
-                    'description' => 'Comment nhanh',
-                    'min_quantity' => 1,
+                    'description' => 'Comment Instagram nick ngoại',
+                    'min_quantity' => 10,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'speed_options' => ['nhanh', 'trung_binh', 'cham'],
+                    ]),
                 ],
             ];
             foreach ($servers as $server) {
                 Server::create(array_merge($server, [
                     'service_id' => $commentInstagram->id,
+                ]));
+            }
+        }
+
+        // Follow Instagram
+        $followInstagram = Service::where('slug', 'follow-instagram')->first();
+        if ($followInstagram) {
+            $servers = [
+                [
+                    'name' => 'Server 1 (Sub Việt)',
+                    'code' => 'IGFOLLOW_S1',
+                    'price_per_unit' => 94.8,
+                    'status' => 'stopped',
+                    'description' => 'Sub Việt 500/24h, tụt cao, bảo hành 7 ngày',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'warranty_days' => 7,
+                        'note' => 'Trạng thái bảo trì',
+                        'speed_per_day' => 500,
+                        'drop_rate' => 'cao',
+                        'over_provision_percent' => 15,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 6 (Sub Tây)',
+                    'code' => 'IGFOLLOW_S6',
+                    'price_per_unit' => 26.4,
+                    'status' => 'active',
+                    'description' => 'Tốc độ 20k/24h, không bảo hành',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'speed_per_day' => 20000,
+                        'warranty_days' => 0,
+                        'over_provision_percent' => 15,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 7 (Sub Tây)',
+                    'code' => 'IGFOLLOW_S7',
+                    'price_per_unit' => 53.8,
+                    'status' => 'active',
+                    'description' => 'Tốc độ 2k/24h, không bảo hành',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'speed_per_day' => 2000,
+                        'warranty_days' => 0,
+                        'over_provision_percent' => 15,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 8 (Sub Tây)',
+                    'code' => 'IGFOLLOW_S8',
+                    'price_per_unit' => 106.8,
+                    'status' => 'active',
+                    'description' => 'Tốc độ 5k/24h, không bảo hành',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'speed_per_day' => 5000,
+                        'warranty_days' => 0,
+                        'over_provision_percent' => 15,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 9 (Sub Tây)',
+                    'code' => 'IGFOLLOW_S9',
+                    'price_per_unit' => 83.4,
+                    'status' => 'active',
+                    'description' => 'Tốc độ 10k/24h, không bảo hành',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'speed_per_day' => 10000,
+                        'warranty_days' => 0,
+                        'over_provision_percent' => 15,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $followInstagram->id,
+                ]));
+            }
+        }
+
+        // View Instagram
+        $viewInstagram = Service::where('slug', 'view-instagram')->first();
+        if ($viewInstagram) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'IGVIEW_S1',
+                    'price_per_unit' => 10.6,
+                    'status' => 'active',
+                    'description' => 'View Video+REEL+IGTV, tốc độ có thể đạt triệu view/ngày (ID: 475417)',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'note' => 'Tốc độ có thể thay đổi',
+                        'supported' => 'Video/REEL/IGTV',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'IGVIEW_S2',
+                    'price_per_unit' => 0.48,
+                    'status' => 'active',
+                    'description' => 'View Video+REEL+IGTV, min 10k',
+                    'min_quantity' => 10000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'supported' => 'Video/REEL/IGTV',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'IGVIEW_S3',
+                    'price_per_unit' => 2.2,
+                    'status' => 'active',
+                    'description' => 'View Video+REEL+IGTV, 8đ',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'supported' => 'Video/REEL/IGTV',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 5 (Story)',
+                    'code' => 'IGVIEW_S5',
+                    'price_per_unit' => 4.2,
+                    'status' => 'active',
+                    'description' => 'Chỉ hỗ trợ stories 24 giờ',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'supported' => 'Story',
+                        'story_duration_hours' => 24,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $viewInstagram->id,
+                ]));
+            }
+        }
+
+        // Mắt LiveStream Instagram
+        $liveEyeInstagram = Service::where('slug', 'mat-livestream-instagram')->first();
+        if ($liveEyeInstagram) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'IGLIVE_S1',
+                    'price_per_unit' => 18.2,
+                    'status' => 'active',
+                    'description' => 'Mắt LiveStream 15đ, tốc độ có thể đạt triệu view/ngày',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'IGLIVE_S2',
+                    'price_per_unit' => 0.84,
+                    'status' => 'active',
+                    'description' => 'Mắt LiveStream min 10k',
+                    'min_quantity' => 10000,
+                    'max_quantity' => 1000000,
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'IGLIVE_S3',
+                    'price_per_unit' => 4.4,
+                    'status' => 'active',
+                    'description' => 'Mắt LiveStream 12đ',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                ],
+                [
+                    'name' => 'Server 5 (Story)',
+                    'code' => 'IGLIVE_S5',
+                    'price_per_unit' => 8.4,
+                    'status' => 'active',
+                    'description' => 'Chỉ hỗ trợ stories 24 giờ',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveEyeInstagram->id,
+                ]));
+            }
+        }
+
+        // VIP Like Instagram
+        $vipLikeInstagram = Service::where('slug', 'vip-like-instagram')->first();
+        if ($vipLikeInstagram) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'IGVIPLIKE_S1',
+                    'price_per_unit' => 900,
+                    'status' => 'active',
+                    'description' => 'Like Việt, không nên ghim bài',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'note' => 'Chọn thời gian 1/2/3 tháng, tùy chọn số bài mỗi ngày',
+                        'avoid_pin' => true,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $vipLikeInstagram->id,
+                ]));
+            }
+        }
+
+        // VIP Comment Instagram
+        $vipCommentInstagram = Service::where('slug', 'vip-comment-instagram')->first();
+        if ($vipCommentInstagram) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'IGVIPCMT_S1',
+                    'price_per_unit' => 16680,
+                    'status' => 'active',
+                    'description' => 'Bắt buộc không ghim bài, chọn gói 10-100 bình luận, tốc độ và thời gian tùy chọn',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'packages' => [10,20,30,40,50,60,70,80,90,100],
+                        'avoid_pin' => true,
+                        'duration_options' => ['1 tháng','2 tháng','3 tháng'],
+                        'speed_options' => ['nhanh','trung_binh','cham'],
+                        'per_day_posts' => 'tùy chọn',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $vipCommentInstagram->id,
                 ]));
             }
         }

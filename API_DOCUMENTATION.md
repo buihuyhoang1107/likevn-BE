@@ -878,6 +878,11 @@ Tất cả các lỗi sẽ trả về format:
 - `friend_cleanup` - Lọc bạn bè không tương tác
 - `instagram_like` - Like Instagram
 - `instagram_comment` - Comment Instagram
+- `instagram_follow` - Follow Instagram
+- `instagram_view` - View Instagram
+- `instagram_live_eye` - Mắt livestream Instagram
+- `instagram_vip_like` - VIP Like Instagram
+- `instagram_vip_comment` - VIP Comment Instagram
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1099,9 +1104,43 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
 ### 27. Comment Instagram (`instagram_comment`, slug: `comment-instagram`)
 - Trường cần nhập: `uid` hoặc link bài viết (https://www.instagram.com/p/id/), `content` (mỗi dòng 1 bình luận), `quantity`, `note`, `speed` (nhanh/cham/trung_binh)
 - Servers:
-  - IGCMT_S1: 1,200 ₫, active, min 1; Comment nhanh
-  - IGCMT_S2: 1,200 ₫, active, min 1; Comment nhanh
-  - IGCMT_S3: 1,200 ₫, active, min 1; Comment nhanh
+  - IGCMT_S2: 720 ₫, active, min 10, max 10,000; Nick Việt, tốc độ trung bình (ID: 475481)
+  - IGCMT_S3: 192 ₫, active, min 10, max 10,000; Nick ngoại
+
+### 28. Follow Instagram (`instagram_follow`, slug: `follow-instagram`)
+- Trường cần nhập: `uid` hoặc link profile, `quantity` (cộng dư 15%), `note`
+- Servers:
+  - IGFOLLOW_S1: 94.8 ₫, stopped, min 100, max 10,000; Sub Việt 500/24h, tụt cao, BH 7 ngày (ID: 475266)
+  - IGFOLLOW_S6: 26.4 ₫, active, min 100, max 10,000; Sub Tây 20k/24h, không BH
+  - IGFOLLOW_S7: 53.8 ₫, active, min 100, max 10,000; Sub Tây 2k/24h, không BH
+  - IGFOLLOW_S8: 106.8 ₫, active, min 100, max 10,000; Sub Tây 5k/24h, không BH
+  - IGFOLLOW_S9: 83.4 ₫, active, min 100, max 10,000; Sub Tây 10k/24h, không BH
+
+### 29. View Instagram (`instagram_view`, slug: `view-instagram`)
+- Trường cần nhập: `uid` hoặc link video/reel/igtv/story, `quantity`, `note`
+- Servers:
+  - IGVIEW_S1: 10.6 ₫, active, min 100, max 1,000,000; View Video+REEL+IGTV, tốc độ có thể đạt triệu view/ngày (ID: 475417)
+  - IGVIEW_S2: 0.48 ₫, active, min 10,000, max 1,000,000; View Video+REEL+IGTV, min 10k
+  - IGVIEW_S3: 2.2 ₫, active, min 100, max 1,000,000; View Video+REEL+IGTV
+  - IGVIEW_S5: 4.2 ₫, active, min 100, max 1,000,000; Chỉ hỗ trợ stories 24 giờ
+
+### 30. Mắt Livestream Instagram (`instagram_live_eye`, slug: `mat-livestream-instagram`)
+- Trường cần nhập: `uid` hoặc link live/story, `quantity`, `note`
+- Servers:
+  - IGLIVE_S1: 18.2 ₫, active, min 100, max 1,000,000; Mắt LiveStream 15đ, tốc độ có thể đạt triệu view/ngày (ID: 475416)
+  - IGLIVE_S2: 0.84 ₫, active, min 10,000, max 1,000,000; Mắt LiveStream min 10k
+  - IGLIVE_S3: 4.4 ₫, active, min 100, max 1,000,000; Mắt LiveStream 12đ
+  - IGLIVE_S5: 8.4 ₫, active, min 100, max 1,000,000; Chỉ hỗ trợ stories 24 giờ
+
+### 31. VIP Like Instagram (`instagram_vip_like`, slug: `vip-like-instagram`)
+- Trường cần nhập: `uid` hoặc link profile, `quantity` (số like cần mua), `duration` (1/2/3 tháng), `posts_per_day` (tùy chọn), `note`
+- Servers:
+  - IGVIPLIKE_S1: 900 ₫, active, min 1; Like Việt, không nên ghim bài (ID: 475349)
+
+### 32. VIP Comment Instagram (`instagram_vip_comment`, slug: `vip-comment-instagram`)
+- Trường cần nhập: `uid` hoặc link profile, `content` (mỗi dòng 1 bình luận), `package` (10/20/30/40/50/60/70/80/90/100 bình luận), `duration` (1/2/3 tháng), `speed` (nhanh/trung_binh/cham), `posts_per_day` (tùy chọn), `note`
+- Servers:
+  - IGVIPCMT_S1: 16,680 ₫, active, min 1; Bắt buộc không ghim bài (ID: 475380)
 
 ---
 
