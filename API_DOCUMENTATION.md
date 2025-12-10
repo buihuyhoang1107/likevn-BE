@@ -874,6 +874,10 @@ Tất cả các lỗi sẽ trả về format:
 - `vip_eye_monthly` - VIP Mắt theo tháng
 - `vip_view_monthly` - VIP View theo tháng
 - `vip_share_monthly` - VIP Share theo tháng
+- `eye_live_view_video` - Mắt lives - View video
+- `friend_cleanup` - Lọc bạn bè không tương tác
+- `instagram_like` - Like Instagram
+- `instagram_comment` - Comment Instagram
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1036,6 +1040,68 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
 - Trường cần nhập: `uid` hoặc link tài khoản, số bài mỗi ngày (tuỳ chọn), chọn gói VIP, thời gian, `note`
 - Servers:
   - VIPS_S2: Share Việt 13,200 ₫, active, không hoàn tiền kể cả uid die
+
+### 18. Buff mắt Livestream V2 (`eye_live_view_video`, slug: `buff-mat-livestream-v2`)
+- Trường cần nhập: `uid` (link chứa từ “Videos”), `quantity`, `note`, chọn server, chọn số phút (đơn giá thay đổi theo phút); Giá Tiền Mỗi Tương Tác; Tổng Giá
+- Servers:
+  - LIVEV2_S4: 79.2 ₫, active, min 50, max 1000; mô tả: Máy chủ 518398 - mắt xem livestream ~30 phút. Tùy chọn phút: 30p (79.2₫, id 518398), 60p (158.4₫, id 518399), 90p (237.6₫, id 518400), 120p (316.8₫, id 518401), 150p (396₫, id 518402), 180p (475.2₫, id 518403), 210p (554.4₫, id 518404), 240p (633.6₫, id 518405). Gói mắt tự do: id 475409 giá 2.6₫.
+  - LIVEV2_S6: 79.2 ₫, active, min 50, max 1000; mô tả: Máy chủ 518398 - mắt xem livestream ~30 phút. Tùy chọn phút: 30p (90₫, id 518406), 60p (180₫, id 518407), 90p (270₫, id 518408), 120p (360₫, id 518409), 150p (450₫, id 518410), 180p (540₫, id 518411), 210p (630₫, id 518412), 240p (720₫, id 518413). Gói mắt tự do: id 475454 giá 3₫.
+
+### 19. Tăng View video (`eye_live_view_video`, slug: `tang-view-video`)
+- Trường cần nhập: `uid` (link video), `quantity` (min 500), `note`
+- Servers:
+  - VIEW_S4: 10.2 ₫, active, min 500, max 5,000,000; auto play nếu video bị ẩn view; video <1 phút sẽ chậm
+  - VIEW_S7: 13.2 ₫, active, min 500, max 5,000,000; tốc độ ổn, ưu tiên đơn lớn
+
+### 20. Tăng View Story (`eye_live_view_video`, slug: `tang-view-story`)
+- Trường cần nhập: `uid` (link story), `quantity` (min 200), `note`
+- Servers:
+  - STORY_S2: 24 ₫, active, min 200, max 20,000; không mua trùng khi view chưa đủ; nên mua ngay sau khi đăng
+  - STORY_S3: 57.4 ₫, active, min 200, max 20,000; tốc độ tốt
+
+### 21. View 600k phút (`eye_live_view_video`, slug: `view-600k-phut`)
+- Trường cần nhập: `uid` (video ≥60 phút), `Độ dài video` (1 giờ / 2 giờ / 3 giờ), `note`
+- Servers:
+  - VIEW600K: 300,000 ₫, active, min 1, max 1; gói 600k phút, thường hoàn thành 1-2 ngày
+
+### 22. View 60K offline (`eye_live_view_video`, slug: `view-60k-offline`)
+- Trường cần nhập: `uid` (video ≥3h + 3s), `Độ dài video` (1 giờ / 2 giờ / 3 giờ), `note`
+- Servers:
+  - OFF60K_S1: 114,000 ₫, active, min 1, max 1; ưu tiên nhanh, hoàn thành trong ngày; còn 1850 đơn
+  - OFF60K_S2: 87,600 ₫, active, min 1, max 1; gói thường; còn 1851 đơn
+
+### 23. View 60K Live (`eye_live_view_video`, slug: `view-60k-live`)
+- Trường cần nhập: `uid` (video/live ≥3h + 3s), `Độ dài video` (1 giờ / 2 giờ / 3 giờ), `note`
+- Servers:
+  - LIVE60K_S1: 228,000 ₫, active, min 1, max 1; ưu tiên nhanh, hoàn thành trong ngày; còn 1817 đơn
+  - LIVE60K_S2: 138,000 ₫, active, min 1, max 1; gói thường; còn 1897 đơn
+
+### 24. Tăng view 100k Reels (`eye_live_view_video`, slug: `tang-view-100k-reels`)
+- Trường cần nhập: `uid` hoặc link reels chính xác, `quantity` (gói = 1), `note`
+- Servers:
+  - REELS_S1: 600,000 ₫, active, min 1, max 1; lên nhanh; khả dụng hiện 0 đơn
+  - REELS_S2: 312,000 ₫, active, min 1, max 1; lên trung bình; khả dụng hiện 0 đơn
+
+### 25. Lọc bạn bè không tương tác (`friend_cleanup`, slug: `loc-ban-be-khong-tuong-tac`)
+- Trường cần nhập: `uid` hoặc link người dùng, `account_name`, `note`
+- Servers:
+  - FRIEND_CLEAN: 15,000 ₫, active, min 1, max 1; lọc bạn bè không tương tác (tài khoản VIP)
+
+### 26. Like Instagram (`instagram_like`, slug: `like-instagram`)
+- Trường cần nhập: `uid` hoặc link bài viết (https://www.instagram.com/p/id/), `quantity`, `note`
+- Servers:
+  - IGLIKE_S1: 27.6 ₫, active, min 100, max 50,000; Like Việt 500/24h (tụt 10-20%)
+  - IGLIKE_S2: 25.2 ₫, active, min 100, max 50,000; Like Việt 5k-10k/24h
+  - IGLIKE_S4: 13.6 ₫, active, min 100, max 50,000; Like Việt tốc độ trung bình
+  - IGLIKE_S5: 8.6 ₫, active, min 100, max 50,000; Like Tây, tốc độ trung bình, không bảo hành
+  - IGLIKE_S6: 14.8 ₫, active, min 100, max 50,000; Like Tây, tốc độ tốt, không bảo hành
+
+### 27. Comment Instagram (`instagram_comment`, slug: `comment-instagram`)
+- Trường cần nhập: `uid` hoặc link bài viết (https://www.instagram.com/p/id/), `content` (mỗi dòng 1 bình luận), `quantity`, `note`, `speed` (nhanh/cham/trung_binh)
+- Servers:
+  - IGCMT_S1: 1,200 ₫, active, min 1; Comment nhanh
+  - IGCMT_S2: 1,200 ₫, active, min 1; Comment nhanh
+  - IGCMT_S3: 1,200 ₫, active, min 1; Comment nhanh
 
 ---
 

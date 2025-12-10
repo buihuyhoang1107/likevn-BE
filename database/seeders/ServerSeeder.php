@@ -337,6 +337,379 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Buff mắt Livestream V2
+        $buffEyeLive = Service::where('slug', 'buff-mat-livestream-v2')->first();
+        if ($buffEyeLive) {
+            $servers = [
+                [
+                    'name' => 'Server 4',
+                    'code' => 'LIVEV2_S4',
+                    'price_per_unit' => 79.2,
+                    'status' => 'active',
+                    'description' => 'Máy chủ 518398 - Mắt xem livestream Facebook v4 ~30 phút',
+                    'min_quantity' => 50,
+                    'max_quantity' => 1000,
+                    'features' => json_encode([
+                        'required_link_contains' => 'Videos',
+                        'duration_minutes' => 30,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 6',
+                    'code' => 'LIVEV2_S6',
+                    'price_per_unit' => 79.2,
+                    'status' => 'active',
+                    'description' => 'Máy chủ 518398 - Mắt xem livestream Facebook v4 ~30 phút',
+                    'min_quantity' => 50,
+                    'max_quantity' => 1000,
+                    'features' => json_encode([
+                        'required_link_contains' => 'Videos',
+                        'duration_minutes' => 30,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $buffEyeLive->id,
+                ]));
+            }
+        }
+
+        // Tăng View video
+        $increaseViewVideo = Service::where('slug', 'tang-view-video')->first();
+        if ($increaseViewVideo) {
+            $servers = [
+                [
+                    'name' => 'Server 4',
+                    'code' => 'VIEW_S4',
+                    'price_per_unit' => 10.2,
+                    'status' => 'active',
+                    'description' => 'Gói view giá tốt, auto phát (play) nếu video bị ẩn view',
+                    'min_quantity' => 500,
+                    'max_quantity' => 5000000,
+                    'features' => json_encode([
+                        'fallback_play_on_hidden_view' => true,
+                        'note' => 'Video <1 phút sẽ lên chậm, đơn lớn tăng tốc độ tốt hơn',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 7',
+                    'code' => 'VIEW_S7',
+                    'price_per_unit' => 13.2,
+                    'status' => 'active',
+                    'description' => 'Tốc độ lên ổn định, ưu tiên đơn số lượng lớn',
+                    'min_quantity' => 500,
+                    'max_quantity' => 5000000,
+                    'features' => json_encode([
+                        'fallback_play_on_hidden_view' => true,
+                        'note' => 'Video <1 phút sẽ lên chậm, đơn lớn tăng tốc độ tốt hơn',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $increaseViewVideo->id,
+                ]));
+            }
+        }
+
+        // Tăng View Story
+        $increaseViewStory = Service::where('slug', 'tang-view-story')->first();
+        if ($increaseViewStory) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'STORY_S2',
+                    'price_per_unit' => 24,
+                    'status' => 'active',
+                    'description' => 'Tốc độ ổn, không mua trùng khi view chưa đủ, nên mua ngay sau khi đăng',
+                    'min_quantity' => 200,
+                    'max_quantity' => 20000,
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'STORY_S3',
+                    'price_per_unit' => 57.4,
+                    'status' => 'active',
+                    'description' => 'Tốc độ tốt, lưu ý thời gian story',
+                    'min_quantity' => 200,
+                    'max_quantity' => 20000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $increaseViewStory->id,
+                ]));
+            }
+        }
+
+        // View 600k phút
+        $view600kMinutes = Service::where('slug', 'view-600k-phut')->first();
+        if ($view600kMinutes) {
+            $servers = [
+                [
+                    'name' => 'Gói 600k phút',
+                    'code' => 'VIEW600K',
+                    'price_per_unit' => 300000,
+                    'status' => 'active',
+                    'description' => 'Hoàn thành trong 1-2 ngày, video tối thiểu 60 phút',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'package_minutes' => 600000,
+                        'min_video_length_minutes' => 60,
+                        'completion' => '1-2 ngày',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $view600kMinutes->id,
+                ]));
+            }
+        }
+
+        // View 60K offline
+        $view60kOffline = Service::where('slug', 'view-60k-offline')->first();
+        if ($view60kOffline) {
+            $servers = [
+                [
+                    'name' => 'Server 1 (VIP)',
+                    'code' => 'OFF60K_S1',
+                    'price_per_unit' => 114000,
+                    'status' => 'active',
+                    'description' => 'Ưu tiên lên nhanh, hoàn thành trong ngày',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'available_orders' => 1850,
+                        'video_length_hours' => 3,
+                        'extra_seconds_required' => 3,
+                        'completion' => 'Trong ngày',
+                        'package_minutes' => 60000,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2 (Thường)',
+                    'code' => 'OFF60K_S2',
+                    'price_per_unit' => 87600,
+                    'status' => 'active',
+                    'description' => 'Gói thường, tốc độ ổn định',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'available_orders' => 1851,
+                        'video_length_hours' => 3,
+                        'extra_seconds_required' => 3,
+                        'package_minutes' => 60000,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $view60kOffline->id,
+                ]));
+            }
+        }
+
+        // View 60K Live
+        $view60kLive = Service::where('slug', 'view-60k-live')->first();
+        if ($view60kLive) {
+            $servers = [
+                [
+                    'name' => 'Server 1 (VIP)',
+                    'code' => 'LIVE60K_S1',
+                    'price_per_unit' => 228000,
+                    'status' => 'active',
+                    'description' => 'Ưu tiên lên nhanh, hoàn thành trong ngày cho live',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'available_orders' => 1817,
+                        'video_length_hours' => 3,
+                        'extra_seconds_required' => 3,
+                        'package_minutes' => 60000,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2 (Thường)',
+                    'code' => 'LIVE60K_S2',
+                    'price_per_unit' => 138000,
+                    'status' => 'active',
+                    'description' => 'Gói thường cho live, tốc độ ổn',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'available_orders' => 1897,
+                        'video_length_hours' => 3,
+                        'extra_seconds_required' => 3,
+                        'package_minutes' => 60000,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $view60kLive->id,
+                ]));
+            }
+        }
+
+        // Tăng view 100k Reels
+        $viewReels = Service::where('slug', 'tang-view-100k-reels')->first();
+        if ($viewReels) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'REELS_S1',
+                    'price_per_unit' => 600000,
+                    'status' => 'active',
+                    'description' => 'Lên nhanh 100k Reels, nhập đúng link/uid',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'available_orders' => 0,
+                        'note' => 'Khả dụng 0 đơn - liên hệ trước khi đặt',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'REELS_S2',
+                    'price_per_unit' => 312000,
+                    'status' => 'active',
+                    'description' => 'Lên trung bình 100k Reels',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'available_orders' => 0,
+                        'note' => 'Khả dụng 0 đơn - liên hệ trước khi đặt',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $viewReels->id,
+                ]));
+            }
+        }
+
+        // Lọc bạn bè không tương tác
+        $friendCleanup = Service::where('slug', 'loc-ban-be-khong-tuong-tac')->first();
+        if ($friendCleanup) {
+            $servers = [
+                [
+                    'name' => 'Lọc bạn bè không tương tác',
+                    'code' => 'FRIEND_CLEAN',
+                    'price_per_unit' => 15000,
+                    'status' => 'active',
+                    'description' => 'Nhập ID/link Facebook và tên tài khoản cần lọc bạn bè không tương tác',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'features' => json_encode([
+                        'requires_username' => true,
+                        'note' => 'Tài khoản cần chạy VIP',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $friendCleanup->id,
+                ]));
+            }
+        }
+
+        // Like Instagram
+        $likeInstagram = Service::where('slug', 'like-instagram')->first();
+        if ($likeInstagram) {
+            $servers = [
+                [
+                    'name' => 'Server 1 (Like Việt)',
+                    'code' => 'IGLIKE_S1',
+                    'price_per_unit' => 27.6,
+                    'status' => 'active',
+                    'description' => 'Like Việt, 500/24h (tụt 10-20%)',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000,
+                ],
+                [
+                    'name' => 'Server 2 (Like Việt)',
+                    'code' => 'IGLIKE_S2',
+                    'price_per_unit' => 25.2,
+                    'status' => 'active',
+                    'description' => 'Like Việt, 5k-10k/24h',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000,
+                ],
+                [
+                    'name' => 'Server 4 (Like Việt)',
+                    'code' => 'IGLIKE_S4',
+                    'price_per_unit' => 13.6,
+                    'status' => 'active',
+                    'description' => 'Like Việt, tốc độ trung bình',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000,
+                ],
+                [
+                    'name' => 'Server 5 (Like Tây)',
+                    'code' => 'IGLIKE_S5',
+                    'price_per_unit' => 8.6,
+                    'status' => 'active',
+                    'description' => 'Like Tây, tốc độ trung bình, không bảo hành',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000,
+                ],
+                [
+                    'name' => 'Server 6 (Like Tây)',
+                    'code' => 'IGLIKE_S6',
+                    'price_per_unit' => 14.8,
+                    'status' => 'active',
+                    'description' => 'Like Tây, tốc độ tốt, không bảo hành',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeInstagram->id,
+                ]));
+            }
+        }
+
+        // Comment Instagram
+        $commentInstagram = Service::where('slug', 'comment-instagram')->first();
+        if ($commentInstagram) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'IGCMT_S1',
+                    'price_per_unit' => 1200,
+                    'status' => 'active',
+                    'description' => 'Comment nhanh',
+                    'min_quantity' => 1,
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'IGCMT_S2',
+                    'price_per_unit' => 1200,
+                    'status' => 'active',
+                    'description' => 'Comment nhanh',
+                    'min_quantity' => 1,
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'IGCMT_S3',
+                    'price_per_unit' => 1200,
+                    'status' => 'active',
+                    'description' => 'Comment nhanh',
+                    'min_quantity' => 1,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $commentInstagram->id,
+                ]));
+            }
+        }
     }
 }
 

@@ -305,7 +305,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook',
+            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -331,7 +331,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook',
+            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment',
             'is_active' => 'nullable|boolean',
         ]);
 

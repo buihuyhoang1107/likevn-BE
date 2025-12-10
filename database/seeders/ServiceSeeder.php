@@ -112,6 +112,66 @@ class ServiceSeeder extends Seeder
                 'category' => 'vip_share_monthly',
                 'description' => 'Gói VIP share theo tháng',
             ],
+            [
+                'name' => 'Buff mắt Livestream V2',
+                'slug' => 'buff-mat-livestream-v2',
+                'category' => 'eye_live_view_video',
+                'description' => 'Mắt xem livestream Facebook V4 ~30 phút, yêu cầu link chứa từ "Videos"',
+            ],
+            [
+                'name' => 'Tăng View video',
+                'slug' => 'tang-view-video',
+                'category' => 'eye_live_view_video',
+                'description' => 'Buff view video, hỗ trợ play khi bị ẩn view, video <1 phút sẽ lên chậm',
+            ],
+            [
+                'name' => 'Tăng View Story',
+                'slug' => 'tang-view-story',
+                'category' => 'eye_live_view_video',
+                'description' => 'View Story, không mua trùng khi đơn chưa đủ, nên mua ngay sau khi đăng',
+            ],
+            [
+                'name' => 'View 600k phút',
+                'slug' => 'view-600k-phut',
+                'category' => 'eye_live_view_video',
+                'description' => 'Gói 600k phút, video ≥60 phút, thường hoàn thành trong 1-2 ngày',
+            ],
+            [
+                'name' => 'View 60K offline',
+                'slug' => 'view-60k-offline',
+                'category' => 'eye_live_view_video',
+                'description' => 'Gói 60K phút offline, ưu tiên lên nhanh, yêu cầu độ dài video đủ theo gói',
+            ],
+            [
+                'name' => 'View 60K Live',
+                'slug' => 'view-60k-live',
+                'category' => 'eye_live_view_video',
+                'description' => 'Gói 60K phút cho live, ưu tiên lên nhanh, hoàn thành trong ngày',
+            ],
+            [
+                'name' => 'Tăng view 100k Reels',
+                'slug' => 'tang-view-100k-reels',
+                'category' => 'eye_live_view_video',
+                'description' => 'Buff view Reels 100k, nhập đúng link/uid, sai không hoàn tiền',
+            ],
+            [
+                'name' => 'Lọc bạn bè không tương tác',
+                'slug' => 'loc-ban-be-khong-tuong-tac',
+                'category' => 'friend_cleanup',
+                'description' => 'Lọc bạn bè không tương tác, nhập link/ID và tên tài khoản cần xử lý',
+            ],
+            [
+                'name' => 'Like Instagram',
+                'slug' => 'like-instagram',
+                'category' => 'instagram_like',
+                'description' => 'Tăng like bài viết Instagram (link https://www.instagram.com/p/id/)',
+            ],
+            [
+                'name' => 'Comment Instagram',
+                'slug' => 'comment-instagram',
+                'category' => 'instagram_comment',
+                'description' => 'Tăng bình luận cho bài viết Instagram (link https://www.instagram.com/p/id/)',
+            ],
         ];
 
         foreach ($services as $service) {
