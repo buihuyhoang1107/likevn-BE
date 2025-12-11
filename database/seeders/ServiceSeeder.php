@@ -202,6 +202,18 @@ class ServiceSeeder extends Seeder
                 'category' => 'instagram_vip_comment',
                 'description' => 'Gói VIP comment Instagram theo tháng, chọn số cmt/bài mỗi ngày',
             ],
+            [
+                'name' => 'Like Threads',
+                'slug' => 'like-threads',
+                'category' => 'threads_like',
+                'description' => 'Like bài viết trên Threads',
+            ],
+            [
+                'name' => 'Follow Threads',
+                'slug' => 'follow-threads',
+                'category' => 'threads_follow',
+                'description' => 'Follow tài khoản trên Threads',
+            ],
         ];
 
         foreach ($services as $service) {

@@ -956,6 +956,80 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Like Threads
+        $likeThreads = Service::where('slug', 'like-threads')->first();
+        if ($likeThreads) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'THREADS_LIKE_S2',
+                    'price_per_unit' => 64.8,
+                    'status' => 'stopped',
+                    'description' => 'Like tây. ổn định. Lên khá nhanh',
+                    'min_quantity' => 50,
+                    'max_quantity' => 500000,
+                    'features' => json_encode([
+                        'id' => '475517',
+                        'note' => 'Ngừng nhận đơn',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'THREADS_LIKE_S3',
+                    'price_per_unit' => 42,
+                    'status' => 'stopped',
+                    'description' => 'Like việt. Giá rẻ - Bảo trì',
+                    'min_quantity' => 1,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeThreads->id,
+                ]));
+            }
+        }
+
+        // Follow Threads
+        $followThreads = Service::where('slug', 'follow-threads')->first();
+        if ($followThreads) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'THREADS_FOLLOW_S1',
+                    'price_per_unit' => 75.6,
+                    'status' => 'stopped',
+                    'description' => 'Sub ngoại, Không bảo hành. Tốc độ lên nhanh. Tỉ lệ tụt thấp',
+                    'min_quantity' => 100,
+                    'max_quantity' => 100000,
+                    'features' => json_encode([
+                        'id' => '475505',
+                        'note' => 'Ngừng nhận đơn',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'THREADS_FOLLOW_S2',
+                    'price_per_unit' => 40.8,
+                    'status' => 'stopped',
+                    'description' => 'Sub ngoại, Không bảo hành - Bảo trì',
+                    'min_quantity' => 1,
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'THREADS_FOLLOW_S3',
+                    'price_per_unit' => 54,
+                    'status' => 'active',
+                    'description' => 'Sub tên Việt, 100-500 /24 giờ',
+                    'min_quantity' => 1,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $followThreads->id,
+                ]));
+            }
+        }
     }
 }
 

@@ -441,7 +441,7 @@ Content-Type: application/json
 {
     "name": "Dịch vụ mới",
     "description": "Mô tả dịch vụ",
-    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post
+    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow
     "is_active": true
 }
 ```
@@ -883,6 +883,8 @@ Tất cả các lỗi sẽ trả về format:
 - `instagram_live_eye` - Mắt livestream Instagram
 - `instagram_vip_like` - VIP Like Instagram
 - `instagram_vip_comment` - VIP Comment Instagram
+- `threads_like` - Like Threads
+- `threads_follow` - Follow Threads
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1141,6 +1143,23 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
 - Trường cần nhập: `uid` hoặc link profile, `content` (mỗi dòng 1 bình luận), `package` (10/20/30/40/50/60/70/80/90/100 bình luận), `duration` (1/2/3 tháng), `speed` (nhanh/trung_binh/cham), `posts_per_day` (tùy chọn), `note`
 - Servers:
   - IGVIPCMT_S1: 16,680 ₫, active, min 1; Bắt buộc không ghim bài (ID: 475380)
+
+### 33. Like Threads (`threads_like`, slug: `like-threads`)
+- Trường cần nhập: `uid` (link bài viết Threads), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự động tính từ `price_per_unit` của server
+- Tổng Giá: Tự động tính = `price_per_unit * quantity`
+- Servers:
+  - THREADS_LIKE_S2: 64.8 ₫, stopped, min 50, max 500,000; Like tây, ổn định, lên khá nhanh (ID: 475517) - Ngừng nhận đơn
+  - THREADS_LIKE_S3: 42 ₫, maintenance; Like việt, giá rẻ - Bảo trì
+
+### 34. Follow Threads (`threads_follow`, slug: `follow-threads`)
+- Trường cần nhập: `uid` (link bài viết Threads), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự động tính từ `price_per_unit` của server
+- Tổng Giá: Tự động tính = `price_per_unit * quantity`
+- Servers:
+  - THREADS_FOLLOW_S1: 75.6 ₫, stopped, min 100, max 100,000; Sub ngoại, không bảo hành, tốc độ lên nhanh, tỉ lệ tụt thấp (ID: 475505) - Ngừng nhận đơn
+  - THREADS_FOLLOW_S2: 40.8 ₫, maintenance; Sub ngoại, không bảo hành - Bảo trì
+  - THREADS_FOLLOW_S3: 54 ₫, active; Sub tên Việt, 100-500 /24 giờ - Hoạt động
 
 ---
 
