@@ -214,6 +214,90 @@ class ServiceSeeder extends Seeder
                 'category' => 'threads_follow',
                 'description' => 'Follow tài khoản trên Threads',
             ],
+            [
+                'name' => 'Like TikTok',
+                'slug' => 'tiktok-like',
+                'category' => 'tiktok_like',
+                'description' => 'Tăng like (tim) cho bài viết TikTok',
+            ],
+            [
+                'name' => 'Like Comment TikTok',
+                'slug' => 'tiktok-like-comment',
+                'category' => 'tiktok_like_comment',
+                'description' => 'Tăng like cho bình luận TikTok',
+            ],
+            [
+                'name' => 'Follow TikTok',
+                'slug' => 'tiktok-follow',
+                'category' => 'tiktok_follow',
+                'description' => 'Tăng follow tài khoản TikTok',
+            ],
+            [
+                'name' => 'View TikTok',
+                'slug' => 'tiktok-view',
+                'category' => 'tiktok_view',
+                'description' => 'Tăng lượt xem TikTok',
+            ],
+            [
+                'name' => 'Comment TikTok',
+                'slug' => 'tiktok-comment',
+                'category' => 'tiktok_comment',
+                'description' => 'Tăng bình luận TikTok',
+            ],
+            [
+                'name' => 'Share TikTok',
+                'slug' => 'tiktok-share',
+                'category' => 'tiktok_share',
+                'description' => 'Tăng chia sẻ bài viết TikTok',
+            ],
+            [
+                'name' => 'Save TikTok',
+                'slug' => 'tiktok-save',
+                'category' => 'tiktok_save',
+                'description' => 'Tăng lượt lưu (yêu thích) TikTok',
+            ],
+            [
+                'name' => 'Tim Livestream TikTok',
+                'slug' => 'tiktok-live-like',
+                'category' => 'tiktok_live_like',
+                'description' => 'Tăng tim cho livestream TikTok',
+            ],
+            [
+                'name' => 'Share Livestream TikTok',
+                'slug' => 'tiktok-live-share',
+                'category' => 'tiktok_live_share',
+                'description' => 'Tăng share cho livestream TikTok',
+            ],
+            [
+                'name' => 'Comment Livestream TikTok',
+                'slug' => 'tiktok-live-comment',
+                'category' => 'tiktok_live_comment',
+                'description' => 'Tăng comment cho livestream TikTok',
+            ],
+            [
+                'name' => 'Mắt Livestream TikTok',
+                'slug' => 'tiktok-live-eye',
+                'category' => 'tiktok_live_eye',
+                'description' => 'Tăng mắt xem livestream TikTok',
+            ],
+            [
+                'name' => 'PK Livestream TikTok',
+                'slug' => 'tiktok-live-pk',
+                'category' => 'tiktok_live_pk',
+                'description' => 'Tăng điểm chiến đấu (PK) livestream TikTok',
+            ],
+            [
+                'name' => 'VIP Love TikTok',
+                'slug' => 'tiktok-vip-like',
+                'category' => 'tiktok_vip_like',
+                'description' => 'Gói VIP tim TikTok theo tháng',
+            ],
+            [
+                'name' => 'VIP View TikTok',
+                'slug' => 'tiktok-vip-view',
+                'category' => 'tiktok_vip_view',
+                'description' => 'Gói VIP view TikTok theo tháng',
+            ],
         ];
 
         foreach ($services as $service) {

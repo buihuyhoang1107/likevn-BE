@@ -1030,6 +1030,560 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Like TikTok
+        $likeTiktok = Service::where('slug', 'tiktok-like')->first();
+        if ($likeTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKLIKE_S1',
+                    'price_per_unit' => 14.4,
+                    'status' => 'active',
+                    'description' => 'Like việt, 5k/24h, hoàn tiền khi chậm, phù hợp gói nhỏ <1k, tốc độ rất nhanh, tụt cao',
+                    'min_quantity' => 50,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'id' => '475278',
+                        'note' => 'Like việt, hỗ trợ hoàn tiền khi chậm, có thể tụt cao theo thời gian',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'TIKLIKE_S3',
+                    'price_per_unit' => 15.0,
+                    'status' => 'active',
+                    'description' => 'Like việt, 5k/24h',
+                    'min_quantity' => 50,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 5',
+                    'code' => 'TIKLIKE_S5',
+                    'price_per_unit' => 16.2,
+                    'status' => 'active',
+                    'description' => 'Like việt, 5k/24 giờ',
+                    'min_quantity' => 50,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKLIKE_S2',
+                    'price_per_unit' => 5.8,
+                    'status' => 'active',
+                    'description' => 'Like ngoại, giá rẻ nhất',
+                    'min_quantity' => 50,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 6',
+                    'code' => 'TIKLIKE_S6',
+                    'price_per_unit' => 11.4,
+                    'status' => 'active',
+                    'description' => 'Like ngoại, tốc độ tốt',
+                    'min_quantity' => 50,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 7',
+                    'code' => 'TIKLIKE_S7',
+                    'price_per_unit' => 10.1,
+                    'status' => 'active',
+                    'description' => 'Like ngoại',
+                    'min_quantity' => 50,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 8',
+                    'code' => 'TIKLIKE_S8',
+                    'price_per_unit' => 16.2,
+                    'status' => 'active',
+                    'description' => 'Like ngoại, rất nhanh',
+                    'min_quantity' => 50,
+                    'max_quantity' => 10000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeTiktok->id,
+                ]));
+            }
+        }
+
+        // Like Comment TikTok
+        $likeCommentTiktok = Service::where('slug', 'tiktok-like-comment')->first();
+        if ($likeCommentTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKLC_S2',
+                    'price_per_unit' => 20.4,
+                    'status' => 'active',
+                    'description' => 'Tốc độ nhanh. User nhiều dấu chấm có thể không nhận diện được và hoàn.',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'id' => '475571',
+                        'note' => 'Dùng link/username profile bình luận. Username nhiều dấu chấm có thể không nhận diện.',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeCommentTiktok->id,
+                ]));
+            }
+        }
+
+        // Follow TikTok
+        $followTiktok = Service::where('slug', 'tiktok-follow')->first();
+        if ($followTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKFOLLOW_S2',
+                    'price_per_unit' => 94.8,
+                    'status' => 'active',
+                    'description' => 'Sub việt 5k/24h, bảo hành 7 ngày, không hỗ trợ đổi username, có thể tụt gốc',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'id' => '475590',
+                        'warranty_days' => 7,
+                        'speed_per_day' => 5000,
+                        'note' => 'Không hỗ trợ khi đổi username; có thể tụt gốc',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 4',
+                    'code' => 'TIKFOLLOW_S4',
+                    'price_per_unit' => 73.2,
+                    'status' => 'slow',
+                    'description' => 'Sub việt 300/24h',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 5',
+                    'code' => 'TIKFOLLOW_S5',
+                    'price_per_unit' => 28.2,
+                    'status' => 'active',
+                    'description' => 'Sub việt 3k/24h, có hiện tượng tụt cao',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 6',
+                    'code' => 'TIKFOLLOW_S6',
+                    'price_per_unit' => 40.8,
+                    'status' => 'active',
+                    'description' => 'Sub việt 1k/1 ngày, có hiện tượng tụt cao',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'TIKFOLLOW_S3',
+                    'price_per_unit' => 45.4,
+                    'status' => 'active',
+                    'description' => 'Sub ngoại 5k-10k/24h',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                ],
+                [
+                    'name' => 'Server 7',
+                    'code' => 'TIKFOLLOW_S7',
+                    'price_per_unit' => 66.0,
+                    'status' => 'active',
+                    'description' => 'Sub ngoại 5k/24h',
+                    'min_quantity' => 100,
+                    'max_quantity' => 10000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $followTiktok->id,
+                ]));
+            }
+        }
+
+        // View TikTok
+        $viewTiktok = Service::where('slug', 'tiktok-view')->first();
+        if ($viewTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 3',
+                    'code' => 'TIKVIEW_S3',
+                    'price_per_unit' => 0.84,
+                    'status' => 'active',
+                    'description' => 'Ổn định. Nên hẹn giờ 10k/đơn cách 12-24h khi mua số lượng cao để hạn chế tụt.',
+                    'min_quantity' => 1000,
+                    'max_quantity' => 100000,
+                    'features' => json_encode([
+                        'id' => '475384',
+                        'note' => 'Mua số cao có rủi ro tụt hết sau 1-3 ngày',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 4',
+                    'code' => 'TIKVIEW_S4',
+                    'price_per_unit' => 0.84,
+                    'status' => 'active',
+                    'description' => 'Ổn định',
+                    'min_quantity' => 1000,
+                    'max_quantity' => 100000,
+                ],
+                [
+                    'name' => 'Server 5',
+                    'code' => 'TIKVIEW_S5',
+                    'price_per_unit' => 1.1,
+                    'status' => 'active',
+                    'description' => 'Tăng chậm, hạn chế tụt',
+                    'min_quantity' => 1000,
+                    'max_quantity' => 100000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $viewTiktok->id,
+                ]));
+            }
+        }
+
+        // Comment TikTok
+        $commentTiktok = Service::where('slug', 'tiktok-comment')->first();
+        if ($commentTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 4',
+                    'code' => 'TIKCMT_S4',
+                    'price_per_unit' => 720,
+                    'status' => 'slow',
+                    'description' => 'Nick việt, tốc độ chậm, cần tối thiểu 1 bình luận',
+                    'min_quantity' => 10,
+                    'max_quantity' => 20,
+                    'features' => json_encode([
+                        'id' => '475477',
+                        'note' => 'Nội dung có thể bị ẩn/trùng; tắt lọc/kiểm duyệt nội dung',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 6',
+                    'code' => 'TIKCMT_S6',
+                    'price_per_unit' => 408,
+                    'status' => 'stopped',
+                    'description' => 'Nick ngoại, tốc độ nhanh',
+                    'min_quantity' => 10,
+                    'max_quantity' => 20,
+                    'features' => json_encode([
+                        'note' => 'Bảo trì',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $commentTiktok->id,
+                ]));
+            }
+        }
+
+        // Share TikTok
+        $shareTiktok = Service::where('slug', 'tiktok-share')->first();
+        if ($shareTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKSHARE_S1',
+                    'price_per_unit' => 16.6,
+                    'status' => 'stopped',
+                    'description' => 'Bảo hành 30 ngày',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000000,
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKSHARE_S2',
+                    'price_per_unit' => 7.0,
+                    'status' => 'active',
+                    'description' => 'Ổn định, BH 30 ngày. Nếu delay có thể chậm, không lỗi thì lên siêu tốc, share thường lên dư',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000000,
+                    'features' => json_encode([
+                        'id' => '475414',
+                        'note' => 'Share có thể lên dư',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 4',
+                    'code' => 'TIKSHARE_S4',
+                    'price_per_unit' => 3.1,
+                    'status' => 'stopped',
+                    'description' => 'Giá rẻ nhất',
+                    'min_quantity' => 100,
+                    'max_quantity' => 50000000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $shareTiktok->id,
+                ]));
+            }
+        }
+
+        // Save TikTok (Yêu thích)
+        $saveTiktok = Service::where('slug', 'tiktok-save')->first();
+        if ($saveTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKSAVE_S1',
+                    'price_per_unit' => 8.2,
+                    'status' => 'active',
+                    'description' => 'Tốc độ tốt, có thể rất nhanh',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'id' => '475424',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKSAVE_S2',
+                    'price_per_unit' => 9.6,
+                    'status' => 'active',
+                    'description' => 'Tốc độ trung bình',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'TIKSAVE_S3',
+                    'price_per_unit' => 14.4,
+                    'status' => 'stopped',
+                    'description' => 'Ổn định, lên chậm',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $saveTiktok->id,
+                ]));
+            }
+        }
+
+        // Tim Livestream TikTok
+        $liveLikeTiktok = Service::where('slug', 'tiktok-live-like')->first();
+        if ($liveLikeTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKLIVE_LIKE_S1',
+                    'price_per_unit' => 10.6,
+                    'status' => 'active',
+                    'description' => 'Tim livestream TikTok, tốc độ tốt',
+                    'min_quantity' => 500,
+                    'max_quantity' => 50000,
+                    'features' => json_encode([
+                        'id' => '475428',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'TIKLIVE_LIKE_S3',
+                    'price_per_unit' => 6.0,
+                    'status' => 'stopped',
+                    'description' => 'Tim livestream TikTok, tốc độ ổn - Bảo trì',
+                    'min_quantity' => 500,
+                    'max_quantity' => 50000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveLikeTiktok->id,
+                ]));
+            }
+        }
+
+        // Share Livestream TikTok
+        $liveShareTiktok = Service::where('slug', 'tiktok-live-share')->first();
+        if ($liveShareTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKLIVE_SHARE_S2',
+                    'price_per_unit' => 24.0,
+                    'status' => 'stopped',
+                    'description' => 'Share việt, cấm dồn đơn, thời gian vài phút, lên đều và chậm',
+                    'min_quantity' => 200,
+                    'max_quantity' => 100000,
+                    'features' => json_encode([
+                        'id' => '475429',
+                        'note' => 'Ngừng nhận đơn; cấm dồn đơn',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'TIKLIVE_SHARE_S3',
+                    'price_per_unit' => 24.0,
+                    'status' => 'stopped',
+                    'description' => 'Share siêu tốc - Bảo trì',
+                    'min_quantity' => 200,
+                    'max_quantity' => 100000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveShareTiktok->id,
+                ]));
+            }
+        }
+
+        // Comment Livestream TikTok
+        $liveCommentTiktok = Service::where('slug', 'tiktok-live-comment')->first();
+        if ($liveCommentTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKLIVE_CMT_S1',
+                    'price_per_unit' => 300,
+                    'status' => 'active',
+                    'description' => 'Icon biểu tượng ngẫu nhiên, tên nước ngoài, tốc độ rất nhanh',
+                    'min_quantity' => 10,
+                    'max_quantity' => 100000,
+                    'features' => json_encode([
+                        'id' => '475465',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKLIVE_CMT_S2',
+                    'price_per_unit' => 468,
+                    'status' => 'stopped',
+                    'description' => 'Nội dung tự nhập - Bảo trì',
+                    'min_quantity' => 10,
+                    'max_quantity' => 100000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveCommentTiktok->id,
+                ]));
+            }
+        }
+
+        // Mắt Livestream TikTok
+        $liveEyeTiktok = Service::where('slug', 'tiktok-live-eye')->first();
+        if ($liveEyeTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKLIVE_EYE_S1',
+                    'price_per_unit' => 0,
+                    'status' => 'stopped',
+                    'description' => 'Mắt livestream TikTok - Bảo trì (chưa cập nhật giá)',
+                    'min_quantity' => 1,
+                ],
+                [
+                    'name' => 'Server 5',
+                    'code' => 'TIKLIVE_EYE_S5',
+                    'price_per_unit' => 0,
+                    'status' => 'stopped',
+                    'description' => 'Mắt livestream TikTok - Bảo trì (chưa cập nhật giá)',
+                    'min_quantity' => 1,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveEyeTiktok->id,
+                ]));
+            }
+        }
+
+        // PK Livestream TikTok
+        $livePkTiktok = Service::where('slug', 'tiktok-live-pk')->first();
+        if ($livePkTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKLIVE_PK_S1',
+                    'price_per_unit' => 16.6,
+                    'status' => 'active',
+                    'description' => 'Không hoàn khi lỗi; 1 lần live chỉ mua 1 đơn; có thể thiếu; thường tăng kèm lượt like',
+                    'min_quantity' => 500,
+                    'max_quantity' => 10000,
+                    'features' => json_encode([
+                        'id' => '475524',
+                        'note' => 'Không hoàn khi lỗi, mỗi live 1 đơn',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKLIVE_PK_S2',
+                    'price_per_unit' => 17.8,
+                    'status' => 'active',
+                    'description' => 'Không hoàn khi lỗi; 1 lần live chỉ mua 1 đơn; có thể thiếu; thường tăng kèm lượt like',
+                    'min_quantity' => 500,
+                    'max_quantity' => 10000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $livePkTiktok->id,
+                ]));
+            }
+        }
+
+        // VIP Love TikTok
+        $vipLoveTiktok = Service::where('slug', 'tiktok-vip-like')->first();
+        if ($vipLoveTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TIKVIPLOVE_S2',
+                    'price_per_unit' => 504,
+                    'status' => 'active',
+                    'description' => 'Like việt, bắt đầu chạy tim vài giờ sau khi đăng, gói VIP tháng',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '475381',
+                        'duration_options' => ['1 tháng','2 tháng','3 tháng'],
+                        'posts_per_day' => 'number',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $vipLoveTiktok->id,
+                ]));
+            }
+        }
+
+        // VIP View TikTok
+        $vipViewTiktok = Service::where('slug', 'tiktok-vip-view')->first();
+        if ($vipViewTiktok) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TIKVIPVIEW_S1',
+                    'price_per_unit' => 20.4,
+                    'status' => 'active',
+                    'description' => 'VIP view, nhật ký uid lưu bài, view có thể lên chậm tùy thời điểm, có nút bù bài khi huỷ',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '475379',
+                        'duration_options' => ['1 tháng','2 tháng','3 tháng'],
+                        'posts_per_day' => 'number',
+                        'note' => 'View có thể chậm do bóp; có nút bù bài nếu bị huỷ',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $vipViewTiktok->id,
+                ]));
+            }
+        }
     }
 }
 

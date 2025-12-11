@@ -441,7 +441,7 @@ Content-Type: application/json
 {
     "name": "Dịch vụ mới",
     "description": "Mô tả dịch vụ",
-    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow
+    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view
     "is_active": true
 }
 ```
@@ -885,6 +885,22 @@ Tất cả các lỗi sẽ trả về format:
 - `instagram_vip_comment` - VIP Comment Instagram
 - `threads_like` - Like Threads
 - `threads_follow` - Follow Threads
+- `tiktok_like` - Like TikTok
+- `tiktok_like_comment` - Like Comment TikTok
+- `tiktok_follow` - Follow TikTok
+- `tiktok_view` - View TikTok
+- `tiktok_comment` - Comment TikTok
+- `tiktok_share` - Share TikTok
+- `tiktok_save` - Save (Yêu thích) TikTok
+- `tiktok_live_like` - Tim Livestream TikTok
+- `tiktok_live_share` - Share Livestream TikTok
+- `tiktok_live_comment` - Comment Livestream TikTok
+- `tiktok_live_eye` - Mắt Livestream TikTok
+- `tiktok_live_pk` - PK Livestream TikTok
+- `tiktok_vip_like` - VIP Love TikTok (theo tháng)
+- `tiktok_vip_view` - VIP View TikTok (theo tháng)
+- `threads_like` - Like Threads
+- `threads_follow` - Follow Threads
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1160,6 +1176,126 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
   - THREADS_FOLLOW_S1: 75.6 ₫, stopped, min 100, max 100,000; Sub ngoại, không bảo hành, tốc độ lên nhanh, tỉ lệ tụt thấp (ID: 475505) - Ngừng nhận đơn
   - THREADS_FOLLOW_S2: 40.8 ₫, maintenance; Sub ngoại, không bảo hành - Bảo trì
   - THREADS_FOLLOW_S3: 54 ₫, active; Sub tên Việt, 100-500 /24 giờ - Hoạt động
+
+### 35. Like TikTok (`tiktok_like`, slug: `tiktok-like`)
+- Trường cần nhập: `uid` (link bài viết), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKLIKE_S1: 14.4 ₫, active, min 50, max 10k; Like việt 5k/24h, hoàn tiền khi chậm, phù hợp gói <1k, tốc độ rất nhanh, có thể tụt cao (ID: 475278)
+  - TIKLIKE_S3: 15 ₫, active, min 50, max 10k; Like việt 5k/24h
+  - TIKLIKE_S5: 16.2 ₫, active, min 50, max 10k; Like việt 5k/24h
+  - TIKLIKE_S2: 5.8 ₫, active, min 50, max 10k; Like ngoại giá rẻ
+  - TIKLIKE_S6: 11.4 ₫, active, min 50, max 10k; Like ngoại tốc độ tốt
+  - TIKLIKE_S7: 10.1 ₫, active, min 50, max 10k; Like ngoại
+  - TIKLIKE_S8: 16.2 ₫, active, min 50, max 10k; Like ngoại rất nhanh
+
+### 36. Like Comment TikTok (`tiktok_like_comment`, slug: `tiktok-like-comment`)
+- Trường cần nhập: `uid` (link bài viết), `account_name` hoặc `profile` của người comment (ví dụ: https://www.tiktok.com/@profile), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKLC_S2: 20.4 ₫, active, min 100, max 10k; Tốc độ nhanh. Username nhiều dấu chấm có thể không nhận diện (ID: 475571)
+
+### 37. Follow TikTok (`tiktok_follow`, slug: `tiktok-follow`)
+- Trường cần nhập: `uid` (link profile), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKFOLLOW_S2: 94.8 ₫, active, min 100, max 10k; Sub việt 5k/24h, BH 7 ngày, không hỗ trợ đổi username, có thể tụt (ID: 475590)
+  - TIKFOLLOW_S4: 73.2 ₫, slow, min 100, max 10k; Sub việt 300/24h
+  - TIKFOLLOW_S5: 28.2 ₫, active, min 100, max 10k; Sub việt 3k/24h, có hiện tượng tụt cao
+  - TIKFOLLOW_S6: 40.8 ₫, active, min 100, max 10k; Sub việt 1k/1 ngày, có hiện tượng tụt cao
+  - TIKFOLLOW_S3: 45.4 ₫, active, min 100, max 10k; Sub ngoại 5k-10k/24h
+  - TIKFOLLOW_S7: 66 ₫, active, min 100, max 10k; Sub ngoại 5k/24h
+
+### 38. View TikTok (`tiktok_view`, slug: `tiktok-view`)
+- Trường cần nhập: `uid` (link bài viết), `quantity` (lượt xem), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKVIEW_S3: 0.84 ₫, active, min 1k, max 100k; Ổn định, nên hẹn giờ 10k/đơn cách 12-24h nếu mua nhiều (ID: 475384)
+  - TIKVIEW_S4: 0.84 ₫, active, min 1k, max 100k; Ổn định
+  - TIKVIEW_S5: 1.1 ₫, active, min 1k, max 100k; Tăng chậm, hạn chế tụt
+
+### 39. Comment TikTok (`tiktok_comment`, slug: `tiktok-comment`)
+- Trường cần nhập: `uid` (link bài viết), `content` (danh sách nội dung, mỗi dòng 1 bình luận), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKCMT_S4: 720 ₫, slow, min 10, max 20; Nick việt, tốc độ chậm, cần tối thiểu 1 bình luận (ID: 475477), nội dung có thể bị ẩn/trùng, tắt lọc/kiểm duyệt
+  - TIKCMT_S6: 408 ₫, stopped, min 10, max 20; Nick ngoại, tốc độ nhanh (Bảo trì)
+
+### 40. Share TikTok (`tiktok_share`, slug: `tiktok-share`)
+- Trường cần nhập: `uid` (link bài viết), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKSHARE_S1: 16.6 ₫, stopped, min 100, max 50,000,000; BH 30 ngày
+  - TIKSHARE_S2: 7 ₫, active, min 100, max 50,000,000; Ổn định, BH 30 ngày, nếu delay có thể chậm; share có thể lên dư (ID: 475414)
+  - TIKSHARE_S4: 3.1 ₫, stopped, min 100, max 50,000,000; Giá rẻ nhất
+
+### 41. Save TikTok (`tiktok_save`, slug: `tiktok-save`)
+- Trường cần nhập: `uid` (link bài viết/nhóm cần tăng save), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKSAVE_S1: 8.2 ₫, active, min 100, max 1,000,000; Tốc độ tốt, có thể rất nhanh (ID: 475424)
+  - TIKSAVE_S2: 9.6 ₫, active, min 100, max 1,000,000; Tốc độ trung bình
+  - TIKSAVE_S3: 14.4 ₫, stopped, min 100, max 1,000,000; Ổn định, lên chậm
+
+### 42. Tim Livestream TikTok (`tiktok_live_like`, slug: `tiktok-live-like`)
+- Trường cần nhập: `uid` (link profile), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKLIVE_LIKE_S1: 10.6 ₫, active, min 500, max 50,000; Tim livestream, tốc độ tốt (ID: 475428)
+  - TIKLIVE_LIKE_S3: 6 ₫, stopped, min 500, max 50,000; Tốc độ ổn, Bảo trì
+
+### 43. Share Livestream TikTok (`tiktok_live_share`, slug: `tiktok-live-share`)
+- Trường cần nhập: `uid` (link profile), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKLIVE_SHARE_S2: 24 ₫, stopped, min 200, max 100,000; Share việt, cấm dồn đơn, thời gian vài phút, lên đều chậm (ID: 475429)
+  - TIKLIVE_SHARE_S3: 24 ₫, stopped, min 200, max 100,000; Share siêu tốc, Bảo trì
+
+### 44. Comment Livestream TikTok (`tiktok_live_comment`, slug: `tiktok-live-comment`)
+- Trường cần nhập: `uid` (link profile), `content` (mỗi dòng 1 comment nếu dùng server nhập nội dung), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKLIVE_CMT_S1: 300 ₫, active, min 10, max 100,000; Icon ngẫu nhiên, tên nước ngoài, tốc độ rất nhanh (ID: 475465)
+  - TIKLIVE_CMT_S2: 468 ₫, stopped, min 10, max 100,000; Nội dung tự nhập, Bảo trì
+
+### 45. Mắt Livestream TikTok (`tiktok_live_eye`, slug: `tiktok-live-eye`)
+- Trường cần nhập: `uid` (link profile), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: (đang bảo trì, chưa cập nhật giá)
+- Servers:
+  - TIKLIVE_EYE_S1: stopped; Bảo trì
+  - TIKLIVE_EYE_S5: stopped; Bảo trì
+
+### 46. PK Livestream TikTok (`tiktok_live_pk`, slug: `tiktok-live-pk`)
+- Trường cần nhập: `uid` (link profile), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKLIVE_PK_S1: 16.6 ₫, active, min 500, max 10,000; Không hoàn khi lỗi, mỗi live chỉ mua 1 đơn, có thể thiếu, thường kèm like (ID: 475524)
+  - TIKLIVE_PK_S2: 17.8 ₫, active, min 500, max 10,000; Không hoàn khi lỗi, mỗi live chỉ mua 1 đơn, có thể thiếu, thường kèm like
+
+### 47. VIP Love TikTok (`tiktok_vip_like`, slug: `tiktok-vip-like`)
+- Trường cần nhập: `uid` (link profile), `quantity`, `duration` (1/2/3 tháng), `posts_per_day` (tùy chọn số bài mỗi ngày), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKVIPLOVE_S2: 504 ₫, active, min 1; Like việt, bắt đầu chạy tim sau vài giờ từ khi đăng, gói VIP tháng (ID: 475381)
+
+### 48. VIP View TikTok (`tiktok_vip_view`, slug: `tiktok-vip-view`)
+- Trường cần nhập: `uid` (link profile), `quantity`, `duration` (1/2/3 tháng), `posts_per_day` (tùy chọn số bài mỗi ngày), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TIKVIPVIEW_S1: 20.4 ₫, active, min 1; Lưu nhật ký uid; view có thể lên chậm do tiktok bóp; nếu bài bị hủy có thể bấm bù bài (ID: 475379)
 
 ---
 
