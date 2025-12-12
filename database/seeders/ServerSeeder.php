@@ -1706,6 +1706,478 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Like Youtube
+        $likeYoutube = Service::where('slug', 'youtube-like')->first();
+        if ($likeYoutube) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'YOUTUBE_LIKE_S1',
+                    'price_per_unit' => 20.3,
+                    'status' => 'active',
+                    'description' => 'Tốc độ trung bình, Bảo hành 15 ngày',
+                    'min_quantity' => 50,
+                    'max_quantity' => 20000,
+                    'features' => json_encode([
+                        'id' => '475457',
+                        'warranty_days' => 15,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'YOUTUBE_LIKE_S2',
+                    'price_per_unit' => 30.0,
+                    'status' => 'active',
+                    'description' => 'Lên nhanh, Bảo hành 15 ngày',
+                    'min_quantity' => 50,
+                    'max_quantity' => 20000,
+                    'features' => json_encode([
+                        'warranty_days' => 15,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 3',
+                    'code' => 'YOUTUBE_LIKE_S3',
+                    'price_per_unit' => 34.5,
+                    'status' => 'active',
+                    'description' => 'Lên nhanh, Bảo hành 30 ngày',
+                    'min_quantity' => 50,
+                    'max_quantity' => 20000,
+                    'features' => json_encode([
+                        'warranty_days' => 30,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeYoutube->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
+
+        // View Youtube
+        $viewYoutube = Service::where('slug', 'youtube-view')->first();
+        if ($viewYoutube) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'YOUTUBE_VIEW_S1',
+                    'price_per_unit' => 43.1,
+                    'status' => 'active',
+                    'description' => 'Speed 1k/day, phần lớn là nguồn ngoài và không xác định, Bảo hành view 30 ngày',
+                    'min_quantity' => 500,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'id' => '475330',
+                        'warranty_days' => 30,
+                        'speed_per_day' => 1000,
+                        'note' => 'Phần lớn là nguồn ngoài và không xác định',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 4',
+                    'code' => 'YOUTUBE_VIEW_S4',
+                    'price_per_unit' => 33.5,
+                    'status' => 'active',
+                    'description' => 'Tốc độ nhanh [Native ADS]',
+                    'min_quantity' => 10000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'type' => 'Native ADS',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 6',
+                    'code' => 'YOUTUBE_VIEW_S6',
+                    'price_per_unit' => 30.6,
+                    'status' => 'active',
+                    'description' => 'Tốc độ nhanh [Native ADS]',
+                    'min_quantity' => 20000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'type' => 'Native ADS',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 7',
+                    'code' => 'YOUTUBE_VIEW_S7',
+                    'price_per_unit' => 47.3,
+                    'status' => 'active',
+                    'description' => 'Speed 2k/day, view random',
+                    'min_quantity' => 1000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'speed_per_day' => 2000,
+                        'view_type' => 'random',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 9',
+                    'code' => 'YOUTUBE_VIEW_S9',
+                    'price_per_unit' => 57.5,
+                    'status' => 'stopped',
+                    'description' => 'Speed 1k/day, Thời lượng xem 10s-2p phút - Bảo trì',
+                    'min_quantity' => 1000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'speed_per_day' => 1000,
+                        'watch_duration' => '10s-2p',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 11',
+                    'code' => 'YOUTUBE_VIEW_S11',
+                    'price_per_unit' => 29.4,
+                    'status' => 'active',
+                    'description' => 'Tốc độ trung bình [Native ADS] - View Số lượng cao',
+                    'min_quantity' => 40000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'type' => 'Native ADS',
+                        'note' => 'View Số lượng cao',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 10',
+                    'code' => 'YOUTUBE_VIEW_S10',
+                    'price_per_unit' => 25.0,
+                    'status' => 'active',
+                    'description' => '[Native ADS]',
+                    'min_quantity' => 300000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'type' => 'Native ADS',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 12',
+                    'code' => 'YOUTUBE_VIEW_S12',
+                    'price_per_unit' => 22.1,
+                    'status' => 'active',
+                    'description' => '[Native ADS]',
+                    'min_quantity' => 500000,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'type' => 'Native ADS',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $viewYoutube->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
+
+        // View Youtube (400H)
+        $viewYoutube400h = Service::where('slug', 'youtube-view-400h')->first();
+        if ($viewYoutube400h) {
+            $servers = [
+                [
+                    'name' => 'Server 3',
+                    'code' => 'YOUTUBE_VIEW_400H_S3',
+                    'price_per_unit' => 900,
+                    'status' => 'stopped',
+                    'description' => 'Yêu cầu video thời lượng từ 5-45 phút - Bảo trì',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'video_length_minutes' => [5, 45],
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $viewYoutube400h->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
+
+        // Live Stream Youtube
+        $liveStreamYoutube = Service::where('slug', 'youtube-live-stream')->first();
+        if ($liveStreamYoutube) {
+            $servers = [
+                [
+                    'name' => 'Server 1 - 30 phút',
+                    'code' => 'YOUTUBE_LIVE_S1_30',
+                    'price_per_unit' => 120,
+                    'status' => 'active',
+                    'description' => 'Mắt xem livestream youtube ~ 30 phút',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '518434',
+                        'duration_minutes' => 30,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 1 - 60 phút',
+                    'code' => 'YOUTUBE_LIVE_S1_60',
+                    'price_per_unit' => 240,
+                    'status' => 'active',
+                    'description' => 'Mắt xem livestream youtube ~ 60 phút',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '518435',
+                        'duration_minutes' => 60,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 1 - 90 phút',
+                    'code' => 'YOUTUBE_LIVE_S1_90',
+                    'price_per_unit' => 360,
+                    'status' => 'active',
+                    'description' => 'Mắt xem livestream youtube ~ 90 phút',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '518436',
+                        'duration_minutes' => 90,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 1 - 120 phút',
+                    'code' => 'YOUTUBE_LIVE_S1_120',
+                    'price_per_unit' => 480,
+                    'status' => 'active',
+                    'description' => 'Mắt xem livestream youtube ~ 120 phút',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '518437',
+                        'duration_minutes' => 120,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 1 - 180 phút',
+                    'code' => 'YOUTUBE_LIVE_S1_180',
+                    'price_per_unit' => 720,
+                    'status' => 'active',
+                    'description' => 'Mắt xem livestream youtube ~ 180 phút',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '518439',
+                        'duration_minutes' => 180,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 1 - 240 phút',
+                    'code' => 'YOUTUBE_LIVE_S1_240',
+                    'price_per_unit' => 960,
+                    'status' => 'active',
+                    'description' => 'Mắt xem livestream youtube ~ 240 phút',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'id' => '518440',
+                        'duration_minutes' => 240,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveStreamYoutube->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
+
+        // Like Youtube (400H)
+        $likeYoutube400h = Service::where('slug', 'youtube-like-400h')->first();
+        if ($likeYoutube400h) {
+            $servers = [
+                [
+                    'name' => 'Server 3',
+                    'code' => 'YOUTUBE_LIKE_400H_S3',
+                    'price_per_unit' => 900,
+                    'status' => 'stopped',
+                    'description' => 'Yêu cầu video thời lượng từ 5-45 phút - Bảo trì',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'video_length_minutes' => [5, 45],
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeYoutube400h->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
+
+        // Comment Youtube
+        $commentYoutube = Service::where('slug', 'youtube-comment')->first();
+        if ($commentYoutube) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'YOUTUBE_CMT_S1',
+                    'price_per_unit' => 350,
+                    'status' => 'active',
+                    'description' => 'Đa quốc gia, điền nội dung, Tốc độ thường rất nhanh',
+                    'min_quantity' => 10,
+                    'max_quantity' => 1500,
+                    'features' => json_encode([
+                        'id' => '475337',
+                        'country' => 'multi',
+                        'input_content' => true,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 4',
+                    'code' => 'YOUTUBE_CMT_S4',
+                    'price_per_unit' => 600,
+                    'status' => 'active',
+                    'description' => 'Việt Nam, điền nội dung',
+                    'min_quantity' => 10,
+                    'max_quantity' => 1500,
+                    'features' => json_encode([
+                        'country' => 'vietnam',
+                        'input_content' => true,
+                    ]),
+                ],
+                [
+                    'name' => 'Server 5',
+                    'code' => 'YOUTUBE_CMT_S5',
+                    'price_per_unit' => 600,
+                    'status' => 'stopped',
+                    'description' => 'Đa quốc gia, comment AI - Bảo trì',
+                    'min_quantity' => 10,
+                    'max_quantity' => 1500,
+                    'features' => json_encode([
+                        'country' => 'multi',
+                        'type' => 'AI',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 6',
+                    'code' => 'YOUTUBE_CMT_S6',
+                    'price_per_unit' => 600,
+                    'status' => 'stopped',
+                    'description' => 'Việt Nam, comment AI - Bảo trì',
+                    'min_quantity' => 10,
+                    'max_quantity' => 1500,
+                    'features' => json_encode([
+                        'country' => 'vietnam',
+                        'type' => 'AI',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 10',
+                    'code' => 'YOUTUBE_CMT_S10',
+                    'price_per_unit' => 600,
+                    'status' => 'stopped',
+                    'description' => 'Đa quốc gia, reply comment AI - Tăng trả lời bình luận - Bảo trì',
+                    'min_quantity' => 10,
+                    'max_quantity' => 1500,
+                    'features' => json_encode([
+                        'country' => 'multi',
+                        'type' => 'AI',
+                        'action' => 'reply',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 11',
+                    'code' => 'YOUTUBE_CMT_S11',
+                    'price_per_unit' => 600,
+                    'status' => 'stopped',
+                    'description' => 'Việt Nam, reply comment AI - Tăng trả lời bình luận - Bảo trì',
+                    'min_quantity' => 10,
+                    'max_quantity' => 1500,
+                    'features' => json_encode([
+                        'country' => 'vietnam',
+                        'type' => 'AI',
+                        'action' => 'reply',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $commentYoutube->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
+
+        // Like Comment Youtube
+        $likeCommentYoutube = Service::where('slug', 'youtube-like-comment')->first();
+        if ($likeCommentYoutube) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'YOUTUBE_LIKE_CMT_S1',
+                    'price_per_unit' => 45,
+                    'status' => 'active',
+                    'description' => 'Lên siêu tốc, Bảo hành 7 ngày, Tỉ lệ tụt thấp',
+                    'min_quantity' => 50,
+                    'max_quantity' => 100000,
+                    'features' => json_encode([
+                        'id' => '475360',
+                        'warranty_days' => 7,
+                        'drop_rate' => 'low',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'YOUTUBE_LIKE_CMT_S2',
+                    'price_per_unit' => 41.3,
+                    'status' => 'active',
+                    'description' => 'Siêu tốc, bảo hành 30 ngày',
+                    'min_quantity' => 50,
+                    'max_quantity' => 100000,
+                    'features' => json_encode([
+                        'warranty_days' => 30,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeCommentYoutube->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
+
+        // Subscribe Youtube
+        $subscribeYoutube = Service::where('slug', 'youtube-subscribe')->first();
+        if ($subscribeYoutube) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'YOUTUBE_SUB_S1',
+                    'price_per_unit' => 712.5,
+                    'status' => 'slow',
+                    'description' => 'Bảo hành 30 ngày, Cần có video dài hơn 3p để sub không bị tụt, Theo dõi lên chậm thường lên sau 1-2 ngày',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'id' => '475341',
+                        'warranty_days' => 30,
+                        'video_length_minutes' => 3,
+                        'note' => 'Cần có video dài hơn 3p để sub không bị tụt',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'YOUTUBE_SUB_S2',
+                    'price_per_unit' => 487.5,
+                    'status' => 'active',
+                    'description' => 'Bảo hành 30 ngày, [100-300/ 1 ngày]',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000000,
+                    'features' => json_encode([
+                        'warranty_days' => 30,
+                        'speed_per_day' => [100, 300],
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $subscribeYoutube->id,
+                    'is_active' => true,
+                ]));
+            }
+        }
     }
 }
 

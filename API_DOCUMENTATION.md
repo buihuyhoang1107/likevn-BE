@@ -441,7 +441,7 @@ Content-Type: application/json
 {
     "name": "Dịch vụ mới",
     "description": "Mô tả dịch vụ",
-    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view, shopee_follow, shopee_love, shopee_like_review, shopee_live_eye, telegram_member_sub, telegram_post_view, telegram_post_reaction
+    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view, shopee_follow, shopee_love, shopee_like_review, shopee_live_eye, telegram_member_sub, telegram_post_view, telegram_post_reaction, youtube_like, youtube_view, youtube_view_400h, youtube_live_stream, youtube_like_400h, youtube_comment, youtube_like_comment, youtube_subscribe
     "is_active": true
 }
 ```
@@ -906,6 +906,14 @@ Tất cả các lỗi sẽ trả về format:
 - `telegram_member_sub` - Member & Sub Telegram
 - `telegram_post_view` - View bài viết Telegram
 - `telegram_post_reaction` - Cảm xúc bài viết Telegram
+- `youtube_like` - Like Youtube
+- `youtube_view` - View Youtube
+- `youtube_view_400h` - View Youtube (400H)
+- `youtube_live_stream` - Live Stream Youtube
+- `youtube_like_400h` - Like Youtube (400H)
+- `youtube_comment` - Comment Youtube
+- `youtube_like_comment` - Like Comment Youtube
+- `youtube_subscribe` - Subscribe Youtube
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1367,6 +1375,87 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
   - TELEGRAM_REACTION_S1: 10 ₫, active, min 50, max 500,000; Cảm xúc tích cực ngẫu nhiên [👍🤩🎉🔥❤️🥰👏🏻] (ID: 475395)
   - TELEGRAM_REACTION_S2: 10 ₫, active, min 50, max 500,000; Cảm xúc tiêu cực ngẫu nhiên [👎💩🤮😢😱]
   - TELEGRAM_REACTION_S3: 10 ₫, active, min 50, max 500,000; Cảm xúc tùy chỉnh - Dễ quá tải và hoàn giữa chừng
+
+### 56. Like Youtube (`youtube_like`, slug: `youtube-like`)
+- Trường cần nhập: `uid` (Link Video Youtube), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - YOUTUBE_LIKE_S1: 20.3 ₫, active, min 50, max 20,000; Tốc độ trung bình, Bảo hành 15 ngày (ID: 475457)
+  - YOUTUBE_LIKE_S2: 30 ₫, active, min 50, max 20,000; Lên nhanh, Bảo hành 15 ngày
+  - YOUTUBE_LIKE_S3: 34.5 ₫, active, min 50, max 20,000; Lên nhanh, Bảo hành 30 ngày
+
+### 57. View Youtube (`youtube_view`, slug: `youtube-view`)
+- Trường cần nhập: `uid` (Link Video Youtube), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - YOUTUBE_VIEW_S1: 43.1 ₫, active, min 500, max 1,000,000; Speed 1k/day, phần lớn là nguồn ngoài và không xác định, Bảo hành view 30 ngày (ID: 475330)
+  - YOUTUBE_VIEW_S4: 33.5 ₫, active, min 10,000, max 1,000,000; Tốc độ nhanh [Native ADS]
+  - YOUTUBE_VIEW_S6: 30.6 ₫, active, min 20,000, max 1,000,000; Tốc độ nhanh [Native ADS]
+  - YOUTUBE_VIEW_S7: 47.3 ₫, active, min 1,000, max 1,000,000; Speed 2k/day, view random
+  - YOUTUBE_VIEW_S9: 57.5 ₫, maintenance, min 1,000, max 1,000,000; Speed 1k/day, Thời lượng xem 10s-2p phút - Bảo trì
+  - YOUTUBE_VIEW_S11: 29.4 ₫, active, min 40,000, max 1,000,000; Tốc độ trung bình [Native ADS] - View Số lượng cao
+  - YOUTUBE_VIEW_S10: 25 ₫, active, min 300,000, max 1,000,000; [Native ADS]
+  - YOUTUBE_VIEW_S12: 22.1 ₫, active, min 500,000, max 1,000,000; [Native ADS]
+
+### 58. View Youtube (400H) (`youtube_view_400h`, slug: `youtube-view-400h`)
+- Trường cần nhập: `uid` (Link video kênh), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Yêu cầu video thời lượng từ 5-45 phút
+- Servers:
+  - YOUTUBE_VIEW_400H_S3: 900 ₫, maintenance; Yêu cầu video thời lượng từ 5-45 phút - Bảo trì
+
+### 59. Live Stream Youtube (`youtube_live_stream`, slug: `youtube-live-stream`)
+- Trường cần nhập: `uid` (Link video Youtube), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit` (tùy chọn phút)
+- Tổng Giá: `price_per_unit * quantity` (tham chiếu giá option trong `features.options`)
+- Servers:
+  - YOUTUBE_LIVE_S1: Mắt xem livestream youtube với các tùy chọn phút:
+    - 30 phút: 120₫ (ID: 518434)
+    - 60 phút: 240₫ (ID: 518435)
+    - 90 phút: 360₫ (ID: 518436)
+    - 120 phút: 480₫ (ID: 518437)
+    - 180 phút: 720₫ (ID: 518439)
+    - 240 phút: 960₫ (ID: 518440)
+
+### 60. Like Youtube (400H) (`youtube_like_400h`, slug: `youtube-like-400h`)
+- Trường cần nhập: `uid` (Link video kênh), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Yêu cầu video thời lượng từ 5-45 phút
+- Servers:
+  - YOUTUBE_LIKE_400H_S3: 900 ₫, maintenance; Yêu cầu video thời lượng từ 5-45 phút - Bảo trì
+
+### 61. Comment Youtube (`youtube_comment`, slug: `youtube-comment`)
+- Trường cần nhập: `uid` (Link Youtube), `content` (Danh sách nội dung, mỗi dòng 1 bình luận), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - YOUTUBE_CMT_S1: 350 ₫, active, min 10, max 1,500; Đa quốc gia, điền nội dung, Tốc độ thường rất nhanh (ID: 475337)
+  - YOUTUBE_CMT_S4: 600 ₫, active, min 10, max 1,500; Việt Nam, điền nội dung
+  - YOUTUBE_CMT_S5: 600 ₫, maintenance, min 10, max 1,500; Đa quốc gia, comment AI - Bảo trì
+  - YOUTUBE_CMT_S6: 600 ₫, maintenance, min 10, max 1,500; Việt Nam, comment AI - Bảo trì
+  - YOUTUBE_CMT_S10: 600 ₫, maintenance, min 10, max 1,500; Đa quốc gia, reply comment AI - Tăng trả lời bình luận - Bảo trì
+  - YOUTUBE_CMT_S11: 600 ₫, maintenance, min 10, max 1,500; Việt Nam, reply comment AI - Tăng trả lời bình luận - Bảo trì
+
+### 62. Like Comment Youtube (`youtube_like_comment`, slug: `youtube-like-comment`)
+- Trường cần nhập: `uid` (Link Comment Video Youtube), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - YOUTUBE_LIKE_CMT_S1: 45 ₫, active, min 50, max 100,000; Lên siêu tốc, Bảo hành 7 ngày, Tỉ lệ tụt thấp (ID: 475360)
+  - YOUTUBE_LIKE_CMT_S2: 41.3 ₫, active, min 50, max 100,000; Siêu tốc, bảo hành 30 ngày
+
+### 63. Subscribe Youtube (`youtube_subscribe`, slug: `youtube-subscribe`)
+- Trường cần nhập: `uid` (Link Kênh Youtube), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Cần có video dài hơn 3p để sub không bị tụt. Theo dõi lên chậm thường lên sau 1-2 ngày.
+- Servers:
+  - YOUTUBE_SUB_S1: 712.5 ₫, slow, min 100, max 1,000,000; Bảo hành 30 ngày, Cần có video dài hơn 3p để sub không bị tụt, Theo dõi lên chậm thường lên sau 1-2 ngày (ID: 475341)
+  - YOUTUBE_SUB_S2: 487.5 ₫, active, min 100, max 1,000,000; Bảo hành 30 ngày, [100-300/ 1 ngày]
 
 ---
 

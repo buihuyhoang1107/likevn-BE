@@ -52,7 +52,16 @@ class ServiceController extends Controller
 
     public function getServers(Request $request, $serviceId)
     {
-        $query = Server::where('service_id', $serviceId)
+        // Check if service exists
+        $service = Service::find($serviceId);
+        if (!$service) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Dịch vụ không tồn tại',
+            ], 404);
+        }
+
+        $query = Server::where('service_id', (int)$serviceId)
             ->where('is_active', true);
 
         // Tìm kiếm theo keyword (name, code, description)

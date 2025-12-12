@@ -340,6 +340,54 @@ class ServiceSeeder extends Seeder
                 'category' => 'telegram_post_reaction',
                 'description' => 'Tăng cảm xúc (reaction) cho bài viết Telegram',
             ],
+            [
+                'name' => 'Like Youtube',
+                'slug' => 'youtube-like',
+                'category' => 'youtube_like',
+                'description' => 'Tăng like cho video YouTube',
+            ],
+            [
+                'name' => 'View Youtube',
+                'slug' => 'youtube-view',
+                'category' => 'youtube_view',
+                'description' => 'Tăng lượt xem cho video YouTube',
+            ],
+            [
+                'name' => 'View Youtube (400H)',
+                'slug' => 'youtube-view-400h',
+                'category' => 'youtube_view_400h',
+                'description' => 'Tăng view YouTube 400 giờ, yêu cầu video thời lượng từ 5-45 phút',
+            ],
+            [
+                'name' => 'Live Stream Youtube',
+                'slug' => 'youtube-live-stream',
+                'category' => 'youtube_live_stream',
+                'description' => 'Tăng mắt xem livestream YouTube',
+            ],
+            [
+                'name' => 'Like Youtube (400H)',
+                'slug' => 'youtube-like-400h',
+                'category' => 'youtube_like_400h',
+                'description' => 'Tăng like YouTube 400 giờ, yêu cầu video thời lượng từ 5-45 phút',
+            ],
+            [
+                'name' => 'Comment Youtube',
+                'slug' => 'youtube-comment',
+                'category' => 'youtube_comment',
+                'description' => 'Tăng bình luận cho video YouTube',
+            ],
+            [
+                'name' => 'Like Comment Youtube',
+                'slug' => 'youtube-like-comment',
+                'category' => 'youtube_like_comment',
+                'description' => 'Tăng like cho bình luận YouTube',
+            ],
+            [
+                'name' => 'Subscribe Youtube',
+                'slug' => 'youtube-subscribe',
+                'category' => 'youtube_subscribe',
+                'description' => 'Tăng subscriber cho kênh YouTube',
+            ],
         ];
 
         foreach ($services as $service) {
