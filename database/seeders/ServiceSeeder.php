@@ -298,6 +298,48 @@ class ServiceSeeder extends Seeder
                 'category' => 'tiktok_vip_view',
                 'description' => 'Gói VIP view TikTok theo tháng',
             ],
+            [
+                'name' => 'Follow Shopee',
+                'slug' => 'shopee-follow',
+                'category' => 'shopee_follow',
+                'description' => 'Tăng follow shop Shopee',
+            ],
+            [
+                'name' => 'Love Shopee',
+                'slug' => 'shopee-love',
+                'category' => 'shopee_love',
+                'description' => 'Tăng love cho sản phẩm Shopee',
+            ],
+            [
+                'name' => 'Like Review Shopee',
+                'slug' => 'shopee-like-review',
+                'category' => 'shopee_like_review',
+                'description' => 'Tăng like cho review Shopee',
+            ],
+            [
+                'name' => 'Mắt Livestream Shopee',
+                'slug' => 'shopee-live-eye',
+                'category' => 'shopee_live_eye',
+                'description' => 'Tăng mắt xem livestream Shopee',
+            ],
+            [
+                'name' => 'Member & Sub Telegram',
+                'slug' => 'telegram-member-sub',
+                'category' => 'telegram_member_sub',
+                'description' => 'Tăng member và subscriber cho nhóm Telegram',
+            ],
+            [
+                'name' => 'View bài viết Telegram',
+                'slug' => 'telegram-post-view',
+                'category' => 'telegram_post_view',
+                'description' => 'Tăng lượt xem bài viết trên kênh Telegram (chỉ hỗ trợ kênh, không hỗ trợ nhóm)',
+            ],
+            [
+                'name' => 'Cảm xúc bài viết Telegram',
+                'slug' => 'telegram-post-reaction',
+                'category' => 'telegram_post_reaction',
+                'description' => 'Tăng cảm xúc (reaction) cho bài viết Telegram',
+            ],
         ];
 
         foreach ($services as $service) {

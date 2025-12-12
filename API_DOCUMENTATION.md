@@ -441,7 +441,7 @@ Content-Type: application/json
 {
     "name": "Dịch vụ mới",
     "description": "Mô tả dịch vụ",
-    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view
+    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view, shopee_follow, shopee_love, shopee_like_review, shopee_live_eye, telegram_member_sub, telegram_post_view, telegram_post_reaction
     "is_active": true
 }
 ```
@@ -899,8 +899,13 @@ Tất cả các lỗi sẽ trả về format:
 - `tiktok_live_pk` - PK Livestream TikTok
 - `tiktok_vip_like` - VIP Love TikTok (theo tháng)
 - `tiktok_vip_view` - VIP View TikTok (theo tháng)
-- `threads_like` - Like Threads
-- `threads_follow` - Follow Threads
+- `shopee_follow` - Follow Shopee
+- `shopee_love` - Love Shopee
+- `shopee_like_review` - Like Review Shopee
+- `shopee_live_eye` - Mắt livestream Shopee
+- `telegram_member_sub` - Member & Sub Telegram
+- `telegram_post_view` - View bài viết Telegram
+- `telegram_post_reaction` - Cảm xúc bài viết Telegram
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1296,6 +1301,72 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
 - Tổng Giá: `price_per_unit * quantity`
 - Servers:
   - TIKVIPVIEW_S1: 20.4 ₫, active, min 1; Lưu nhật ký uid; view có thể lên chậm do tiktok bóp; nếu bài bị hủy có thể bấm bù bài (ID: 475379)
+
+### 49. Follow Shopee (`shopee_follow`, slug: `shopee-follow`)
+- Trường cần nhập: `uid` (username hoặc link shop), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - SHOPEE_FOLLOW_S1: 70.8 ₫, active, min 500, max 30k; Siêu tốc 10k/1 ngày; Sub gốc cao hoặc >15k sub tốc độ sẽ chậm (ID: 475281)
+  - SHOPEE_FOLLOW_S2: 66 ₫, slow, min 500, max 30k; 100-500/24 giờ, tốc độ chậm
+
+### 50. Love Shopee (`shopee_love`, slug: `shopee-love`)
+- Trường cần nhập: `uid` (link sản phẩm Shopee), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - SHOPEE_LOVE_S1: 30 ₫, stopped; Tốc độ chậm, Bảo trì
+
+### 51. Like Review Shopee (`shopee_like_review`, slug: `shopee-like-review`)
+- Trường cần nhập: `uid` (link sản phẩm Shopee), `account_name` (username người review), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - SHOPEE_LIKEREV_S1: 33.6 ₫, stopped; Bảo trì
+
+### 52. Mắt Livestream Shopee (`shopee_live_eye`, slug: `shopee-live-eye`)
+- Trường cần nhập: `uid` (link Shopee live), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit` / hoặc giá theo option phút
+- Tổng Giá: `price_per_unit * quantity` (tham chiếu giá option trong `features.options`)
+- Servers:
+  - SHOPEE_LIVE_EYE_S1: 33.6 ₫, stopped; Bảo trì; options phút (ID: 518441–518446)
+  - SHOPEE_LIVE_EYE_S2: 38.6 ₫, stopped; Bảo trì; options phút (ID: 518441–518446)
+- Options (features):
+  - 30p: 568.8₫ (518441)
+  - 60p: 1137.6₫ (518442)
+  - 90p: 1706.4₫ (518443)
+  - 120p: 2275.2₫ (518444)
+  - 180p: 3412.8₫ (518445)
+  - 240p: 4550.4₫ (518446)
+
+### 53. Member & Sub Telegram (`telegram_member_sub`, slug: `telegram-member-sub`)
+- Trường cần nhập: `uid` (Link Group Telegram), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TELEGRAM_MEMBER_S1: 36.9 ₫, active, min 200, max 40,000; Tốc độ 10k/24 giờ, Bảo hành 7 ngày cho đơn mua đầu tiên (vì vậy không chia nhỏ đơn hàng), có thể tụt vào thời điểm không xác định (ID: 475325)
+  - TELEGRAM_MEMBER_S2: 68.8 ₫, active, min 200, max 40,000; Tốc độ 5k-10k/24 giờ, Bảo hành 7 ngày
+  - TELEGRAM_MEMBER_S4: 34.4 ₫, active, min 200, max 40,000; Tốc độ 5k/24 giờ, Không bảo hành (tụt hết sau vài ngày)
+
+### 54. View bài viết Telegram (`telegram_post_view`, slug: `telegram-post-view`)
+- Trường cần nhập: `uid` (Link Post kênh Telegram - Chỉ hỗ trợ kênh, không hỗ trợ nhóm), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý đặc biệt:** Server 1 yêu cầu số lượng mua phải chia hết cho 100 (ví dụ: 500, 600, 700...)
+- Servers:
+  - TELEGRAM_VIEW_S1: 1.9 ₫, active, min 500, max 1,000,000; Tốc độ lên chậm, số lượng mua phải chia hết cho 100, bài text thường lên sớm hơn, bài video và ảnh sẽ chậm hơn (ID: 475392)
+  - TELEGRAM_VIEW_S2: 6.3 ₫, active, min 500, max 1,000,000; Siêu tốc, 1 bài
+  - TELEGRAM_VIEW_S3: 3.8 ₫, maintenance; Nhiều bài tùy chọn - Bảo trì
+
+### 55. Cảm xúc bài viết Telegram (`telegram_post_reaction`, slug: `telegram-post-reaction`)
+- Trường cần nhập: `uid` (Link Post kênh Telegram), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Có thể thiếu và không bảo hành, nên mua dư khi mua. Không hỗ trợ group.
+- Servers:
+  - TELEGRAM_REACTION_S1: 10 ₫, active, min 50, max 500,000; Cảm xúc tích cực ngẫu nhiên [👍🤩🎉🔥❤️🥰👏🏻] (ID: 475395)
+  - TELEGRAM_REACTION_S2: 10 ₫, active, min 50, max 500,000; Cảm xúc tiêu cực ngẫu nhiên [👎💩🤮😢😱]
+  - TELEGRAM_REACTION_S3: 10 ₫, active, min 50, max 500,000; Cảm xúc tùy chỉnh - Dễ quá tải và hoàn giữa chừng
 
 ---
 

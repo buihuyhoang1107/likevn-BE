@@ -305,7 +305,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view',
+            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view,shopee_follow,shopee_love,shopee_like_review,shopee_live_eye,telegram_member_sub,telegram_post_view,telegram_post_reaction',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -331,7 +331,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view',
+            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view,shopee_follow,shopee_love,shopee_like_review,shopee_live_eye',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -549,7 +549,18 @@ class AdminController extends Controller
 
         // Handle features - ưu tiên các field riêng lẻ, sau đó mới đến features object
         $featuresUpdated = false;
-        $featuresArray = $server->features ? $server->features : [];
+        
+        // Đảm bảo features luôn là array
+        $featuresArray = [];
+        if ($server->features) {
+            if (is_array($server->features)) {
+                $featuresArray = $server->features;
+            } elseif (is_string($server->features)) {
+                // Nếu là JSON string, decode nó
+                $decoded = json_decode($server->features, true);
+                $featuresArray = is_array($decoded) ? $decoded : [];
+            }
+        }
         
         // Cập nhật từ các field riêng lẻ
         if ($request->has('support_batch')) {

@@ -1584,6 +1584,128 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Follow Shopee
+        $followShopee = Service::where('slug', 'shopee-follow')->first();
+        if ($followShopee) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'SHOPEE_FOLLOW_S1',
+                    'price_per_unit' => 70.8,
+                    'status' => 'active',
+                    'description' => 'Siêu tốc, 10k/1 ngày. Sub gốc cao hoặc >15k sub tốc độ chậm',
+                    'min_quantity' => 500,
+                    'max_quantity' => 30000,
+                    'features' => json_encode([
+                        'id' => '475281',
+                        'note' => 'Sub gốc cao hoặc >15k sub tốc độ sẽ chậm',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'SHOPEE_FOLLOW_S2',
+                    'price_per_unit' => 66.0,
+                    'status' => 'slow',
+                    'description' => '100-500 /24 giờ. Tốc độ chậm',
+                    'min_quantity' => 500,
+                    'max_quantity' => 30000,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $followShopee->id,
+                ]));
+            }
+        }
+
+        // Love Shopee
+        $loveShopee = Service::where('slug', 'shopee-love')->first();
+        if ($loveShopee) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'SHOPEE_LOVE_S1',
+                    'price_per_unit' => 30.0,
+                    'status' => 'stopped',
+                    'description' => 'Tốc độ chậm - Bảo trì',
+                    'min_quantity' => 1,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $loveShopee->id,
+                ]));
+            }
+        }
+
+        // Like Review Shopee
+        $likeReviewShopee = Service::where('slug', 'shopee-like-review')->first();
+        if ($likeReviewShopee) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'SHOPEE_LIKEREV_S1',
+                    'price_per_unit' => 33.6,
+                    'status' => 'stopped',
+                    'description' => 'Like review Shopee - Bảo trì',
+                    'min_quantity' => 1,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeReviewShopee->id,
+                ]));
+            }
+        }
+
+        // Mắt livestream Shopee
+        $liveEyeShopee = Service::where('slug', 'shopee-live-eye')->first();
+        if ($liveEyeShopee) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'SHOPEE_LIVE_EYE_S1',
+                    'price_per_unit' => 33.6,
+                    'status' => 'stopped',
+                    'description' => 'Mắt livestream Shopee - Bảo trì',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'options' => [
+                            ['id' => 518441, 'minutes' => 30, 'price' => 568.8],
+                            ['id' => 518442, 'minutes' => 60, 'price' => 1137.6],
+                            ['id' => 518443, 'minutes' => 90, 'price' => 1706.4],
+                            ['id' => 518444, 'minutes' => 120, 'price' => 2275.2],
+                            ['id' => 518445, 'minutes' => 180, 'price' => 3412.8],
+                            ['id' => 518446, 'minutes' => 240, 'price' => 4550.4],
+                        ],
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'SHOPEE_LIVE_EYE_S2',
+                    'price_per_unit' => 38.6,
+                    'status' => 'stopped',
+                    'description' => 'Mắt livestream Shopee - Bảo trì',
+                    'min_quantity' => 1,
+                    'features' => json_encode([
+                        'options' => [
+                            ['id' => 518441, 'minutes' => 30, 'price' => 568.8],
+                            ['id' => 518442, 'minutes' => 60, 'price' => 1137.6],
+                            ['id' => 518443, 'minutes' => 90, 'price' => 1706.4],
+                            ['id' => 518444, 'minutes' => 120, 'price' => 2275.2],
+                            ['id' => 518445, 'minutes' => 180, 'price' => 3412.8],
+                            ['id' => 518446, 'minutes' => 240, 'price' => 4550.4],
+                        ],
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveEyeShopee->id,
+                ]));
+            }
+        }
     }
 }
 

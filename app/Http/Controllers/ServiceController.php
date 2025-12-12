@@ -109,6 +109,22 @@ class ServiceController extends Controller
             ], 400);
         }
 
+        // Validate quantity divisible by 100 for telegram_post_view Server 1
+        $service = $server->service;
+        if ($service && $service->category === 'telegram_post_view') {
+            // Check if this is Server 1 (có thể check bằng server code hoặc features)
+            $isServer1 = $server->code === '475392' || 
+                        (isset($server->features['requires_divisible_by_100']) && $server->features['requires_divisible_by_100'] === true) ||
+                        (strpos(strtolower($server->name), 'server 1') !== false && strpos(strtolower($server->name), 'server 1') === 0);
+            
+            if ($isServer1 && $request->quantity % 100 !== 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Số lượng mua phải chia hết cho 100 (ví dụ: 500, 600, 700...)',
+                ], 400);
+            }
+        }
+
         $totalPrice = $server->price_per_unit * $request->quantity;
 
         return response()->json([
