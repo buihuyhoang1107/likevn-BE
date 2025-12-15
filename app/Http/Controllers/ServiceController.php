@@ -26,6 +26,16 @@ class ServiceController extends Controller
             $query->where('category', $request->category);
         }
 
+        // Filter theo platform (nhóm dịch vụ)
+        if ($request->has('platform') && $request->platform) {
+            $platform = strtolower($request->platform);
+            $categories = $this->getCategoriesByPlatform($platform);
+            
+            if (!empty($categories)) {
+                $query->whereIn('category', $categories);
+            }
+        }
+
         $services = $query->with(['servers' => function ($query) {
                 $query->where('is_active', true);
             }])
@@ -144,6 +154,88 @@ class ServiceController extends Controller
                 'total_price' => $totalPrice,
             ],
         ]);
+    }
+
+    /**
+     * Lấy danh sách category theo platform
+     */
+    private function getCategoriesByPlatform($platform)
+    {
+        $platforms = [
+            'facebook' => [
+                'like_post_speed',
+                'like_post_vip',
+                'sub_personal_fanpage',
+                'like_fanpage',
+                'like_comment',
+                'increase_comment',
+                'share_post',
+                'member_group',
+                'review_fanpage',
+                'checkin_fanpage',
+                'event_facebook',
+                'vip_like_monthly',
+                'vip_like_group_monthly',
+                'vip_comment_monthly',
+                'vip_eye_monthly',
+                'vip_view_monthly',
+                'vip_share_monthly',
+                'eye_live_view_video',
+                'friend_cleanup',
+            ],
+            'instagram' => [
+                'instagram_like',
+                'instagram_comment',
+                'instagram_follow',
+                'instagram_view',
+                'instagram_live_eye',
+                'instagram_vip_like',
+                'instagram_vip_comment',
+            ],
+            'threads' => [
+                'threads_like',
+                'threads_follow',
+            ],
+            'tiktok' => [
+                'tiktok_like',
+                'tiktok_like_comment',
+                'tiktok_follow',
+                'tiktok_view',
+                'tiktok_comment',
+                'tiktok_share',
+                'tiktok_save',
+                'tiktok_live_like',
+                'tiktok_live_share',
+                'tiktok_live_comment',
+                'tiktok_live_eye',
+                'tiktok_live_pk',
+                'tiktok_vip_like',
+                'tiktok_vip_view',
+            ],
+            'shopee' => [
+                'shopee_follow',
+                'shopee_love',
+                'shopee_like_review',
+                'shopee_live_eye',
+            ],
+            'telegram' => [
+                'telegram_member_sub',
+                'telegram_post_view',
+                'telegram_post_reaction',
+            ],
+            'youtube' => [
+                'youtube_like',
+                'youtube_view',
+                'youtube_view_400h',
+                'youtube_live_stream',
+                'youtube_like_400h',
+                'youtube_comment',
+                'youtube_like_comment',
+                'youtube_subscribe',
+            ],
+        ];
+
+        return $platforms[$platform] ?? [];
     }
 }
 

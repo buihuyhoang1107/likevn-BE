@@ -97,7 +97,7 @@ GET /api/services?search=keyword&category=like_post_speed
 
 **Query Parameters:**
 - `search` (optional): Tìm kiếm theo name, description
-- `category` (optional): Lọc theo category (like_post_speed, like_post_vip, v.v.)
+- `category` (optional): Lọc theo category cụ thể (like_post_speed, like_post_vip, v.v.)
 
 **Ví dụ:**
 ```http
@@ -409,20 +409,76 @@ Authorization: Bearer {admin_token}
 
 ### 👑 Quản lý Services
 
+#### Lấy danh sách các platform (để chia tab/bảng)
+```http
+GET /api/admin/platforms
+Authorization: Bearer {admin_token}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "label": "Quản lý dịch vụ Facebook",
+      "total_services": 19,
+      "active_services": 18,
+      "inactive_services": 1
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "label": "Quản lý dịch vụ Instagram",
+      "total_services": 7,
+      "active_services": 7,
+      "inactive_services": 0
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "label": "Quản lý dịch vụ YouTube",
+      "total_services": 8,
+      "active_services": 8,
+      "inactive_services": 0
+    }
+    // ... các platform khác
+  ]
+}
+```
+
+**Cách sử dụng:**
+- Gọi API này để lấy danh sách các platform
+- Dùng `id` của platform để filter khi gọi `/api/admin/services?platform=facebook`
+- Frontend có thể tạo các tab/bảng dựa trên danh sách này
+
 #### Lấy danh sách dịch vụ (bao gồm inactive)
 ```http
-GET /api/admin/services?page=1&search=keyword&category=like_post_speed&is_active=true
+GET /api/admin/services?page=1&search=keyword&category=like_post_speed&platform=facebook&is_active=true
 Authorization: Bearer {admin_token}
 ```
 
 **Query Parameters:**
 - `search` (optional): Tìm kiếm theo name, description
-- `category` (optional): Lọc theo category (like_post_speed, like_post_vip, v.v.)
+- `category` (optional): Lọc theo category cụ thể (like_post_speed, like_post_vip, v.v.)
+- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube)
 - `is_active` (optional): Lọc theo trạng thái active (true/false)
 - `page` (optional): Số trang (mặc định: 1)
 
 **Ví dụ:**
 ```http
+# Lấy tất cả dịch vụ Facebook (bao gồm inactive)
+GET /api/admin/services?platform=facebook
+
+# Lấy tất cả dịch vụ YouTube đang active
+GET /api/admin/services?platform=youtube&is_active=true
+
+# Lấy tất cả dịch vụ TikTok (bao gồm inactive)
+GET /api/admin/services?platform=tiktok
+
+# Tìm kiếm và lọc category cụ thể
 GET /api/admin/services?search=like&category=like_post_speed&is_active=true
 ```
 
@@ -494,21 +550,42 @@ Authorization: Bearer {admin_token}
 
 #### Lấy danh sách server
 ```http
-GET /api/admin/servers?service_id=1&search=keyword&status=active&is_active=true
+GET /api/admin/servers?platform=facebook&search=keyword&status=active&is_active=true&page=1&per_page=10
 Authorization: Bearer {admin_token}
 ```
 
 **Query Parameters:**
 - `search` (optional): Tìm kiếm theo name, code, description
-- `service_id` (optional): Lọc server theo service
+- `service_id` (optional): Lọc server theo service - **Ưu tiên cao nhất**
+- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube) - **Chỉ dùng khi không có service_id**
 - `status` (optional): Lọc theo trạng thái (active, slow, stopped)
 - `is_active` (optional): Lọc theo trạng thái active (true/false)
 - `page` (optional): Số trang (mặc định: 1)
+- `per_page` (optional): Số items mỗi trang (mặc định: 20)
 
 **Ví dụ:**
 ```http
-GET /api/admin/servers?search=Server&service_id=1&status=active&is_active=true
+# Lấy tất cả servers của platform Facebook
+GET /api/admin/servers?platform=facebook&page=1&per_page=10
+
+# Lấy tất cả servers của platform YouTube
+GET /api/admin/servers?platform=youtube&page=1&per_page=10
+
+# Lấy servers theo service_id (như cũ)
+GET /api/admin/servers?service_id=18&page=1&per_page=10
+
+# Kết hợp platform với các filter khác
+GET /api/admin/servers?platform=facebook&status=active&is_active=true&page=1&per_page=10
+
+# Tìm kiếm trong platform
+GET /api/admin/servers?platform=facebook&search=Server&status=active
 ```
+
+**Lưu ý:**
+- Nếu truyền cả `service_id` và `platform`, sẽ ưu tiên `service_id` (lấy servers của service cụ thể)
+- Nếu chỉ truyền `platform` (không có `service_id`), sẽ lấy tất cả servers của tất cả services thuộc platform đó
+- Nếu chỉ truyền `service_id`, sẽ lấy servers của service đó như cũ
+- Các platform hỗ trợ: `facebook`, `instagram`, `threads`, `tiktok`, `shopee`, `telegram`, `youtube`
 
 #### Lấy chi tiết server
 ```http
@@ -1473,7 +1550,7 @@ Tất cả các API lấy danh sách đều hỗ trợ tìm kiếm và lọc d�
 | **Admin Users** | `GET /api/admin/users` | username, email, full_name | `type`, `is_active`, `is_verified` |
 | **Admin Orders** | `GET /api/admin/orders` | uid, account_name, note, admin_note | `status`, `user_id`, `service_id`, `server_id`, `date_from`, `date_to` |
 | **Admin Services** | `GET /api/admin/services` | name, description | `category`, `is_active` |
-| **Admin Servers** | `GET /api/admin/servers` | name, code, description | `service_id`, `status`, `is_active` |
+| **Admin Servers** | `GET /api/admin/servers` | name, code, description | `platform`, `service_id`, `status`, `is_active` |
 
 ### 🔍 Chi tiết từng API
 
@@ -1481,7 +1558,7 @@ Tất cả các API lấy danh sách đều hỗ trợ tìm kiếm và lọc d�
 
 ##### Services (`GET /api/services`)
 - **Tìm kiếm:** `?search=keyword` - Tìm theo name, description
-- **Lọc:** `?category=like_post_speed`
+- **Lọc:** `?category=like_post_speed` - Lọc theo category cụ thể
 - **Ví dụ:** `GET /api/services?search=like&category=like_post_speed`
 
 ##### Servers (`GET /api/services/{serviceId}/servers`)
@@ -1510,13 +1587,25 @@ Tất cả các API lấy danh sách đều hỗ trợ tìm kiếm và lọc d�
 
 ##### Services (`GET /api/admin/services`)
 - **Tìm kiếm:** `?search=keyword` - Tìm theo name, description
-- **Lọc:** `?category=like_post_speed&is_active=true`
-- **Ví dụ:** `GET /api/admin/services?search=like&category=like_post_speed&is_active=true`
+- **Lọc:** `?category=like_post_speed` - Lọc theo category cụ thể
+- **Lọc:** `?platform=facebook` - Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube)
+- **Lọc:** `?is_active=true` - Lọc theo trạng thái active
+- **Ví dụ:** 
+  - `GET /api/admin/services?platform=facebook` - Lấy tất cả dịch vụ Facebook (bao gồm inactive)
+  - `GET /api/admin/services?platform=youtube&is_active=true` - Lấy dịch vụ YouTube đang active
+  - `GET /api/admin/services?search=like&category=like_post_speed&is_active=true` - Tìm kiếm và lọc category cụ thể
 
 ##### Servers (`GET /api/admin/servers`)
 - **Tìm kiếm:** `?search=keyword` - Tìm theo name, code, description
-- **Lọc:** `?service_id=1&status=active&is_active=true`
-- **Ví dụ:** `GET /api/admin/servers?search=Server&service_id=1&status=active&is_active=true`
+- **Lọc:** `?service_id=1` - Lọc theo service (ưu tiên cao nhất)
+- **Lọc:** `?platform=facebook` - Lọc theo nhóm dịch vụ (chỉ dùng khi không có service_id)
+- **Lọc:** `?status=active&is_active=true` - Lọc theo trạng thái
+- **Ví dụ:** 
+  - `GET /api/admin/servers?service_id=27&page=1&per_page=10` - Lấy servers theo service_id (ưu tiên)
+  - `GET /api/admin/servers?platform=facebook&page=1&per_page=10` - Lấy tất cả servers của Facebook (khi không có service_id)
+  - `GET /api/admin/servers?platform=youtube&status=active` - Lấy servers YouTube đang active
+  - `GET /api/admin/servers?service_id=27&platform=instagram` - Nếu có cả 2, sẽ ưu tiên service_id=27
+  - `GET /api/admin/servers?search=Server&service_id=1&status=active&is_active=true` - Tìm kiếm và lọc
 
 ### 💡 Ví dụ sử dụng
 

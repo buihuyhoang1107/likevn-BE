@@ -277,6 +277,16 @@ class AdminController extends Controller
             $query->where('category', $request->category);
         }
 
+        // Filter theo platform (nhóm dịch vụ)
+        if ($request->has('platform') && $request->platform) {
+            $platform = strtolower($request->platform);
+            $categories = $this->getCategoriesByPlatform($platform);
+            
+            if (!empty($categories)) {
+                $query->whereIn('category', $categories);
+            }
+        }
+
         // Filter theo is_active
         if ($request->has('is_active')) {
             $query->where('is_active', $request->is_active === 'true' || $request->is_active === true);
@@ -394,9 +404,22 @@ class AdminController extends Controller
             });
         }
 
-        // Filter theo service_id
+        // Filter theo service_id (ưu tiên cao nhất)
         if ($request->has('service_id') && $request->service_id) {
             $query->where('service_id', $request->service_id);
+        } elseif ($request->has('platform') && $request->platform) {
+            // Chỉ filter theo platform nếu không có service_id
+            $platform = strtolower($request->platform);
+            $categories = $this->getCategoriesByPlatform($platform);
+            
+            if (!empty($categories)) {
+                // Lấy tất cả service_ids của platform này
+                $serviceIds = Service::whereIn('category', $categories)->pluck('id');
+                $query->whereIn('service_id', $serviceIds);
+            } else {
+                // Nếu platform không hợp lệ, trả về empty
+                $query->where('id', 0); // Không có server nào
+            }
         }
 
         // Filter theo status
@@ -675,6 +698,156 @@ class AdminController extends Controller
             'data' => [
                 'enable_balance_check' => $request->enable_balance_check,
             ],
+        ]);
+    }
+
+    /**
+     * Lấy danh sách category theo platform
+     */
+    private function getCategoriesByPlatform($platform)
+    {
+        $platforms = [
+            'facebook' => [
+                'like_post_speed',
+                'like_post_vip',
+                'sub_personal_fanpage',
+                'like_fanpage',
+                'like_comment',
+                'increase_comment',
+                'share_post',
+                'member_group',
+                'review_fanpage',
+                'checkin_fanpage',
+                'event_facebook',
+                'vip_like_monthly',
+                'vip_like_group_monthly',
+                'vip_comment_monthly',
+                'vip_eye_monthly',
+                'vip_view_monthly',
+                'vip_share_monthly',
+                'eye_live_view_video',
+                'friend_cleanup',
+            ],
+            'instagram' => [
+                'instagram_like',
+                'instagram_comment',
+                'instagram_follow',
+                'instagram_view',
+                'instagram_live_eye',
+                'instagram_vip_like',
+                'instagram_vip_comment',
+            ],
+            'threads' => [
+                'threads_like',
+                'threads_follow',
+            ],
+            'tiktok' => [
+                'tiktok_like',
+                'tiktok_like_comment',
+                'tiktok_follow',
+                'tiktok_view',
+                'tiktok_comment',
+                'tiktok_share',
+                'tiktok_save',
+                'tiktok_live_like',
+                'tiktok_live_share',
+                'tiktok_live_comment',
+                'tiktok_live_eye',
+                'tiktok_live_pk',
+                'tiktok_vip_like',
+                'tiktok_vip_view',
+            ],
+            'shopee' => [
+                'shopee_follow',
+                'shopee_love',
+                'shopee_like_review',
+                'shopee_live_eye',
+            ],
+            'telegram' => [
+                'telegram_member_sub',
+                'telegram_post_view',
+                'telegram_post_reaction',
+            ],
+            'youtube' => [
+                'youtube_like',
+                'youtube_view',
+                'youtube_view_400h',
+                'youtube_live_stream',
+                'youtube_like_400h',
+                'youtube_comment',
+                'youtube_like_comment',
+                'youtube_subscribe',
+            ],
+        ];
+
+        return $platforms[$platform] ?? [];
+    }
+
+    /**
+     * Lấy danh sách các platform và thống kê
+     */
+    public function getPlatforms()
+    {
+        $platforms = [
+            'facebook' => [
+                'name' => 'Facebook',
+                'label' => 'Quản lý dịch vụ Facebook',
+                'categories' => $this->getCategoriesByPlatform('facebook'),
+            ],
+            'instagram' => [
+                'name' => 'Instagram',
+                'label' => 'Quản lý dịch vụ Instagram',
+                'categories' => $this->getCategoriesByPlatform('instagram'),
+            ],
+            'threads' => [
+                'name' => 'Threads',
+                'label' => 'Quản lý dịch vụ Threads',
+                'categories' => $this->getCategoriesByPlatform('threads'),
+            ],
+            'tiktok' => [
+                'name' => 'TikTok',
+                'label' => 'Quản lý dịch vụ TikTok',
+                'categories' => $this->getCategoriesByPlatform('tiktok'),
+            ],
+            'shopee' => [
+                'name' => 'Shopee',
+                'label' => 'Quản lý dịch vụ Shopee',
+                'categories' => $this->getCategoriesByPlatform('shopee'),
+            ],
+            'telegram' => [
+                'name' => 'Telegram',
+                'label' => 'Quản lý dịch vụ Telegram',
+                'categories' => $this->getCategoriesByPlatform('telegram'),
+            ],
+            'youtube' => [
+                'name' => 'YouTube',
+                'label' => 'Quản lý dịch vụ YouTube',
+                'categories' => $this->getCategoriesByPlatform('youtube'),
+            ],
+        ];
+
+        // Thêm thống kê số lượng services cho mỗi platform
+        $result = [];
+        foreach ($platforms as $key => $platform) {
+            $totalServices = Service::whereIn('category', $platform['categories'])->count();
+            $activeServices = Service::whereIn('category', $platform['categories'])
+                ->where('is_active', true)
+                ->count();
+            $inactiveServices = $totalServices - $activeServices;
+
+            $result[] = [
+                'id' => $key,
+                'name' => $platform['name'],
+                'label' => $platform['label'],
+                'total_services' => $totalServices,
+                'active_services' => $activeServices,
+                'inactive_services' => $inactiveServices,
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $result,
         ]);
     }
 }

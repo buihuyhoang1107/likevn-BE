@@ -64,6 +64,9 @@ Route::middleware('auth:sanctum')->group(function () {
         // Settings
         Route::get('/settings', [AdminController::class, 'getSettings']);
         Route::put('/settings', [AdminController::class, 'updateSettings']);
+        
+        // Platforms
+        Route::get('/platforms', [AdminController::class, 'getPlatforms']);
     });
 });
 
