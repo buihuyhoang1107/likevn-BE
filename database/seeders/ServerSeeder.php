@@ -2178,6 +2178,260 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Like Twitter
+        $likeTwitter = Service::where('slug', 'twitter-like')->first();
+        if ($likeTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TWITTER_LIKE_S1',
+                    'price_per_unit' => 26.2,
+                    'status' => 'stopped',
+                    'description' => 'Like ngoại, giá rẻ - Bảo trì',
+                    'is_active' => true,
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TWITTER_LIKE_S2',
+                    'price_per_unit' => 82.8,
+                    'status' => 'stopped',
+                    'description' => 'Like việt, [100-200/24 giờ] - Bảo trì',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'speed_per_day' => [100, 200],
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $likeTwitter->id,
+                ]));
+            }
+        }
+
+        // Follow Twitter
+        $followTwitter = Service::where('slug', 'twitter-follow')->first();
+        if ($followTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TWITTER_FOLLOW_S1',
+                    'price_per_unit' => 455.4,
+                    'status' => 'active',
+                    'description' => 'Sub tây, [1000/24 giờ]. Dịch vụ có thể tụt hết sub vì vậy không mua số lượng cao. Không bảo hành',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475357',
+                        'speed_per_day' => 1000,
+                        'warranty_days' => 0,
+                        'note' => 'Có thể tụt hết sub, không mua số lượng cao',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TWITTER_FOLLOW_S2',
+                    'price_per_unit' => 538.2,
+                    'status' => 'active',
+                    'description' => 'Sub tây, [1000/24 giờ]. Bảo hành 7 ngày',
+                    'min_quantity' => 100,
+                    'max_quantity' => 1000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'speed_per_day' => 1000,
+                        'warranty_days' => 7,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $followTwitter->id,
+                ]));
+            }
+        }
+
+        // View Twitter
+        $viewTwitter = Service::where('slug', 'twitter-view')->first();
+        if ($viewTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TWITTER_VIEW_S2',
+                    'price_per_unit' => 3.5,
+                    'status' => 'active',
+                    'description' => 'Siêu tốc, view & impressions. Bảo hành 30 ngày. Siêu tốc, lên sau vài phút. 10 triệu view/1 ngày. Có tăng lượt impressions để bật kiếm tiền',
+                    'min_quantity' => 1000,
+                    'max_quantity' => 10000000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475501',
+                        'warranty_days' => 30,
+                        'speed_per_day' => 10000000,
+                        'note' => 'Siêu tốc, lên sau vài phút. Có tăng lượt impressions để bật kiếm tiền',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $viewTwitter->id,
+                ]));
+            }
+        }
+
+        // ReTweet Twitter
+        $retweetTwitter = Service::where('slug', 'twitter-retweet')->first();
+        if ($retweetTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TWITTER_RETWEET_S1',
+                    'price_per_unit' => 483,
+                    'status' => 'active',
+                    'description' => 'Nước ngoài. Có tỉ lệ tụt. Mỗi link được mua 1 lần, mua lần 2 gói sẽ bị hoàn tiền',
+                    'min_quantity' => 10,
+                    'max_quantity' => 2000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475416',
+                        'note' => 'Mỗi link được mua 1 lần, mua lần 2 gói sẽ bị hoàn tiền',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TWITTER_RETWEET_S2',
+                    'price_per_unit' => 372.6,
+                    'status' => 'active',
+                    'description' => 'Nước ngoài. Có tụt',
+                    'min_quantity' => 10,
+                    'max_quantity' => 2000,
+                    'is_active' => true,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $retweetTwitter->id,
+                ]));
+            }
+        }
+
+        // Comment Twitter
+        $commentTwitter = Service::where('slug', 'twitter-comment')->first();
+        if ($commentTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TWITTER_CMT_S1',
+                    'price_per_unit' => 579.6,
+                    'status' => 'active',
+                    'description' => 'Việt Nam (tốc độ chậm)',
+                    'min_quantity' => 5,
+                    'max_quantity' => 1000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475476',
+                        'country' => 'vietnam',
+                        'speed' => 'slow',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TWITTER_CMT_S2',
+                    'price_per_unit' => 1242,
+                    'status' => 'stopped',
+                    'description' => 'Tài nguyên random - Bảo trì',
+                    'min_quantity' => 5,
+                    'max_quantity' => 1000,
+                    'is_active' => true,
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $commentTwitter->id,
+                ]));
+            }
+        }
+
+        // Livestream Twitter
+        $liveStreamTwitter = Service::where('slug', 'twitter-live-stream')->first();
+        if ($liveStreamTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TWITTER_LIVE_S1',
+                    'price_per_unit' => 724.5,
+                    'status' => 'active',
+                    'description' => 'Mắt xem livestream twitter ~ 30 phút',
+                    'min_quantity' => 50,
+                    'max_quantity' => 1000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '518430',
+                        'duration_minutes' => 30,
+                        'support_livestream' => true,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $liveStreamTwitter->id,
+                ]));
+            }
+        }
+
+        // VIP Like Twitter
+        $vipLikeTwitter = Service::where('slug', 'twitter-vip-like')->first();
+        if ($vipLikeTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 2',
+                    'code' => 'TWITTER_VIP_LIKE_S2',
+                    'price_per_unit' => 2428.8,
+                    'status' => 'stopped',
+                    'description' => 'Like random. Tốc độ ổn - Bảo trì',
+                    'min_quantity' => 50,
+                    'max_quantity' => 2000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475497',
+                        'vip_type' => true,
+                        'duration_options' => [1, 2, 3], // months
+                        'note' => 'Min 50 like, Max 2000 like',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $vipLikeTwitter->id,
+                ]));
+            }
+        }
+
+        // VIP View Twitter
+        $vipViewTwitter = Service::where('slug', 'twitter-vip-view')->first();
+        if ($vipViewTwitter) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'TWITTER_VIP_VIEW_S1',
+                    'price_per_unit' => 20,
+                    'status' => 'active',
+                    'description' => 'VIP View Twitter theo tháng',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475499',
+                        'vip_type' => true,
+                        'duration_options' => [1, 2, 3], // months
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $vipViewTwitter->id,
+                ]));
+            }
+        }
     }
 }
 

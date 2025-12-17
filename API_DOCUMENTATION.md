@@ -463,7 +463,7 @@ Authorization: Bearer {admin_token}
 **Query Parameters:**
 - `search` (optional): Tìm kiếm theo name, description
 - `category` (optional): Lọc theo category cụ thể (like_post_speed, like_post_vip, v.v.)
-- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube)
+- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube, twitter)
 - `is_active` (optional): Lọc theo trạng thái active (true/false)
 - `page` (optional): Số trang (mặc định: 1)
 
@@ -497,7 +497,7 @@ Content-Type: application/json
 {
     "name": "Dịch vụ mới",
     "description": "Mô tả dịch vụ",
-    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view, shopee_follow, shopee_love, shopee_like_review, shopee_live_eye, telegram_member_sub, telegram_post_view, telegram_post_reaction, youtube_like, youtube_view, youtube_view_400h, youtube_live_stream, youtube_like_400h, youtube_comment, youtube_like_comment, youtube_subscribe
+    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view, shopee_follow, shopee_love, shopee_like_review, shopee_live_eye, telegram_member_sub, telegram_post_view, telegram_post_reaction, youtube_like, youtube_view, youtube_view_400h, youtube_live_stream, youtube_like_400h, youtube_comment, youtube_like_comment, youtube_subscribe, twitter_like, twitter_follow, twitter_view, twitter_retweet, twitter_comment, twitter_live_stream, twitter_vip_like, twitter_vip_view
     "is_active": true
 }
 ```
@@ -557,7 +557,7 @@ Authorization: Bearer {admin_token}
 **Query Parameters:**
 - `search` (optional): Tìm kiếm theo name, code, description
 - `service_id` (optional): Lọc server theo service - **Ưu tiên cao nhất**
-- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube) - **Chỉ dùng khi không có service_id**
+- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube, twitter) - **Chỉ dùng khi không có service_id**
 - `status` (optional): Lọc theo trạng thái (active, slow, stopped)
 - `is_active` (optional): Lọc theo trạng thái active (true/false)
 - `page` (optional): Số trang (mặc định: 1)
@@ -585,7 +585,7 @@ GET /api/admin/servers?platform=facebook&search=Server&status=active
 - Nếu truyền cả `service_id` và `platform`, sẽ ưu tiên `service_id` (lấy servers của service cụ thể)
 - Nếu chỉ truyền `platform` (không có `service_id`), sẽ lấy tất cả servers của tất cả services thuộc platform đó
 - Nếu chỉ truyền `service_id`, sẽ lấy servers của service đó như cũ
-- Các platform hỗ trợ: `facebook`, `instagram`, `threads`, `tiktok`, `shopee`, `telegram`, `youtube`
+- Các platform hỗ trợ: `facebook`, `instagram`, `threads`, `tiktok`, `shopee`, `telegram`, `youtube`, `twitter`
 
 #### Lấy chi tiết server
 ```http
@@ -991,6 +991,14 @@ Tất cả các lỗi sẽ trả về format:
 - `youtube_comment` - Comment Youtube
 - `youtube_like_comment` - Like Comment Youtube
 - `youtube_subscribe` - Subscribe Youtube
+- `twitter_like` - Like Twitter
+- `twitter_follow` - Follow Twitter
+- `twitter_view` - View Twitter
+- `twitter_retweet` - ReTweet Twitter
+- `twitter_comment` - Comment Twitter
+- `twitter_live_stream` - Livestream Twitter
+- `twitter_vip_like` - VIP Like Twitter
+- `twitter_vip_view` - VIP View Twitter
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1534,6 +1542,70 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
   - YOUTUBE_SUB_S1: 712.5 ₫, slow, min 100, max 1,000,000; Bảo hành 30 ngày, Cần có video dài hơn 3p để sub không bị tụt, Theo dõi lên chậm thường lên sau 1-2 ngày (ID: 475341)
   - YOUTUBE_SUB_S2: 487.5 ₫, active, min 100, max 1,000,000; Bảo hành 30 ngày, [100-300/ 1 ngày]
 
+### 64. Like Twitter (`twitter_like`, slug: `twitter-like`)
+- Trường cần nhập: `uid` (Link bài viết), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TWITTER_LIKE_S1: 26.2 ₫, maintenance; Like ngoại, giá rẻ - Bảo trì
+  - TWITTER_LIKE_S2: 82.8 ₫, maintenance; Like việt, [100-200/24 giờ] - Bảo trì
+
+### 65. Follow Twitter (`twitter_follow`, slug: `twitter-follow`)
+- Trường cần nhập: `uid` (Link profile), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Dịch vụ có thể tụt hết sub vì vậy không mua số lượng cao. Không bảo hành. Cần tối thiểu 1 sub.
+- Servers:
+  - TWITTER_FOLLOW_S1: 455.4 ₫, active, min 100, max 1,000; Sub tây, [1000/24 giờ]. Dịch vụ có thể tụt hết sub vì vậy không mua số lượng cao. Không bảo hành (ID: 475357)
+  - TWITTER_FOLLOW_S2: 538.2 ₫, active, min 100, max 1,000; Sub tây, [1000/24 giờ]. Bảo hành 7 ngày
+
+### 66. View Twitter (`twitter_view`, slug: `twitter-view`)
+- Trường cần nhập: `uid` (Link bài viết), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Siêu tốc, lên sau vài phút. 10 triệu view/1 ngày. Có tăng lượt impressions để bật kiếm tiền.
+- Servers:
+  - TWITTER_VIEW_S2: 3.5 ₫, active, min 1,000, max 10,000,000; Siêu tốc, view & impressions. Bảo hành 30 ngày. Siêu tốc, lên sau vài phút. 10 triệu view/1 ngày. Có tăng lượt impressions để bật kiếm tiền (ID: 475501)
+
+### 67. ReTweet Twitter (`twitter_retweet`, slug: `twitter-retweet`)
+- Trường cần nhập: `uid` (Link bài viết), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Mỗi link được mua 1 lần, mua lần 2 gói sẽ bị hoàn tiền.
+- Servers:
+  - TWITTER_RETWEET_S1: 483 ₫, active, min 10, max 2,000; Nước ngoài. Có tỉ lệ tụt. Mỗi link được mua 1 lần, mua lần 2 gói sẽ bị hoàn tiền (ID: 475416)
+  - TWITTER_RETWEET_S2: 372.6 ₫, active, min 10, max 2,000; Nước ngoài. Có tụt
+
+### 68. Comment Twitter (`twitter_comment`, slug: `twitter-comment`)
+- Trường cần nhập: `uid` (Link bài viết), `content` (Danh sách nội dung, mỗi dòng 1 bình luận), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TWITTER_CMT_S1: 579.6 ₫, active, min 5, max 1,000; Việt Nam (tốc độ chậm) (ID: 475476)
+  - TWITTER_CMT_S2: 1,242 ₫, maintenance; Tài nguyên random - Bảo trì
+
+### 69. Livestream Twitter (`twitter_live_stream`, slug: `twitter-live-stream`)
+- Trường cần nhập: `uid` (Link bài viết), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TWITTER_LIVE_S1: 724.5 ₫, active, min 50, max 1,000; Mắt xem livestream twitter ~ 30 phút (ID: 518430)
+
+### 70. VIP Like Twitter (`twitter_vip_like`, slug: `twitter-vip-like`)
+- Trường cần nhập: `uid` (Link profile), `quantity` (số like cần mua), `duration` (1/2/3 tháng), `posts_per_day` (tùy chọn số bài mỗi ngày), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `(Giá tiền mỗi like) x (Số lượng like cần mua) x (Tổng số bài mỗi ngày) x (số ngày mua gói)`
+- **Lưu ý:** Min 50 like, Max 2000 like
+- Servers:
+  - TWITTER_VIP_LIKE_S2: 2,428.8 ₫, maintenance; Like random. Tốc độ ổn - Bảo trì (ID: 475497)
+
+### 71. VIP View Twitter (`twitter_vip_view`, slug: `twitter-vip-view`)
+- Trường cần nhập: `uid` (Link bài viết), `quantity` (số lượng view cần mua), `duration` (1/2/3 tháng), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- Servers:
+  - TWITTER_VIP_VIEW_S1: 20 ₫, active; VIP View Twitter theo tháng (ID: 475499)
+
 ---
 
 ## Tính năng Tìm kiếm và Lọc
@@ -1647,9 +1719,20 @@ GET /api/admin/orders?user_id=1&date_from=2024-12-01&date_to=2024-12-31
 ## Tổng kết API
 
 - **Public APIs:** 6 endpoints
-- **Protected APIs (User):** 5 endpoints
-- **Admin APIs:** 20 endpoints (Users: 5, Orders: 4, Services: 5, Servers: 5, Settings: 2)
-- **Tổng cộng:** 31 API endpoints
+  - Authentication: 2 (register, login)
+  - Services: 4 (list, detail, servers, calculate-price)
+- **Protected APIs (User):** 7 endpoints
+  - Authentication: 2 (logout, me)
+  - User: 2 (update profile, balance)
+  - Orders: 3 (create, list, detail)
+- **Admin APIs:** 22 endpoints
+  - Users: 5 (list, detail, create, update, delete)
+  - Orders: 4 (list, detail, update, delete)
+  - Services: 5 (list, detail, create, update, delete)
+  - Servers: 5 (list, detail, create, update, delete)
+  - Settings: 2 (get, update)
+  - Platforms: 1 (list)
+- **Tổng cộng:** 35 API endpoints
 - **Tất cả API danh sách đều hỗ trợ tìm kiếm và lọc**
 
 ---

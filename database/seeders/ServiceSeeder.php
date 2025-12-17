@@ -388,6 +388,55 @@ class ServiceSeeder extends Seeder
                 'category' => 'youtube_subscribe',
                 'description' => 'Tăng subscriber cho kênh YouTube',
             ],
+            // Twitter Services
+            [
+                'name' => 'Like Twitter',
+                'slug' => 'twitter-like',
+                'category' => 'twitter_like',
+                'description' => 'Like bài viết Twitter',
+            ],
+            [
+                'name' => 'Follow Twitter',
+                'slug' => 'twitter-follow',
+                'category' => 'twitter_follow',
+                'description' => 'Follow tài khoản Twitter',
+            ],
+            [
+                'name' => 'View Twitter',
+                'slug' => 'twitter-view',
+                'category' => 'twitter_view',
+                'description' => 'Tăng view cho bài viết Twitter',
+            ],
+            [
+                'name' => 'ReTweet Twitter',
+                'slug' => 'twitter-retweet',
+                'category' => 'twitter_retweet',
+                'description' => 'Retweet bài viết Twitter',
+            ],
+            [
+                'name' => 'Comment Twitter',
+                'slug' => 'twitter-comment',
+                'category' => 'twitter_comment',
+                'description' => 'Tăng comment cho bài viết Twitter',
+            ],
+            [
+                'name' => 'Livestream Twitter',
+                'slug' => 'twitter-live-stream',
+                'category' => 'twitter_live_stream',
+                'description' => 'Mắt xem livestream Twitter',
+            ],
+            [
+                'name' => 'VIP Like Twitter',
+                'slug' => 'twitter-vip-like',
+                'category' => 'twitter_vip_like',
+                'description' => 'VIP Like Twitter theo tháng',
+            ],
+            [
+                'name' => 'VIP View Twitter',
+                'slug' => 'twitter-vip-view',
+                'category' => 'twitter_vip_view',
+                'description' => 'VIP View Twitter theo tháng',
+            ],
         ];
 
         foreach ($services as $service) {

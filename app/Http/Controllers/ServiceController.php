@@ -233,6 +233,16 @@ class ServiceController extends Controller
                 'youtube_like_comment',
                 'youtube_subscribe',
             ],
+            'twitter' => [
+                'twitter_like',
+                'twitter_follow',
+                'twitter_view',
+                'twitter_retweet',
+                'twitter_comment',
+                'twitter_live_stream',
+                'twitter_vip_like',
+                'twitter_vip_view',
+            ],
         ];
 
         return $platforms[$platform] ?? [];
