@@ -437,6 +437,32 @@ class ServiceSeeder extends Seeder
                 'category' => 'twitter_vip_view',
                 'description' => 'VIP View Twitter theo tháng',
             ],
+            // Lazada
+            [
+                'name' => 'Sub Lazada',
+                'slug' => 'lazada-sub',
+                'category' => 'lazada_sub',
+                'description' => 'Tăng sub cho shop Lazada',
+            ],
+            // Google Services
+            [
+                'name' => 'Google Maps',
+                'slug' => 'google-map-create',
+                'category' => 'google_map_create',
+                'description' => 'Tạo Google Maps mới',
+            ],
+            [
+                'name' => 'RIP Google Map',
+                'slug' => 'google-map-rip',
+                'category' => 'google_map_rip',
+                'description' => 'RIP Google Map',
+            ],
+            [
+                'name' => 'Review 5* Google Map',
+                'slug' => 'google-map-review',
+                'category' => 'google_map_review',
+                'description' => 'Review 5 sao cho Google Map',
+            ],
         ];
 
         foreach ($services as $service) {

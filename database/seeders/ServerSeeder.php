@@ -2432,6 +2432,133 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Sub Lazada
+        $lazadaSub = Service::where('slug', 'lazada-sub')->first();
+        if ($lazadaSub) {
+            $servers = [
+                [
+                    'name' => 'Server 1',
+                    'code' => 'LAZADA_SUB_S1',
+                    'price_per_unit' => 165.6,
+                    'status' => 'slow',
+                    'description' => '100 sub / 24 giờ. BH 15 ngày. Gói có thể tụt, hãy mua dư 10-20%. Không mua dồn đơn',
+                    'min_quantity' => 100,
+                    'max_quantity' => 5000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475485',
+                        'speed_per_day' => 100,
+                        'warranty_days' => 15,
+                        'over_provision_percent' => 20,
+                        'note' => 'Không mua dồn đơn; bh khi tụt trên 100 sub',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $lazadaSub->id,
+                ]));
+            }
+        }
+
+        // Google Map Create
+        $googleMapCreate = Service::where('slug', 'google-map-create')->first();
+        if ($googleMapCreate) {
+            $servers = [
+                [
+                    'name' => 'Server 1 (Map ảo)',
+                    'code' => 'GGMAP_CREATE_S1',
+                    'price_per_unit' => 1242000,
+                    'status' => 'active',
+                    'description' => 'Map ảo, thời gian trung bình ~5 ngày, có thể 1-2 tuần với maps yêu cầu cao',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475432',
+                        'processing_days' => [5, 14],
+                        'note' => 'Sau khi tạo maps sẽ liên hệ qua Zalo để lấy mã google',
+                    ]),
+                ],
+                [
+                    'name' => 'Server 2 (Map thật)',
+                    'code' => 'GGMAP_CREATE_S2',
+                    'price_per_unit' => 883200,
+                    'status' => 'active',
+                    'description' => 'Cần bảng hiệu treo và tên maps trùng tên bảng hiệu',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'address_type_options' => ['viet_nam', 'quoc_te_plus_300k'],
+                        'contact_phone_required' => true,
+                        'require_signboard' => true,
+                        'note' => 'Địa chỉ nước ngoài +300k; cần bảng hiệu trùng tên',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $googleMapCreate->id,
+                ]));
+            }
+        }
+
+        // RIP Google Map
+        $googleMapRip = Service::where('slug', 'google-map-rip')->first();
+        if ($googleMapRip) {
+            $servers = [
+                [
+                    'name' => 'Server 1 (Map ảo)',
+                    'code' => 'GGMAP_RIP_S1',
+                    'price_per_unit' => 1242000,
+                    'status' => 'active',
+                    'description' => 'Từ chối rip doanh nghiệp uy tín, có nhiều đánh giá tích cực',
+                    'min_quantity' => 1,
+                    'max_quantity' => 1,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475444',
+                        'note' => 'Nếu maps nước ngoài +300k; từ chối doanh nghiệp uy tín',
+                        'address_type_options' => ['viet_nam', 'quoc_te_plus_300k'],
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $googleMapRip->id,
+                ]));
+            }
+        }
+
+        // Review 5* Google Map
+        $googleMapReview = Service::where('slug', 'google-map-review')->first();
+        if ($googleMapReview) {
+            $servers = [
+                [
+                    'name' => 'Server 3',
+                    'code' => 'GGMAP_REVIEW_S3',
+                    'price_per_unit' => 24.15,
+                    'status' => 'slow',
+                    'description' => 'Review tích cực, tốc độ 1-2 review/ngày. Không mua lại khi đơn cũ chưa hoàn thành',
+                    'min_quantity' => 5,
+                    'max_quantity' => 20,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'id' => '475551',
+                        'speed_per_day' => [1, 2],
+                        'warranty_days' => 30,
+                        'note' => 'Web không hỗ trợ review ngoại; mỗi nội dung 1 lần bấm bảo hành trong 30 ngày',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $googleMapReview->id,
+                ]));
+            }
+        }
     }
 }
 

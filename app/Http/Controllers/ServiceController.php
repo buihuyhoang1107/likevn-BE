@@ -243,6 +243,14 @@ class ServiceController extends Controller
                 'twitter_vip_like',
                 'twitter_vip_view',
             ],
+            'lazada' => [
+                'lazada_sub',
+            ],
+            'google' => [
+                'google_map_create',
+                'google_map_rip',
+                'google_map_review',
+            ],
         ];
 
         return $platforms[$platform] ?? [];

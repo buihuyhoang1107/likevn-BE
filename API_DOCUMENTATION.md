@@ -463,7 +463,7 @@ Authorization: Bearer {admin_token}
 **Query Parameters:**
 - `search` (optional): Tìm kiếm theo name, description
 - `category` (optional): Lọc theo category cụ thể (like_post_speed, like_post_vip, v.v.)
-- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube, twitter)
+- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube, twitter, lazada, google)
 - `is_active` (optional): Lọc theo trạng thái active (true/false)
 - `page` (optional): Số trang (mặc định: 1)
 
@@ -497,7 +497,7 @@ Content-Type: application/json
 {
     "name": "Dịch vụ mới",
     "description": "Mô tả dịch vụ",
-    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view, shopee_follow, shopee_love, shopee_like_review, shopee_live_eye, telegram_member_sub, telegram_post_view, telegram_post_reaction, youtube_like, youtube_view, youtube_view_400h, youtube_live_stream, youtube_like_400h, youtube_comment, youtube_like_comment, youtube_subscribe, twitter_like, twitter_follow, twitter_view, twitter_retweet, twitter_comment, twitter_live_stream, twitter_vip_like, twitter_vip_view
+    "category": "like_post_speed", // like_post_speed, like_post_vip, sub_personal_fanpage, like_fanpage, like_comment, increase_comment, share_post, member_group, review_fanpage, checkin_fanpage, event_facebook, vip_like_monthly, vip_like_group_monthly, vip_comment_monthly, vip_eye_monthly, vip_view_monthly, vip_share_monthly, eye_live_view_video, friend_cleanup, instagram_like, instagram_comment, instagram_follow, instagram_view, instagram_live_eye, instagram_vip_like, instagram_vip_comment, threads_like, threads_follow, tiktok_like, tiktok_like_comment, tiktok_follow, tiktok_view, tiktok_comment, tiktok_share, tiktok_save, tiktok_live_like, tiktok_live_share, tiktok_live_comment, tiktok_live_eye, tiktok_live_pk, tiktok_vip_like, tiktok_vip_view, shopee_follow, shopee_love, shopee_like_review, shopee_live_eye, telegram_member_sub, telegram_post_view, telegram_post_reaction, youtube_like, youtube_view, youtube_view_400h, youtube_live_stream, youtube_like_400h, youtube_comment, youtube_like_comment, youtube_subscribe, twitter_like, twitter_follow, twitter_view, twitter_retweet, twitter_comment, twitter_live_stream, twitter_vip_like, twitter_vip_view, lazada_sub, google_map_create, google_map_rip, google_map_review
     "is_active": true
 }
 ```
@@ -585,7 +585,7 @@ GET /api/admin/servers?platform=facebook&search=Server&status=active
 - Nếu truyền cả `service_id` và `platform`, sẽ ưu tiên `service_id` (lấy servers của service cụ thể)
 - Nếu chỉ truyền `platform` (không có `service_id`), sẽ lấy tất cả servers của tất cả services thuộc platform đó
 - Nếu chỉ truyền `service_id`, sẽ lấy servers của service đó như cũ
-- Các platform hỗ trợ: `facebook`, `instagram`, `threads`, `tiktok`, `shopee`, `telegram`, `youtube`, `twitter`
+- Các platform hỗ trợ: `facebook`, `instagram`, `threads`, `tiktok`, `shopee`, `telegram`, `youtube`, `twitter`, `lazada`, `google`
 
 #### Lấy chi tiết server
 ```http
@@ -999,6 +999,10 @@ Tất cả các lỗi sẽ trả về format:
 - `twitter_live_stream` - Livestream Twitter
 - `twitter_vip_like` - VIP Like Twitter
 - `twitter_vip_view` - VIP View Twitter
+- `lazada_sub` - Sub Lazada
+- `google_map_create` - Tạo Google Maps
+- `google_map_rip` - RIP Google Maps
+- `google_map_review` - Review 5* Google Maps
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1605,6 +1609,46 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
 - Tổng Giá: `price_per_unit * quantity`
 - Servers:
   - TWITTER_VIP_VIEW_S1: 20 ₫, active; VIP View Twitter theo tháng (ID: 475499)
+
+### 72. Sub Lazada (`lazada_sub`, slug: `lazada-sub`)
+- Trường cần nhập: `uid` (Link Shop), `quantity`, `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** Gói có thể tụt, hãy mua dư 10-20%. Không mua dồn đơn. Bảo hành 15 ngày (bh khi tụt trên 100 sub)
+- Servers:
+  - LAZADA_SUB_S1: 165.6 ₫, slow, min 100, max 5,000; 100 sub / 24 giờ. BH 15 ngày. (ID: 475485)
+
+### 73. Google Maps (`google_map_create`, slug: `google-map-create`)
+- Trường cần nhập: `name` (Tên google maps), `address_type` (options: "Địa chỉ Việt Nam" / "Địa chỉ nước ngoài (Giá +300K)"), `address` (text), `phone` (SDT ghim trên google maps - Liên hệ fanpage để xác thực mã), `website_or_fanpage` (Tên Website hoặc Fanpage - nếu có), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** 
+  - Server 1: Thời gian trung bình tầm 5 ngày, 1 số đơn maps yêu cầu cao của google chờ duyệt lâu hơn kéo dài 1-2 tuần. Sau khi tạo maps chúng tôi sẽ liên hệ qua zalo để lấy mã google.
+  - Server 2: Cần có bảng hiệu treo và tên maps trùng tên bảng hiệu. Địa chỉ nước ngoài sẽ cộng thêm 300,000 VNĐ.
+- Servers:
+  - GGMAP_CREATE_S1: 1,242,000 ₫, active, min 1, max 1; Map ảo (ID: 475432). Thời gian trung bình ~5 ngày, có thể 1-2 tuần với maps yêu cầu cao. Sau khi tạo maps sẽ liên hệ qua Zalo để lấy mã google.
+  - GGMAP_CREATE_S2: 883,200 ₫, active, min 1, max 1; Map thật, cần bảng hiệu treo và tên maps trùng tên bảng hiệu. Địa chỉ nước ngoài +300k.
+
+### 74. RIP Google Maps (`google_map_rip`, slug: `google-map-rip`)
+- Trường cần nhập: `uid` (Link google maps), `address_type` (options: "Địa chỉ Việt Nam" / "Địa chỉ nước ngoài (Giá +300K)"), `contact_phone` (SDT Liên Hệ), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity` (nếu địa chỉ nước ngoài sẽ cộng thêm 300,000 VNĐ)
+- **Lưu ý:** Từ chối rip doanh nghiệp uy tín, có chất lượng và nhiều đánh giá tích cực. Nếu maps nước ngoài chi phí sẽ thêm 300,000 VNĐ.
+- Servers:
+  - GGMAP_RIP_S1: 1,242,000 ₫, active, min 1, max 1; Map ảo (ID: 475444). Từ chối rip doanh nghiệp uy tín, có chất lượng và nhiều đánh giá tích cực. Nếu maps nước ngoài chi phí sẽ thêm 300,000 VNĐ.
+
+### 75. Review 5* Google Maps (`google_map_review`, slug: `google-map-review`)
+- Trường cần nhập: `uid` (Link google maps), `quantity`, `service_description` (Mô tả dịch vụ maps bạn cung cấp - **bắt buộc với server này!** Người đánh giá sẽ tự nghĩ nội dung phù hợp để đánh giá với server này!), `note`
+- Giá Tiền Mỗi Tương Tác: Tự tính theo `price_per_unit`
+- Tổng Giá: `price_per_unit * quantity`
+- **Lưu ý:** 
+  - Review tích cực, tốc độ chậm 1-2 review/1 ngày (cấm mua lại khi đơn cũ chưa hoàn thành)
+  - Hãy nhập chi tiết rõ ràng mô tả của maps để chạy review (nội dung đánh giá có thể lệch chủ đề maps, vì vậy maps cần sự chuẩn chỉ từng câu chữ thì không nên mua dịch vụ)
+  - Web không hỗ trợ review ngoại và nội dung ngoại
+  - Hãy like review để chất lượng hiển thị review tốt nhất
+  - Mỗi nội dung sẽ có 1 lần bấm bảo hành trong 30 ngày đầu, vì vậy hãy kiểm tra kĩ nội dung có mất thì mới bấm
+- Servers:
+  - GGMAP_REVIEW_S3: 24.15 ₫, slow, min 5, max 20; Review tích cực, tốc độ chậm 1-2 review/ngày (ID: 475551). Cấm mua lại khi đơn cũ chưa hoàn thành.
 
 ---
 
