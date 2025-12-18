@@ -53,6 +53,12 @@ class ServiceSeeder extends Seeder
                 'description' => 'Chia sẻ bài viết',
             ],
             [
+                'name' => 'Share Livestream Group',
+                'slug' => 'share-live-group',
+                'category' => 'share_live_group',
+                'description' => 'Share livestream vào group',
+            ],
+            [
                 'name' => 'Tăng Member Group',
                 'slug' => 'member-group',
                 'category' => 'member_group',

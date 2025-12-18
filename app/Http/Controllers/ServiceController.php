@@ -170,6 +170,7 @@ class ServiceController extends Controller
                 'like_comment',
                 'increase_comment',
                 'share_post',
+                'share_live_group',
                 'member_group',
                 'review_fanpage',
                 'checkin_fanpage',

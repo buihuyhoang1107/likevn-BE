@@ -315,7 +315,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view,shopee_follow,shopee_love,shopee_like_review,shopee_live_eye,telegram_member_sub,telegram_post_view,telegram_post_reaction,youtube_like,youtube_view,youtube_view_400h,youtube_live_stream,youtube_like_400h,youtube_comment,youtube_like_comment,youtube_subscribe,twitter_like,twitter_follow,twitter_view,twitter_retweet,twitter_comment,twitter_live_stream,twitter_vip_like,twitter_vip_view,lazada_sub,google_map_create,google_map_rip,google_map_review,unlock_facebook,fanpage_rename,fanpage_appeal,fanpage_care,fanpage_big_like',
+            'category' => 'required|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,share_live_group,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view,shopee_follow,shopee_love,shopee_like_review,shopee_live_eye,telegram_member_sub,telegram_post_view,telegram_post_reaction,youtube_like,youtube_view,youtube_view_400h,youtube_live_stream,youtube_like_400h,youtube_comment,youtube_like_comment,youtube_subscribe,twitter_like,twitter_follow,twitter_view,twitter_retweet,twitter_comment,twitter_live_stream,twitter_vip_like,twitter_vip_view,lazada_sub,google_map_create,google_map_rip,google_map_review,unlock_facebook,fanpage_rename,fanpage_appeal,fanpage_care,fanpage_big_like',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -341,7 +341,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view,shopee_follow,shopee_love,shopee_like_review,shopee_live_eye,telegram_member_sub,telegram_post_view,telegram_post_reaction,youtube_like,youtube_view,youtube_view_400h,youtube_live_stream,youtube_like_400h,youtube_comment,youtube_like_comment,youtube_subscribe,twitter_like,twitter_follow,twitter_view,twitter_retweet,twitter_comment,twitter_live_stream,twitter_vip_like,twitter_vip_view,lazada_sub,google_map_create,google_map_rip,google_map_review,unlock_facebook,fanpage_rename,fanpage_appeal,fanpage_care,fanpage_big_like',
+            'category' => 'sometimes|in:like_post_speed,like_post_vip,sub_personal_fanpage,like_fanpage,like_comment,increase_comment,share_post,share_live_group,member_group,review_fanpage,checkin_fanpage,event_facebook,vip_like_monthly,vip_like_group_monthly,vip_comment_monthly,vip_eye_monthly,vip_view_monthly,vip_share_monthly,eye_live_view_video,friend_cleanup,instagram_like,instagram_comment,instagram_follow,instagram_view,instagram_live_eye,instagram_vip_like,instagram_vip_comment,threads_like,threads_follow,tiktok_like,tiktok_like_comment,tiktok_follow,tiktok_view,tiktok_comment,tiktok_share,tiktok_save,tiktok_live_like,tiktok_live_share,tiktok_live_comment,tiktok_live_eye,tiktok_live_pk,tiktok_vip_like,tiktok_vip_view,shopee_follow,shopee_love,shopee_like_review,shopee_live_eye,telegram_member_sub,telegram_post_view,telegram_post_reaction,youtube_like,youtube_view,youtube_view_400h,youtube_live_stream,youtube_like_400h,youtube_comment,youtube_like_comment,youtube_subscribe,twitter_like,twitter_follow,twitter_view,twitter_retweet,twitter_comment,twitter_live_stream,twitter_vip_like,twitter_vip_view,lazada_sub,google_map_create,google_map_rip,google_map_review,unlock_facebook,fanpage_rename,fanpage_appeal,fanpage_care,fanpage_big_like',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -458,6 +458,7 @@ class AdminController extends Controller
             'code' => 'required|string|max:255|unique:servers,code',
             'service_id' => 'required|exists:services,id',
             'description' => 'nullable|string',
+            'notes' => 'nullable|string', // Ghi chú riêng cho server
             'price_per_unit' => 'required|numeric|min:0',
             'status' => 'nullable|in:active,slow,stopped',
             'min_quantity' => 'nullable|integer|min:1',
@@ -508,6 +509,7 @@ class AdminController extends Controller
             'code' => $request->code,
             'service_id' => $request->service_id,
             'description' => $request->description,
+            'notes' => $request->notes, // Ghi chú riêng cho server
             'price_per_unit' => $request->price_per_unit,
             'status' => $request->status ?? 'active',
             'min_quantity' => $request->min_quantity ?? 1,
@@ -532,6 +534,7 @@ class AdminController extends Controller
             'code' => ['sometimes', 'string', 'max:255', Rule::unique('servers')->ignore($server->id)],
             'service_id' => 'sometimes|exists:services,id',
             'description' => 'nullable|string',
+            'notes' => 'nullable|string', // Ghi chú riêng cho server
             'price_per_unit' => 'sometimes|numeric|min:0',
             'status' => 'sometimes|in:active,slow,stopped',
             'min_quantity' => 'nullable|integer|min:1',
@@ -565,6 +568,7 @@ class AdminController extends Controller
         if ($request->has('code')) $data['code'] = $request->code;
         if ($request->has('service_id')) $data['service_id'] = $request->service_id;
         if ($request->has('description')) $data['description'] = $request->description; // Cho phép set null
+        if ($request->has('notes')) $data['notes'] = $request->notes; // Cho phép set null để xóa notes
         if ($request->has('price_per_unit')) $data['price_per_unit'] = $request->price_per_unit;
         if ($request->has('status')) $data['status'] = $request->status;
         if ($request->has('min_quantity')) $data['min_quantity'] = $request->min_quantity;
@@ -716,6 +720,7 @@ class AdminController extends Controller
                 'like_comment',
                 'increase_comment',
                 'share_post',
+                'share_live_group',
                 'member_group',
                 'review_fanpage',
                 'checkin_fanpage',

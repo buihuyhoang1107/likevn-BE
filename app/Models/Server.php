@@ -14,6 +14,7 @@ class Server extends Model
         'code',
         'service_id',
         'description',
+        'notes',
         'price_per_unit',
         'status',
         'min_quantity',

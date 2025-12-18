@@ -610,6 +610,7 @@ Content-Type: application/json
     "code": "LS2",
     "service_id": 1,
     "description": "Mô tả server",
+    "notes": "Ghi chú riêng cho server này\n- Được phép dồn số lượng\n- Không hỗ trợ like group\n- Nick like có avatar random",
     "price_per_unit": 150.00,
     "status": "active", // active, slow, stopped
     "min_quantity": 10,
@@ -633,6 +634,13 @@ Content-Type: application/json
 }
 ```
 
+**Lưu ý về field `notes`:**
+- `notes` là field text riêng để lưu ghi chú cho từng server
+- Mỗi server có thể có ghi chú riêng, không dùng chung
+- Frontend có thể hiển thị `notes` khi user chọn server
+- Có thể dùng `\n` để xuống dòng trong notes
+- Có thể set `null` để xóa notes
+
 **Response:**
 ```json
 {
@@ -643,6 +651,8 @@ Content-Type: application/json
         "name": "Server Like Speed 2",
         "code": "LS2",
         "service_id": 1,
+        "description": "Mô tả server",
+        "notes": "Ghi chú riêng cho server này\n- Được phép dồn số lượng\n- Không hỗ trợ like group",
         "price_per_unit": "150.00",
         "status": "active",
         "min_quantity": 10,
@@ -662,6 +672,7 @@ Content-Type: application/json
 {
     "name": "Server Like Speed 2 Updated",
     "description": "Mô tả mới cho server",
+    "notes": "Ghi chú riêng cho server này\n- Được phép dồn số lượng\n- Không hỗ trợ like group\n- Nick like có avatar random",
     "price_per_unit": 200.00,
     "status": "slow",
     "min_quantity": 20,
@@ -684,8 +695,19 @@ Content-Type: application/json
     
     // HOẶC xóa features:
     // "features": null
+    
+    // Để xóa notes, gửi:
+    // "notes": null
 }
 ```
+
+**Lưu ý về field `notes`:**
+- `notes` là field text riêng để lưu ghi chú cho từng server
+- Mỗi server có thể có ghi chú riêng, không dùng chung
+- Frontend có thể hiển thị `notes` khi user chọn server
+- Có thể dùng `\n` để xuống dòng trong notes
+- Có thể set `null` để xóa notes
+- Khi update, chỉ cần gửi field `notes` để cập nhật, các field khác không cần gửi
 
 **Lưu ý:** 
 - Các trường đều optional, chỉ cần gửi trường muốn cập nhật
@@ -859,6 +881,44 @@ Content-Type: application/json
 ```
 
 **Lưu ý:** Các field features sẽ tự động merge với features hiện có, không cần gửi tất cả.
+
+### Field Notes (Ghi chú riêng cho từng Server)
+
+**Field `notes` là một field text riêng biệt để lưu ghi chú cho từng server.**
+
+**Đặc điểm:**
+- Mỗi server có thể có ghi chú riêng, không dùng chung
+- Frontend có thể hiển thị `notes` khi user chọn server
+- Có thể dùng `\n` để xuống dòng trong notes
+- Có thể set `null` để xóa notes
+
+**Ví dụ cập nhật notes:**
+```http
+PUT /api/admin/servers/{id}
+Content-Type: application/json
+
+{
+    "notes": "Ghi chú riêng cho server này\n- Được phép dồn số lượng\n- Không hỗ trợ like group\n- Nick like có avatar random"
+}
+```
+
+**Response khi lấy server:**
+```json
+{
+    "id": 1,
+    "name": "Server 6",
+    "code": "S6",
+    "description": "Like Việt. Ngừng nhận đơn",
+    "notes": "Ghi chú riêng cho server này\n- Được phép dồn số lượng\n- Không hỗ trợ like group",
+    "price_per_unit": "30.10",
+    ...
+}
+```
+
+**Frontend có thể hiển thị:**
+- Khi user chọn server, hiển thị `notes` trong một box riêng
+- Có thể format `\n` thành `<br>` hoặc dùng `<pre>` để hiển thị đúng format
+- Nếu `notes` là `null` hoặc rỗng, có thể ẩn phần hiển thị notes
 
 ### Các field Features có sẵn
 
@@ -1206,92 +1266,335 @@ Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn d�
   - **FANPAGE_BIGLIKE_S1** – rate 19.2 ₫/like, `status=active`, `min_quantity=300000`  
     - Tăng Like Fanpage số lượng lớn, thời gian hoàn thành khoảng 3 ngày.
 
-### 1. Like bài viết Speed (`like_post_speed`, slug: `like-post-speed`)
-- Trường cần nhập: `uid` (link bài viết), `emotion` (like/love/haha/wow/sad/angry), `quantity`, `speed` (nhanh/cham/trung_binh), `note`
-- Servers:
-  - S6: Like Việt, 26.2, status active, min 1, max (null)
-  - S1: Like Việt, 14.2, status slow, desc: Tốc độ chậm
-  - S3: Like Việt, 25, status active, desc: Tốc độ ổn
-  - S5: Like Việt, 16, status active, desc: Tốc độ trung bình
-  - S15: Like Việt, 38.2, status active
-  - S16: Like Việt, 62.2, status active
+y đơn  
+    - Không hỗ trợ like group, nick like có avatar random
+  - **S15**: 43.9 ₫, `status=active`, min 50, max 100,000  ### 1. Like bài viết Speed (`like_post_speed`, slug: `like-post-speed`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link bài viết cần chạy)
+  - `server_code` (Chọn server)
+  - `emotions` (Chọn loại cảm xúc – cho phép chọn **nhiều loại cảm xúc** dạng checkbox: like/love/haha/wow/sad/angry)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user từ `price_per_unit` của server)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
 
-### 2. Like bài viết VIP (`like_post_vip`, slug: `like-post-vip`)
-- Trường cần nhập: `uid`, `emotion`, `quantity`, `speed`, `note`
-- Servers:
-  - VIP_S1: Tăng chậm, 57.6, status active, desc: Tăng chậm, min 1
+- **Lưu ý chung:**
+  - Một số server **cho phép dồn đơn** (ví dụ: mua 10k có thể mua 5 lần 2k cùng 1 lúc để chạy nhanh hơn)
+  - Một số server **cho phép mua nhiều cảm xúc cùng lúc**, số lượng sẽ được phân chia ngẫu nhiên; nếu Facebook quét và tỉ lệ chủ yếu là Like thì nên tách riêng từng cảm xúc để đạt đúng số lượng mong muốn
+  - Các server có ghi chú sẽ **không hỗ trợ like bài video trong album** (server sẽ nhảy like lên bài album)
+  - Các server có ghi chú sẽ **không hỗ trợ cảm xúc cho bài reels** (cố tình mua sẽ tính hoàn gói, không hoàn tiền)
 
-### 3. Sub cá nhân & fanpage (`sub_personal_fanpage`, slug: `sub-personal-fanpage`)
-- Trường cần nhập: `uid` hoặc link, `account_name`, `quantity`, `note`
 - Servers:
-  - SUB_S3: Sub VN 2k/ngày, BH 7d, 41.8, active
-  - SUB_S4: Sub VN 1k/ngày, BH 7d, 29.6, slow
-  - SUB_S6: Sub Tây 20k/ngày, BH 7d, 36, active
-  - SUB_S7: Sub Tây 10k/ngày, BH 7d, 29.9, active
-  - SUB_S8: Sub Tây 30k/ngày, BH 7d, 16.2, active
-  - SUB_S11: Sub VN 5k/ngày, BH 7d, 25.8, stopped
-  - SUB_S12: Sub VN 10k/ngày, BH 7d, 50.4, stopped
-  - SUB_S15: Sub VN 30k/ngày, BH 7d, 65.8, stopped
+  - **S6**: 30.1 ₫, `status=stopped`, min 50, max 200,000  
+    - Like Việt – Ngừng nhận đơn (ID: 475352)  
+    - Được phép dồn số lượng (mua 10k có thể mua 5 lần 2k cùng lúc)  
+    - Hỗ trợ mua cùng lúc nhiều cảm xúc, số lượng sẽ phân chia ngẫu nhiên; nếu FB quét tỉ lệ chủ yếu là Like, nên chọn riêng cảm xúc để đạt số lượng mong muốn  
+    - Không hỗ trợ like bài video trong album (server sẽ nhảy like lên bài album)  
+    - Không hỗ trợ cảm xúc cho bài reels (cố tình mua sẽ hoàn gói, không hoàn tiền)
+  - **S1**: 16.3 ₫, `status=stopped`, min 50, max 10,000  
+    - Like Việt, tốc độ chậm – Ngừng nhận đơn
+  - **S3**: 28.7 ₫, `status=active`, min 50, max 10,000  
+    - Like Việt, tốc độ chậm (ID: 475288)  
+    - Đơn giá cảm xúc khác (love/haha/…) **đắt hơn** so với Like  
+    - Không hỗ trợ like group  
+    - Nick like có avatar random
+  - **S5**: 18.4 ₫, `status=active`, min 50, max 10,000  
+    - Like Việt, tốc độ trung bình (ID: 475489)  
+    - Không hỗ trợ huỷ gói; không nên mua link video dễ bị ẩn/hủ
+    - Like Việt (ID: 475581)  
+    - Được phép dồn số lượng (mua 10k có thể mua 5 lần 2k cùng lúc)  
+    - Hỗ trợ mua cùng lúc nhiều cảm xúc, số lượng phân chia ngẫu nhiên; nếu FB quét tỉ lệ chủ yếu là Like, nên chọn riêng cảm xúc  
+    - Không hỗ trợ like bài video trong album; không hỗ trợ cảm xúc cho reels (cố tình mua sẽ hoàn gói, không hoàn tiền)
+  - **S16**: 71.5 ₫, `status=active`, min 50, max 100,000  
+    - Like Việt (ID: 475582)  
+    - Được phép dồn số lượng (mua 10k có thể mua 5 lần 2k cùng lúc)  
+    - Hỗ trợ mua cùng lúc nhiều cảm xúc, số lượng phân chia ngẫu nhiên; nếu FB quét tỉ lệ chủ yếu là Like, nên chọn riêng cảm xúc  
+    - Không hỗ trợ like bài video trong album; không hỗ trợ cảm xúc cho reels (cố tình mua sẽ hoàn gói, không hoàn tiền)
 
-### 4. Like fanpage (`like_fanpage`, slug: `like-fanpage`)
-- Trường cần nhập: `uid` hoặc link page, `account_name`, `quantity`, `note`
-- Servers (min/max kèm nếu có):
-  - FP_S2: Like Ngoại 10k/ngày BH7d, 34.3, active, min 100, max 20000
-  - FP_S4: Like Random 500/ngày BH7d, 52.6, slow
-  - FP_S5: Like VN 20k/ngày BH7d, 38.2, active
-  - FP_S10: Like VN 500/ngày BH7d, 57.6, slow
-  - FP_S11: Like VN 10k/ngày, không BH, 32.4, active
-  - FP_S12: Like VN 20k/ngày, không BH, 50.4, active
-  - FP_S15: Like VN 30k/ngày, không BH, 65.8, active
+### 1.2 Like bài viết VIP (`like_post_vip`, slug: `like-post-vip`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link bài viết cần chạy)
+  - `server_code` (Chọn server)
+  - `emotion` (Chọn loại cảm xúc – **chỉ cho phép chọn 1 loại cảm xúc**: like/love/haha/wow/sad/angry)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
 
-### 5. Like cho bình luận (`like_comment`, slug: `like-comment`)
-- Trường cần nhập: `uid` hoặc link, `emotion`, `quantity`, `speed`, `note`
 - Servers:
-  - LC_S3: 50.4, active, desc: Like Việt, min 50, max 50000, features: support_batch=true
-  - LC_S4: 27.4, active, desc: Like Việt
-  - LC_S5: 70.8, active, desc: Tốc độ tốt
+  - **Server 1**: 66.2 ₫, `status=active`, min 20, max 5,000
+    - Tăng chậm (ID: 475271)
 
-### 6. Tăng bình luận (`increase_comment`, slug: `increase-comment`)
-- Trường cần nhập: `uid` hoặc link bài viết, `content` (danh sách nội dung), `quantity`, `note`
-- Servers:
-  - IC_S5: 600, active, desc: VN nhanh, min 10, max 500, features: support_livestream=true
-  - IC_S6: 432, active, desc: VN ổn, min 10, max 500
-  - IC_S7: 600, active, desc: VN trung bình, min 10, max 500
-  - IC_S8: 9000, active, desc: Nick tích xanh VN, min 10, max 500
-  - IC_S9: 288, active, desc: Bình luận ẩn, min 10, max 500
+### 1.3 Sub cá nhân & Fanpage (`sub_personal_fanpage`, slug: `sub-personal-fanpage`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link tài khoản cần tăng sub)
+  - `account_name` (Tên tài khoản)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
 
-### 7. Chia sẻ bài viết (`share_post`, slug: `share-post`)
-- Trường cần nhập: `uid` hoặc link bài viết, `quantity`, `note`
-- Servers:
-  - SP_S2: Share Việt nhanh, 276, active, min 20, max 10000
-  - SP_S6: Share Việt siêu tốc, 348, active, min 20, max 10000
-  - SP_S7: Kèm nội dung, 360, active, min 20, max 10000
-  - SP_S5: Share ảo siêu tốc, 24, active, min 1
+- **Lưu ý:** Đọc kĩ trước khi chọn gói, tốc độ ở mỗi gói mang tính chất tham khảo.
 
-### 8. Tăng Member Group (`member_group`, slug: `member-group`)
-- Trường cần nhập: `uid` hoặc link group, `account_name`, `quantity`, `note`
 - Servers:
-  - MG_S3: Member beta VN 30k/24h, 42.7, active, min 1000, max 30000
-  - MG_S4: Fb Via VN 5k-10k/24h, 14.4, stopped, min 1000, max 30000
-  - MG_S5: Fb Via VN 10k/24h, 41.4, active, min 1000, max 30000
-  - MG_S6: Member Beta ngoại 20k/24h, 15.6, active, min 1000, max 30000
-  - MG_S15: Fb Via VN 5k-10k/24h, 62.2, active, min 1000, max 30000
+  - **Server 3**: 48 ₫, `status=active`, min 500, max 40,000
+    - Sub Tên Việt Nam, tốc độ 5k /1 ngày, bảo hành 7 ngày (ID: 475536)
+    - Hỗ trợ sub cá nhân và sub fanpage
+  - **Server 4**: 34.1 ₫, `status=active`, min 100, max 50,000
+    - Sub Tên Việt Nam, tốc độ 3k/1 ngày, bảo hành 7 ngày (ID: 475375)
+    - Hỗ trợ sub trang cá nhân và sub fanpage
+    - Tài nguyên tối đa cho 1 uid là 100.000 sub
+  - **Server 6**: 41.4 ₫, `status=active`, min 100, max 1,000,000
+    - Sub Tây, tốc độ 100k /1 ngày, bảo hành 7 ngày (ID: 475292)
+    - Hỗ trợ sub trang cá nhân và sub fanpage
+    - Sub tài nguyên beta+ via
+  - **Server 7**: 34.4 ₫, `status=active`, min 500, max 100,000
+    - Sub Tây, tốc độ 50k / 1 ngày, bảo hành 7 ngày (ID: 475538)
+    - Hỗ trợ sub trang cá nhân và sub fanpage
+    - Sub tài nguyên beta+ via
+    - 1 đơn chỉ hỗ trợ mua tối đa 3 lần
+  - **Server 8**: 18.6 ₫, `status=active`, min 200, max 10,000
+    - Sub Tây, tốc độ 30k / 1 ngày, bảo hành 7 ngày (ID: 475371)
+    - Hỗ trợ sub trang cá nhân và sub fanpage
+    - Bảo hành 7 ngày
+  - **Server 11**: 29.7 ₫, `status=stopped`, min 100, max 40,000
+    - Sub Việt Nam, tốc độ 5k / 1 ngày, bảo hành 7 ngày – Ngừng nhận đơn
+  - **Server 12**: 58 ₫, `status=stopped`, min 100, max 40,000
+    - Sub Việt Nam, tốc độ 10k/ 1 ngày, bảo hành 7 ngày – Ngừng nhận đơn
+  - **Server 15**: 75.6 ₫, `status=stopped`, min 100, max 40,000
+    - Sub Việt Nam, tốc độ 30k / 1 ngày, bảo hành 7 ngày – Ngừng nhận đơn
 
-### 9. Đánh giá 5* fanpage (`review_fanpage`, slug: `review-fanpage`)
-- Trường cần nhập: `uid` hoặc link fanpage, `account_name`, `content` (review tối thiểu 25 ký tự, không chứa từ cấm), `quantity`, `note`
-- Servers:
-  - RV_S5: Via Việt chất lượng tốt, 1380, active, min 1
+### 1.4 Like Fanpage (`like_fanpage`, slug: `like-fanpage`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link page cần tăng)
+  - `account_name` (Tên tài khoản)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
 
-### 10. Check-in fanpage (`checkin_fanpage`, slug: `checkin-fanpage`)
-- Trường cần nhập: `uid` hoặc link fanpage, `account_name`, `quantity`, `note`
 - Servers:
-  - CI_S2: Lên nhanh, BH 30 ngày, 576, status stopped (bảo trì), min 1
+  - **Server 2**: 39.5 ₫, `status=active`, min 100, max 20,000
+    - Like Ngoại, tốc độ 10k/ 1 ngày. Bảo hành 7 ngày (ID: 475543)
+    - Hỗ trợ tất cả fanpage có nút like
+  - **Server 4**: 60.4 ₫, `status=active`, min 200, max 1,000,000
+    - Like Việt Nam, tốc độ 5k/ 1 ngày. Bảo hành 7 ngày (ID: 475500)
+    - FanPage cần có nút like
+  - **Server 5**: 43.9 ₫, `status=active`, min 1,000, max 40,000
+    - Like tên Việt Nam, tốc độ 20k / 1 ngày. Bảo hành 7 ngày (ID: 475544)
+    - Phần lớn là sub beta
+    - Tốc độ thường lên khá tốt, không hỗ trợ huỷ gói khi chạy
+  - **Server 10**: 66.2 ₫, `status=active`, min 200, max 10,000
+    - Like Việt Nam, tốc độ 5k/ 1 ngày. Bảo hành 7 ngày (ID: 475547)
+    - Tài nguyên phần lớn là Via nick Việt Nam
+    - FanPage cần có nút like
+    - Không hỗ trợ dồn đơn
+  - **Server 11**: 37.3 ₫, `status=active`, min 100, max 50,000
+    - Like Việt Nam, tốc độ 3k / 1 ngày. Không bảo hành (ID: 475548)
+    - Tài nguyên là via và beta
+    - Fanpage cần có nút like
+    - Gói có thể dồn đơn, bạn có thể mua 5 lần 2k liên tiếp để đạt 10k nhanh nhất
+    - **Lưu ý:** Done thiếu ~20%, ví dụ mua 20k sẽ nhận 16k like
+  - **Server 12**: 58 ₫, `status=active`, min 100, max 50,000
+    - Like Việt Nam, tốc độ 5k/ 1 ngày. Không bảo hành (ID: 475549)
+    - Tài nguyên là via và beta
+    - Fanpage cần có nút like
+    - Gói có thể dồn đơn, bạn có thể mua 5 lần 2k liên tiếp để đạt 10k nhanh nhất
+    - **Lưu ý:** Done thiếu ~20%, ví dụ mua 20k sẽ nhận 16k like
+  - **Server 15**: 75.6 ₫, `status=active`, min 50, max 50,000
+    - Like Việt Nam, tốc độ 20k/ 1 ngày. Không bảo hành (ID: 475579)
+    - Tài nguyên là via và beta
+    - Fanpage cần có nút like
+    - Gói có thể dồn đơn, bạn có thể mua 5 lần 2k liên tiếp để đạt 10k nhanh nhất
+    - **Lưu ý:** Done thiếu ~20%, ví dụ mua 20k sẽ nhận 16k like
 
-### 11. Sự kiện Facebook (`event_facebook`, slug: `event-facebook`)
-- Trường cần nhập: `uid` hoặc link event, `quantity`, `note`
+### 1.5 Like cho Bình luận (`like_comment`, slug: `like-comment`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link đối tượng)
+  - `server_code` (Chọn server)
+  - `emotions` (Chọn loại cảm xúc – **Server 3 cho phép chọn nhiều cảm xúc cùng lúc**, còn server còn lại thì chỉ cho chọn 1 loại cảm xúc: like/love/haha/wow/sad/angry)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
 - Servers:
-  - EV_QT: Quan tâm event, 384, status stopped (bảo trì), min 100, max 50000
-  - EV_TG: Tham gia event, 384, status stopped (bảo trì), min 100, max 50000
+  - **Server 3**: 58 ₫, `status=active`, min 50, max 50,000
+    - Like việt (ID: 475412)
+    - Hỗ trợ dồn đơn
+    - **Cho phép chọn nhiều cảm xúc cùng lúc**
+  - **Server 4**: 31.5 ₫, `status=slow`, min 50, max 10,000
+    - Like việt (ID: 475558)
+    - Không được dồn đơn, sẽ bị chậm
+    - **Chỉ cho phép chọn 1 loại cảm xúc**
+  - **Server 5**: 81.4 ₫, `status=active`, min 50, max 20,000
+    - Tốc độ tốt (ID: 475587)
+    - Hỗ trợ dồn đơn
+    - **Chỉ cho phép chọn 1 loại cảm xúc**
+
+### 1.6 Tăng bình luận (`increase_comment`, slug: `increase-comment`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link bài viết cần chạy)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `content` (Danh sách nội dung – mỗi bình luận là 1 dòng, tối thiểu 5 bình luận)
+  - `price_per_unit` (Giá tiền mỗi bình luận – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
+- Servers:
+  - **Server 5**: 676.2 ₫, `status=active`, min 10, max 500
+    - Việt Nam. Tốc độ nhanh (ID: 475307)
+    - Có hỗ trợ LIVESTREAM
+    - Không hỗ trợ các nội dung lừa đảo, vi phạm chính trị, đạo đức v.v
+  - **Server 6**: 483 ₫, `status=active`, min 10, max 20
+    - Việt Nam. Tốc độ ổn (ID: 475572)
+    - Không hỗ trợ livestream
+    - Không hỗ trợ các nội dung lừa đảo, vi phạm chính trị, đạo đức v.v
+    - Nội dung thường bị ẩn sau vài ngày
+  - **Server 7**: 676.2 ₫, `status=active`, min 5, max 1,000
+    - Việt Nam. Tốc độ trung bình (ID: 475597)
+    - Có hỗ trợ livestream nếu đơn hàng hoạt động tốt. Tối đa 100 cmt/ 1 lần mua
+    - Nếu lên chậm trong livestream vui lòng thông cảm, đơn sẽ không hoàn tiền
+    - Không hỗ trợ các nội dung lừa đảo, vi phạm chính trị, đạo đức v.v
+  - **Server 8**: 9,660 ₫, `status=maintenance`
+    - Nick tích xanh Tên Việt Nam – Bảo trì
+  - **Server 9**: 331.2 ₫, `status=active`, min 30, max 200,000
+    - Bình luận ẩn. (dư bình luận cao) (ID: 485672)
+    - Chỉ hiển thị số lượng bình luận, không hiển thị nội dung (có dư bình luận nhiều)
+    - Có thể bỏ trống mục nội dung (chỉ cần nhập số lượng bình luận)
+    - Tốc độ siêu cao 200k bình luận /1 ngày
+
+### 1.7 Chia sẻ bài viết (`share_post`, slug: `share-post`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link bài viết cần chạy)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
+- **Share việt:**
+  - **Server 2**: 317.4 ₫, `status=active`, min 20, max 10,000
+    - Chia sẻ việt, tốc độ nhanh (ID: 475345)
+    - Hỗ trợ tất cả các link trên nền tảng FB
+  - **Server 6**: 400.2 ₫, `status=active`, min 20, max 10,000
+    - Share việt, tốc độ siêu tốc (ID: 475388)
+    - Tốc độ chạy rất nhanh
+  - **Server 7**: 414 ₫, `status=slow`, min 5, max 1,000
+    - Kèm nội dung khi share (ID: 475443)
+    - Nội dung ngắn gọn, không hỗ trợ share cho bài gr
+    - Không vi phạm pháp luật, chửi bới, bôi xấu người khác, lừa đảo. Vi phạm hủy gói không hoàn tiền
+
+- **Share ảo:**
+  - **Server 5**: 27.6 ₫, `status=active`, min 1,000, max 100,000,000
+    - Share ảo [Lên Siêu Tốc - hỗ trợ tất cả link fb] (ID: 475361)
+    - Share ảo [max. 100 triệu share]
+    - Hỗ Trợ Tất Cả Các Link
+    - Các đơn cần chạy gấp, cuộc đua, vote thì inbox trước cho admin để ưu tiên chạy trước. Thời gian chạy 9h-24h mỗi ngày
+
+### 1.8 Tăng member group (`member_group`, slug: `member-group`)
+- Trường cần nhập:
+  - `uid` (Link nhóm cần tăng)
+  - `account_name` (Tên nhóm cần tăng)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
+- Servers:
+  - **Server 2**: 40 ₫, `status=active`, min 100, max 200,000
+    - Member beta, Tên Việt Nam (ID: 475297)
+    - Không hỗ trợ group riêng tư
+    - Yêu cầu bật cho fanpage tham gia
+  - **Server 3**: 49.1 ₫, `status=active`, min 1,000, max 30,000
+    - Member beta, Tên Việt Nam [30k / 24 giờ.] (ID: 475298)
+    - Không hỗ trợ group riêng tư
+    - Yêu cầu bật cho fanpage tham gia
+  - **Server 4**: 16.6 ₫, `status=stopped`, min 100, max 30,000
+    - Fb Via tên Việt Nam [5k-10k/ 24 giờ.] – Ngừng nhận đơn
+  - **Server 5**: 47.6 ₫, `status=active`, min 100, max 30,000
+    - Fb Via tên Việt Nam [5k/ 24 giờ.] (ID: 475516)
+    - Có thể mua dồn đơn để lên nhanh
+    - Ví dụ: mua 5 lần 1k thì chạy đồng loạt 5 đơn
+  - **Server 6**: 17.9 ₫, `status=active`, min 500, max 100,000
+    - Member Beta ngoại [20k / 24 giờ] (ID: 475422)
+    - Không hỗ trợ group riêng tư
+    - Yêu cầu bật cho fanpage tham gia
+    - Không được mua dồn đơn, sẽ bị mất tiền
+  - **Server 15**: 71.5 ₫, `status=active`, min 50, max 50,000
+    - Fb Via tên Việt Nam [10k / 24 giờ.] (ID: 475574)
+    - Có thể mua dồn đơn để lên nhanh
+    - Ví dụ: mua 5 lần 1k thì chạy đồng loạt 5 đơn
+
+### 1.9 Share Livestream Group (`share_live_group`, slug: `share-live-group`)
+- Trường cần nhập:
+  - `uid` (Link cần share group)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
+- Servers:
+  - **Server 1**: 345 ₫, `status=active`, min 100, max 20,000
+    - Rẻ (ID: 475268)
+    - Không share bài chứa link liên kết
+    - Không nhận share bài viết, ảnh… chỉ nhận share livestream
+    - Nên mua từ thời gian: 9h-23h
+  - **Server 2**: 552 ₫, `status=stopped`, min 100, max 20,000
+    - Lên ổn – Ngừng nhận đơn
+
+### 1.10 Đánh giá 5* Fanpage (`review_fanpage`, slug: `review-fanpage`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link cần chạy)
+  - `account_name` (Tên tài khoản)
+  - `server_code` (Chọn server)
+  - `content` (Danh sách các nội dung – mỗi review 1 dòng, tối thiểu 5 dòng)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
+- Servers:
+  - **Server 5**: 1,587 ₫, `status=active`, min 10, max 500
+    - Via việt. Chất lượng tốt (Yêu cầu có tối thiểu 1 đánh giá) (ID: 475598)
+    - Hãy kiểm tra bật đánh giá và có tối thiểu 1 đánh giá, không hỗ trợ hủy gói
+    - Tài nguyên tối đa cho 1 page là 500, tuyệt đối không dồn đơn mua liên tiếp
+
+### 1.11 Check in fanpage (`checkin_fanpage`, slug: `checkin-fanpage`)
+- Trường cần nhập:
+  - `uid` (ID hoặc link cần chạy)
+  - `account_name` (Tên tài khoản)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi Checkin – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
+- Servers:
+  - **Server 2**: 662.4 ₫, `status=stopped`
+    - Lên nhanh - Bảo hành 30 ngày. Bảo trì
+
+### 1.12 Sự kiện event facebook (`event_facebook`, slug: `event-facebook`)
+- Trường cần nhập:
+  - `uid` (Link hoặc UID sự kiện)
+  - `server_code` (Chọn server)
+  - `quantity` (Số lượng)
+  - `price_per_unit` (Giá tiền mỗi tương tác – tự tính cho user)
+  - `note` (Ghi chú)
+- **Tổng Giá:** `price_per_unit * quantity` (tự tính cho user)
+
+- Servers:
+  - **Quan tâm event**: 441.6 ₫, `status=stopped`, min 100, max 50,000
+    - Bảo trì (ID: 475512)
+    - Không hỗ trợ hủy gói, thời gian tăng có thể mất 1-2 ngày
+    - Người tham gia nước ngoài
+  - **Tham gia event**: 441.6 ₫, `status=stopped`, min 100, max 50,000
+    - Bảo trì
 
 ### 12. VIP Like theo tháng (`vip_like_monthly`, slug: `vip-like-monthly`)
 - Trường cần nhập: `uid` hoặc link tài khoản, `account_name`, chọn gói VIP, thời gian, `note` (FE thêm các option gói/thời gian)
