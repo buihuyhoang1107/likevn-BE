@@ -557,7 +557,10 @@ Authorization: Bearer {admin_token}
 **Query Parameters:**
 - `search` (optional): Tìm kiếm theo name, code, description
 - `service_id` (optional): Lọc server theo service - **Ưu tiên cao nhất**
-- `platform` (optional): Lọc theo nhóm dịch vụ (facebook, instagram, threads, tiktok, shopee, telegram, youtube, twitter) - **Chỉ dùng khi không có service_id**
+- `platform` (optional): Lọc theo **nhóm dịch vụ** (platform), **không phải category**.  
+  - Giá trị hợp lệ: `facebook`, `instagram`, `threads`, `tiktok`, `shopee`, `telegram`, `youtube`, `twitter`, `lazada`, `google`  
+  - Ví dụ đúng: `platform=google` (sẽ lấy tất cả servers của các dịch vụ `google_map_create`, `google_map_rip`, `google_map_review`)  
+  - Ví dụ sai: `platform=google_map` (không tồn tại platform này nên trả về mảng rỗng)
 - `status` (optional): Lọc theo trạng thái (active, slow, stopped)
 - `is_active` (optional): Lọc theo trạng thái active (true/false)
 - `page` (optional): Số trang (mặc định: 1)
@@ -570,6 +573,9 @@ GET /api/admin/servers?platform=facebook&page=1&per_page=10
 
 # Lấy tất cả servers của platform YouTube
 GET /api/admin/servers?platform=youtube&page=1&per_page=10
+
+# Lấy tất cả servers của platform Google (Google Maps)
+GET /api/admin/servers?platform=google&page=1&per_page=10
 
 # Lấy servers theo service_id (như cũ)
 GET /api/admin/servers?service_id=18&page=1&per_page=10

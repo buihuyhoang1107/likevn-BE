@@ -432,7 +432,8 @@ class AdminController extends Controller
             $query->where('is_active', $request->is_active === 'true' || $request->is_active === true);
         }
 
-        $servers = $query->orderBy('created_at', 'desc')->paginate(20);
+        $perPage = $request->get('per_page', 20);
+        $servers = $query->orderBy('created_at', 'desc')->paginate($perPage);
 
         return response()->json([
             'success' => true,
