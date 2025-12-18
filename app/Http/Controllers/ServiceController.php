@@ -182,6 +182,11 @@ class ServiceController extends Controller
                 'vip_share_monthly',
                 'eye_live_view_video',
                 'friend_cleanup',
+                'unlock_facebook',
+                'fanpage_rename',
+                'fanpage_appeal',
+                'fanpage_care',
+                'fanpage_big_like',
             ],
             'instagram' => [
                 'instagram_like',

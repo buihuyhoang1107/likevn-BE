@@ -463,6 +463,38 @@ class ServiceSeeder extends Seeder
                 'category' => 'google_map_review',
                 'description' => 'Review 5 sao cho Google Map',
             ],
+            // Unlock Facebook
+            [
+                'name' => 'Mở khóa FB',
+                'slug' => 'unlock-facebook',
+                'category' => 'unlock_facebook',
+                'description' => 'Dịch vụ mở khóa, khôi phục và xử lý sự cố tài khoản Facebook',
+            ],
+            // Fanpage Services
+            [
+                'name' => 'Đổi tên Fanpage',
+                'slug' => 'fanpage-rename',
+                'category' => 'fanpage_rename',
+                'description' => 'Dịch vụ đổi tên Fanpage Facebook',
+            ],
+            [
+                'name' => 'Kháng gậy Fanpage',
+                'slug' => 'fanpage-appeal',
+                'category' => 'fanpage_appeal',
+                'description' => 'Dịch vụ kháng gậy, kháng vi phạm cho Fanpage Facebook',
+            ],
+            [
+                'name' => 'Nuôi thuê Fanpage',
+                'slug' => 'fanpage-care',
+                'category' => 'fanpage_care',
+                'description' => 'Dịch vụ nuôi thuê, chăm sóc nội dung Fanpage',
+            ],
+            [
+                'name' => 'Tăng Like Fanpage SL lớn',
+                'slug' => 'fanpage-big-like',
+                'category' => 'fanpage_big_like',
+                'description' => 'Dịch vụ tăng Like Fanpage số lượng lớn',
+            ],
         ];
 
         foreach ($services as $service) {

@@ -2559,6 +2559,239 @@ class ServerSeeder extends Seeder
                 ]));
             }
         }
+
+        // Unlock Facebook
+        $unlockFacebook = Service::where('slug', 'unlock-facebook')->first();
+        if ($unlockFacebook) {
+            $servers = [
+                [
+                    'name' => 'Check pass lấy lại mật khẩu',
+                    'code' => 'UNLOCK_FB_CHECK_PASS',
+                    'price_per_unit' => 840000,
+                    'status' => 'active',
+                    'description' => 'Check pass lấy lại mật khẩu tài khoản Facebook',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'note' => 'Cần thiết bị chính chủ, tài khoản/mật khẩu cũ, gmail/pass cũ (nếu có); Link FB bị hack và CCCD mặt trước; giá có thể thay đổi theo từng case',
+                        'demo_url' => 'https://s3.ap-northeast-1.amazonaws.com/h.files/images/1740813399560_cbjjBXyhK6.jpeg',
+                    ]),
+                ],
+                [
+                    'name' => 'Đi cổng support kéo ALL dạng FAQ',
+                    'code' => 'UNLOCK_FB_SUPPORT_FAQ_ALL',
+                    'price_per_unit' => 26400000,
+                    'status' => 'active',
+                    'description' => 'Đi cổng support, kéo ALL dạng FAQ cho các case khó',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'note' => 'Case phức tạp, giá cao; cần xác nhận giá trước khi làm',
+                        'demo_url' => 'https://s3.ap-northeast-1.amazonaws.com/h.files/images/1712734073388_XOMDcyN5Xz.jpg',
+                    ]),
+                ],
+                [
+                    'name' => 'Gỡ mail lạ Auth Meta liên kết FB',
+                    'code' => 'UNLOCK_FB_REMOVE_AUTH_META',
+                    'price_per_unit' => 1200000,
+                    'status' => 'stopped',
+                    'description' => 'Gỡ mail lạ/Auth Meta liên kết với tài khoản Facebook',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'note' => 'Đang bảo trì',
+                    ]),
+                ],
+                [
+                    'name' => 'Tắt khiên bảo vệ tài khoản',
+                    'code' => 'UNLOCK_FB_DISABLE_SHIELD',
+                    'price_per_unit' => 1200000,
+                    'status' => 'active',
+                    'description' => 'Tắt khiên bảo vệ (shield) tài khoản Facebook',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'demo_url' => 'https://s3.ap-northeast-1.amazonaws.com/h.files/images/1740813732394_OVbY5FHY8H.jpg',
+                    ]),
+                ],
+                [
+                    'name' => 'Phá trình tạo mã 2FA',
+                    'code' => 'UNLOCK_FB_BREAK_2FA',
+                    'price_per_unit' => 480000,
+                    'status' => 'active',
+                    'description' => 'Xử lý khi bị chặn bởi trình tạo mã 2FA',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'demo_url' => 'https://s3.ap-northeast-1.amazonaws.com/h.files/images/1740813892004_nBQo96SxrO.jpg',
+                    ]),
+                ],
+                [
+                    'name' => 'Mở khoá FB khoá dạng 282',
+                    'code' => 'UNLOCK_FB_282',
+                    'price_per_unit' => 1800000,
+                    'status' => 'active',
+                    'description' => 'Mở khóa tài khoản Facebook bị khoá dạng 282',
+                    'is_active' => true,
+                ],
+            ];
+
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $unlockFacebook->id,
+                ]));
+            }
+        }
+
+        // Fanpage Services
+        // 2.1 Đổi tên Fanpage
+        $fanpageRename = Service::where('slug', 'fanpage-rename')->first();
+        if ($fanpageRename) {
+            $servers = [
+                [
+                    'name' => 'Đổi Tên Fanpage',
+                    'code' => 'FANPAGE_RENAME_S1',
+                    'price_per_unit' => 240000,
+                    'status' => 'active',
+                    'description' => 'Đổi tên Fanpage (yêu cầu: chưa spam, không đổi tên trong 60 ngày gần nhất)',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'requirements' => [
+                            'fanpage_not_spam' => true,
+                            'not_renamed_within_60_days' => true,
+                            'add_admin_account' => 'https://www.facebook.com/setpagesieudiinh (Syed Zainullah)',
+                        ],
+                        'zalo_required' => true,
+                        'note' => 'Thời gian xử lý khoảng 5 phút nếu đủ điều kiện',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $fanpageRename->id,
+                ]));
+            }
+        }
+
+        // 2.2 Kháng gậy Fanpage
+        $fanpageAppeal = Service::where('slug', 'fanpage-appeal')->first();
+        if ($fanpageAppeal) {
+            $servers = [
+                [
+                    'name' => 'Kháng Fanpage bị gậy (đi cổng Meta)',
+                    'code' => 'FANPAGE_APPEAL_META',
+                    'price_per_unit' => 21600000,
+                    'status' => 'active',
+                    'description' => 'Kháng Fanpage bị gậy qua cổng Meta, cần set QTV BM để đi cổng, tỉ lệ xanh page 100%',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'bm_admin_required' => true,
+                        'success_rate_percent' => 100,
+                    ]),
+                ],
+                [
+                    'name' => 'Kháng Fanpage bị gậy thương hiệu & hàng giả',
+                    'code' => 'FANPAGE_APPEAL_BRAND_FAKE',
+                    'price_per_unit' => 4800000,
+                    'status' => 'stopped',
+                    'description' => 'Kháng Fanpage bị gậy thương hiệu và hàng giả',
+                    'is_active' => true,
+                ],
+                [
+                    'name' => 'Kháng Fanpage bị mạo danh',
+                    'code' => 'FANPAGE_APPEAL_IMPERSONATION',
+                    'price_per_unit' => 600000,
+                    'status' => 'active',
+                    'description' => 'Kháng Fanpage bị mạo danh, cần acc quản trị viên, tỉ lệ về ~90%',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'requires_admin_account' => true,
+                        'success_rate_percent' => 90,
+                        'note' => 'Nếu fanpage đã bấm và treo, giá sẽ được điều chỉnh và thông báo lại',
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $fanpageAppeal->id,
+                ]));
+            }
+        }
+
+        // 2.3 Dv Nuôi Thuê Fanpage
+        $fanpageCare = Service::where('slug', 'fanpage-care')->first();
+        if ($fanpageCare) {
+            $servers = [
+                [
+                    'name' => 'Gói Cơ Bản - 16 bài/tháng',
+                    'code' => 'FANPAGE_CARE_16',
+                    'price_per_unit' => 600000,
+                    'status' => 'active',
+                    'description' => '16 bài viết + hình ảnh/tháng; đăng 4 bài/tuần; thiết kế hình ảnh sản phẩm; tối ưu Fanpage cơ bản',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'posts_per_month' => 16,
+                        'posts_per_week' => 4,
+                        'design_images' => true,
+                        'optimize_fanpage_basic' => true,
+                    ]),
+                ],
+                [
+                    'name' => 'Gói Cơ Bản - 32 bài/tháng',
+                    'code' => 'FANPAGE_CARE_32',
+                    'price_per_unit' => 1200000,
+                    'status' => 'active',
+                    'description' => '32 bài viết + hình ảnh/tháng; đăng 8 bài/tuần; thiết kế hình ảnh sản phẩm; tối ưu Fanpage cơ bản',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'posts_per_month' => 32,
+                        'posts_per_week' => 8,
+                        'design_images' => true,
+                        'optimize_fanpage_basic' => true,
+                    ]),
+                ],
+                [
+                    'name' => 'Gói Cơ Bản - 60 bài/tháng',
+                    'code' => 'FANPAGE_CARE_60',
+                    'price_per_unit' => 2280000,
+                    'status' => 'active',
+                    'description' => '60 bài viết + hình ảnh/tháng; đăng tuỳ ý khách; thiết kế hình ảnh cơ bản; tối ưu Fanpage',
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'posts_per_month' => 60,
+                        'posts_schedule' => 'flexible',
+                        'design_images_basic' => true,
+                        'optimize_fanpage' => true,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $fanpageCare->id,
+                ]));
+            }
+        }
+
+        // 2.4 Tăng Like page SL lớn
+        $fanpageBigLike = Service::where('slug', 'fanpage-big-like')->first();
+        if ($fanpageBigLike) {
+            $servers = [
+                [
+                    'name' => 'Tăng Like Fanpage SL lớn',
+                    'code' => 'FANPAGE_BIGLIKE_S1',
+                    'price_per_unit' => 19.2,
+                    'status' => 'active',
+                    'description' => 'Tăng like Fanpage từ 300.000 like trở lên; ví dụ 300.000 like = 5.760.000 ₫; thời gian hoàn thành khoảng 3 ngày; hỗ trợ fanpage và sub cá nhân',
+                    'min_quantity' => 300000,
+                    'is_active' => true,
+                    'features' => json_encode([
+                        'example_quantity' => 300000,
+                        'example_price' => 5760000,
+                        'estimated_days' => 3,
+                    ]),
+                ],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge($server, [
+                    'service_id' => $fanpageBigLike->id,
+                ]));
+            }
+        }
     }
 }
 

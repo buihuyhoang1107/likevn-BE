@@ -1009,6 +1009,11 @@ Tất cả các lỗi sẽ trả về format:
 - `google_map_create` - Tạo Google Maps
 - `google_map_rip` - RIP Google Maps
 - `google_map_review` - Review 5* Google Maps
+- `unlock_facebook` - Dịch vụ mở khóa Facebook
+- `fanpage_rename` - Đổi tên Fanpage
+- `fanpage_appeal` - Kháng gậy Fanpage
+- `fanpage_care` - Nuôi thuê Fanpage
+- `fanpage_big_like` - Tăng Like Fanpage số lượng lớn
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1051,6 +1056,155 @@ Tất cả các lỗi sẽ trả về format:
 ## Danh sách dịch vụ & server (chi tiết cho Frontend)
 
 Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn dịch vụ/server, giá và min/max. Giá đã seed sẵn trong DB (đơn vị: ₫/mỗi tương tác).
+
+### I. DV MỞ KHÓA MXH (Menu cấp 1)
+
+#### 1. Mở khóa FB (Menu cấp 2)
+
+- Service: **Mở khóa FB** (`unlock_facebook`, slug: `unlock-facebook`) – thuộc platform `facebook`.
+- Có thể lấy qua:
+  - Public: `GET /api/services?category=unlock_facebook`
+  - Admin services: `GET /api/admin/services?category=unlock_facebook`
+  - Admin servers: `GET /api/admin/servers?service_id={id_service_mo_khoa_fb}`
+
+- Trường cần nhập chung cho tất cả server:
+  - `uid` (Link Facebook bị hack/khoá) *
+  - `old_account` (Tài khoản và mật khẩu cũ - nếu có)
+  - `old_gmail` (Gmail và mật khẩu cũ - nếu có)
+  - `cccd_front` (Link ảnh CCCD mặt trước hoặc gửi qua Zalo)
+  - `zalo_phone` (Số điện thoại Zalo liên hệ)
+  - `note` (Ghi chú)
+- **Lưu ý chung:**
+  - Cần thiết bị chính chủ (thiết bị thường xuyên đăng nhập Facebook nếu có)
+  - Giá có thể thay đổi tuỳ theo từng trường hợp; mọi thay đổi về giá sẽ cần sự đồng ý của bạn trước khi tiến hành
+
+**Servers:**
+
+- **Check pass lấy lại mật khẩu**
+  - Giá: **840.000 ₫** – Hoạt động  
+  - Mô tả: Check pass, lấy lại mật khẩu tài khoản Facebook  
+  - Demo: `https://s3.ap-northeast-1.amazonaws.com/h.files/images/1740813399560_cbjjBXyhK6.jpeg`
+
+- **Đi cổng support kéo ALL dạng FAQ**
+  - Giá: **26.400.000 ₫** – Hoạt động  
+  - Mô tả: Đi cổng support, kéo ALL dạng FAQ (trường hợp phức tạp, cao cấp)  
+  - Demo: `https://s3.ap-northeast-1.amazonaws.com/h.files/images/1712734073388_XOMDcyN5Xz.jpg`
+
+- **Gỡ mail lạ Auth Meta liên kết FB**
+  - Giá: **1.200.000 ₫** – Bảo trì  
+  - Mô tả: Gỡ mail lạ/Auth Meta đang liên kết với tài khoản Facebook  
+  - Demo: (chưa có hoặc cập nhật sau)
+
+- **Tắt khiên bảo vệ tài khoản**
+  - Giá: **1.200.000 ₫** – Hoạt động  
+  - Mô tả: Tắt khiên bảo vệ (shield) của tài khoản Facebook  
+  - Demo: `https://s3.ap-northeast-1.amazonaws.com/h.files/images/1740813732394_OVbY5FHY8H.jpg`
+
+- **Phá trình tạo mã 2FA**
+  - Giá: **480.000 ₫** – Hoạt động  
+  - Mô tả: Phá/truy cập lại khi bị chặn bởi trình tạo mã 2FA  
+  - Demo: `https://s3.ap-northeast-1.amazonaws.com/h.files/images/1740813892004_nBQo96SxrO.jpg`
+
+- **Mở khoá FB khoá dạng 282**
+  - Giá: **1.800.000 ₫** – Hoạt động  
+  - Mô tả: Xử lý các tài khoản bị khoá dạng 282  
+
+### II. Dịch vụ Fanpage
+
+#### 2.1 Đổi tên Fanpage
+
+- Service: **Đổi tên Fanpage** (`fanpage_rename`, slug: `fanpage-rename`) – thuộc platform `facebook`.
+- Có thể lấy qua:
+  - Public: `GET /api/services?category=fanpage_rename`
+  - Admin services: `GET /api/admin/services?category=fanpage_rename`
+  - Admin servers: `GET /api/admin/servers?service_id={id_service_doi_ten_fanpage}`
+
+- Trường cần nhập:
+  - `uid` (Link Fanpage) *
+  - `old_name` (Tên cũ) *
+  - `new_name` (Tên mới) *
+  - `zalo_phone` (SDT Zalo liên hệ)
+  - `note` (Ghi chú)
+
+- **Yêu cầu:**
+  - Fanpage chưa spam
+  - Không được đổi tên trong vòng 60 ngày gần nhất
+  - Cần thêm Quản trị viên Fanpage cho nick phụ: `https://www.facebook.com/setpagesieudiinh` (tên: **Syed Zainullah**)
+
+- Servers:
+  - **FANPAGE_RENAME_S1** – 240.000 ₫, `status=active`  
+    - Đổi tên Fanpage theo yêu cầu, thời gian xử lý khoảng 5 phút nếu đủ điều kiện.
+
+#### 2.2 Kháng gậy Fanpage
+
+- Service: **Kháng gậy Fanpage** (`fanpage_appeal`, slug: `fanpage-appeal`)
+- Trường cần nhập:
+  - `uid` (Link Fanpage)
+  - `contact_info` (Thông tin liên hệ)
+  - `zalo_phone` (SDT Zalo liên hệ)
+  - `note` (Ghi chú)
+
+- Servers:
+  - **FANPAGE_APPEAL_META** – 21.600.000 ₫, `status=active`  
+    - Kháng Fanpage bị gậy (đi cổng Meta)  
+    - Cần set QTV BM để đi cổng  
+    - Tỉ lệ xanh page 100%
+
+  - **FANPAGE_APPEAL_BRAND_FAKE** – 4.800.000 ₫, `status=stopped` (Bảo trì)  
+    - Kháng Fanpage bị gậy thương hiệu và hàng giả
+
+  - **FANPAGE_APPEAL_IMPERSONATION** – 600.000 ₫, `status=active`  
+    - Kháng Fanpage bị mạo danh  
+    - Cần acc quản trị viên, tỉ lệ về ~90%  
+    - Nếu fanpage đã bấm và treo, giá sẽ được điều chỉnh và thông báo lại.
+
+#### 2.3 Dv Nuôi Thuê Fanpage
+
+- Service: **Nuôi thuê Fanpage** (`fanpage_care`, slug: `fanpage-care`)
+- Trường cần nhập:
+  - `uid` (Link Fanpage) *
+  - `duration_months` (Thời gian cần mua – số tháng)
+  - `zalo_phone` (SDT Zalo liên hệ)
+  - `note` (Ghi chú)
+
+- Gói dịch vụ (servers):
+  - **FANPAGE_CARE_16** – 600.000 ₫, `status=active`  
+    - 16 bài viết + hình ảnh/tháng  
+    - Đăng bài đều đặn (4 bài/tuần)  
+    - Thiết kế hình ảnh sản phẩm  
+    - Tối ưu Fanpage cơ bản
+
+  - **FANPAGE_CARE_32** – 1.200.000 ₫, `status=active`  
+    - 32 bài viết + hình ảnh/tháng  
+    - Đăng bài đều đặn (8 bài/tuần)  
+    - Thiết kế hình ảnh sản phẩm  
+    - Tối ưu Fanpage cơ bản
+
+  - **FANPAGE_CARE_60** – 2.280.000 ₫, `status=active`  
+    - 60 bài viết + hình ảnh/tháng  
+    - Đăng bài đều đặn tuỳ ý khách  
+    - Thiết kế hình ảnh cơ bản  
+    - Tối ưu Fanpage
+
+#### 2.4 Tăng Like page SL lớn
+
+- Service: **Tăng Like Fanpage SL lớn** (`fanpage_big_like`, slug: `fanpage-big-like`)
+- Trường cần nhập:
+  - `uid` (Link Fanpage hoặc profile) *
+  - `quantity` (Số lượng like muốn mua – tối thiểu 300.000)
+  - `zalo_phone` (SDT Zalo liên hệ)
+  - `note` (Ghi chú)
+
+- **Lưu ý:**
+  - Số lượng từ **300.000 like** trở lên  
+  - Giá tiền = **Số lượng muốn mua × rate (19.2 ₫/like)**  
+  - Ví dụ: 300.000 like ≈ 5.760.000 ₫  
+  - Thời gian hoàn thành: khoảng **3 ngày**  
+  - Tăng được cho **fanpage** và **sub cá nhân**
+
+- Servers:
+  - **FANPAGE_BIGLIKE_S1** – rate 19.2 ₫/like, `status=active`, `min_quantity=300000`  
+    - Tăng Like Fanpage số lượng lớn, thời gian hoàn thành khoảng 3 ngày.
 
 ### 1. Like bài viết Speed (`like_post_speed`, slug: `like-post-speed`)
 - Trường cần nhập: `uid` (link bài viết), `emotion` (like/love/haha/wow/sad/angry), `quantity`, `speed` (nhanh/cham/trung_binh), `note`
