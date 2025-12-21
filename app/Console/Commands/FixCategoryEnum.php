@@ -116,7 +116,7 @@ class FixCategoryEnum extends Command
             ");
 
             $this->info('✅ ENUM fixed successfully!');
-            return 0;
+        return 0;
         } catch (\Exception $e) {
             $this->error('❌ Error fixing ENUM: ' . $e->getMessage());
             return 1;

@@ -164,6 +164,89 @@ Content-Type: application/json
 }
 ```
 
+### 🔓 Facebook Utilities (Tiện ích Facebook - Không cần đăng nhập)
+
+#### Parse Facebook Link và lấy UID
+```http
+POST /api/parse-facebook-link
+Content-Type: application/json
+
+{
+  "url": "https://www.facebook.com/profile.php?id=123456789"
+}
+```
+
+**Mô tả:**
+- API này giúp parse link Facebook và tự động extract UID từ nhiều định dạng link khác nhau
+- Hỗ trợ các định dạng link:
+  - `https://www.facebook.com/username`
+  - `https://www.facebook.com/profile.php?id=123456789`
+  - `https://www.facebook.com/username/posts/123456789`
+  - `https://m.facebook.com/username`
+  - `https://fb.com/username`
+  - Và nhiều định dạng khác
+
+**Response thành công:**
+```json
+{
+  "success": true,
+  "message": "Parse link Facebook thành công",
+  "data": {
+    "uid": "123456789",
+    "username": null,
+    "type": "profile",
+    "original_url": "https://www.facebook.com/profile.php?id=123456789",
+    "extracted_uid": "123456789"
+  }
+}
+```
+
+**Response khi link không hợp lệ:**
+```json
+{
+  "success": false,
+  "message": "URL không phải là link Facebook hợp lệ",
+  "data": {
+    "uid": null,
+    "username": null,
+    "type": "invalid",
+    "original_url": "https://example.com"
+  }
+}
+```
+
+**Các loại type có thể trả về:**
+- `profile` - Profile/Page Facebook
+- `post` - Bài viết Facebook
+- `invalid` - Link không hợp lệ
+- `unknown` - Không xác định được loại
+
+**Ví dụ sử dụng:**
+```http
+# Parse profile với ID
+POST /api/parse-facebook-link
+{
+  "url": "https://www.facebook.com/profile.php?id=123456789"
+}
+
+# Parse profile với username
+POST /api/parse-facebook-link
+{
+  "url": "https://www.facebook.com/username"
+}
+
+# Parse bài viết
+POST /api/parse-facebook-link
+{
+  "url": "https://www.facebook.com/username/posts/123456789"
+}
+```
+
+**Lưu ý:**
+- API này không cần authentication (public)
+- Nếu link là username (không có UID), `extracted_uid` sẽ trả về username
+- Khi tạo order, hệ thống sẽ tự động extract UID nếu bạn gửi link Facebook thay vì UID
+
 ---
 
 ## Protected APIs
@@ -237,6 +320,16 @@ Content-Type: application/json
   "speed": "nhanh" // nhanh, cham, trung_binh
 }
 ```
+
+**Lưu ý về field `uid`:**
+- Bạn có thể gửi **link Facebook** thay vì UID, hệ thống sẽ tự động extract UID
+- Hỗ trợ các định dạng:
+  - Link profile: `https://www.facebook.com/profile.php?id=123456789` hoặc `https://www.facebook.com/username`
+  - Link bài viết: `https://www.facebook.com/username/posts/123456789`
+  - Link mobile: `https://m.facebook.com/username`
+  - UID trực tiếp: `123456789`
+- Nếu là link Facebook hợp lệ, hệ thống sẽ tự động parse và lưu UID vào database
+- Nếu không phải link Facebook, hệ thống sẽ lưu giá trị gốc
 
 **Response:**
 ```json
@@ -2225,9 +2318,10 @@ GET /api/admin/orders?user_id=1&date_from=2024-12-01&date_to=2024-12-31
 
 ## Tổng kết API
 
-- **Public APIs:** 6 endpoints
+- **Public APIs:** 7 endpoints
   - Authentication: 2 (register, login)
   - Services: 4 (list, detail, servers, calculate-price)
+  - Facebook Utilities: 1 (parse-facebook-link)
 - **Protected APIs (User):** 7 endpoints
   - Authentication: 2 (logout, me)
   - User: 2 (update profile, balance)
@@ -2239,8 +2333,9 @@ GET /api/admin/orders?user_id=1&date_from=2024-12-01&date_to=2024-12-31
   - Servers: 5 (list, detail, create, update, delete)
   - Settings: 2 (get, update)
   - Platforms: 1 (list)
-- **Tổng cộng:** 35 API endpoints
+- **Tổng cộng:** 36 API endpoints
 - **Tất cả API danh sách đều hỗ trợ tìm kiếm và lọc**
+- **Tính năng tự động:** Khi tạo order với link Facebook, hệ thống tự động extract UID
 
 ---
 

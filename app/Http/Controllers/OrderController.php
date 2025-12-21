@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Server;
 use App\Models\Service;
 use App\Models\User;
+use App\Helpers\FacebookHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +22,31 @@ class OrderController extends Controller
             'content' => 'nullable|string',
             'note' => 'nullable|string',
             'quantity' => 'required|integer|min:1',
-            'emotion' => 'nullable|string|in:like,love,haha,wow,sad,angry',
+            'emotion' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if (empty($value)) {
+                        return;
+                    }
+                    
+                    // Nếu là string với dấu phẩy, tách thành array
+                    if (is_string($value) && strpos($value, ',') !== false) {
+                        $emotions = array_map('trim', explode(',', $value));
+                    } elseif (is_array($value)) {
+                        $emotions = $value;
+                    } else {
+                        $emotions = [$value];
+                    }
+                    
+                    $validEmotions = ['like', 'love', 'haha', 'wow', 'sad', 'angry'];
+                    
+                    foreach ($emotions as $emotion) {
+                        if (!in_array($emotion, $validEmotions)) {
+                            $fail("Cảm xúc '{$emotion}' không hợp lệ. Các cảm xúc hợp lệ: " . implode(', ', $validEmotions));
+                        }
+                    }
+                },
+            ],
             'speed' => 'nullable|string|in:nhanh,cham,trung_binh',
         ]);
 
@@ -38,14 +63,15 @@ class OrderController extends Controller
         }
 
         // Validate quantity
-        if ($request->quantity < $server->min_quantity) {
+        $quantity = $request->input('quantity');
+        if ($quantity < $server->min_quantity) {
             return response()->json([
                 'success' => false,
                 'message' => "Số lượng tối thiểu là {$server->min_quantity}",
             ], 400);
         }
 
-        if ($server->max_quantity && $request->quantity > $server->max_quantity) {
+        if ($server->max_quantity && $quantity > $server->max_quantity) {
             return response()->json([
                 'success' => false,
                 'message' => "Số lượng tối đa là {$server->max_quantity}",
@@ -60,7 +86,7 @@ class OrderController extends Controller
                         (isset($server->features['requires_divisible_by_100']) && $server->features['requires_divisible_by_100'] === true) ||
                         (strpos(strtolower($server->name), 'server 1') !== false && strpos(strtolower($server->name), 'server 1') === 0);
             
-            if ($isServer1 && $request->quantity % 100 !== 0) {
+            if ($isServer1 && $quantity % 100 !== 0) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Số lượng mua phải chia hết cho 100 (ví dụ: 500, 600, 700...)',
@@ -69,7 +95,7 @@ class OrderController extends Controller
         }
 
         // Calculate price
-        $totalPrice = $server->price_per_unit * $request->quantity;
+        $totalPrice = $server->price_per_unit * $quantity;
 
         // Check balance (only if enabled)
         $enableBalanceCheck = config('settings.enable_balance_check', false);
@@ -80,6 +106,17 @@ class OrderController extends Controller
                     'success' => false,
                     'message' => 'Số dư không đủ',
                 ], 400);
+            }
+        }
+
+        // Auto-extract UID from Facebook link if provided
+        $uid = $request->uid;
+        if ($uid && FacebookHelper::isValidFacebookUrl($uid)) {
+            $extractedUid = FacebookHelper::extractUid($uid);
+            // Only replace if we successfully extracted a UID (not username or original URL)
+            $parsed = FacebookHelper::parseFacebookUrl($uid);
+            if ($parsed['uid']) {
+                $uid = $parsed['uid'];
             }
         }
 
@@ -96,15 +133,15 @@ class OrderController extends Controller
                 'service_id' => $service->id,
                 'server_id' => $server->id,
                 'action' => $service->name,
-                'uid' => $request->uid,
-                'account_name' => $request->account_name,
-                'content' => $request->content,
-                'note' => $request->note,
-                'quantity' => $request->quantity,
+                'uid' => $uid,
+                'account_name' => $request->input('account_name'),
+                'content' => $request->input('content'),
+                'note' => $request->input('note'),
+                'quantity' => $quantity,
                 'price_per_unit' => $server->price_per_unit,
                 'total_price' => $totalPrice,
-                'emotion' => $request->emotion,
-                'speed' => $request->speed,
+                'emotion' => $request->input('emotion'),
+                'speed' => $request->input('speed'),
                 'status' => 'pending',
             ]);
 

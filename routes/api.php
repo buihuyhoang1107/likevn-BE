@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FacebookController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -16,6 +17,9 @@ Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::get('/services/{serviceId}/servers', [ServiceController::class, 'getServers']);
 Route::post('/calculate-price', [ServiceController::class, 'calculatePrice']);
+
+// Facebook utilities (public)
+Route::post('/parse-facebook-link', [FacebookController::class, 'parseUrl']);
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
