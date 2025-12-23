@@ -2,219 +2,161 @@
 
 namespace App\Helpers;
 
+/**
+ * FacebookHelper
+ *
+ * Mục tiêu: đơn giản – chỉ làm 2 việc
+ * - Kiểm tra link có phải Facebook hay không
+ * - Gọi đúng 1 lần Facebook Graph API để đổi URL → numeric ID
+ */
 class FacebookHelper
 {
     /**
-     * Parse Facebook link and extract UID
-     * 
-     * Supports multiple Facebook URL formats:
-     * - https://www.facebook.com/username
-     * - https://www.facebook.com/profile.php?id=123456789
-     * - https://www.facebook.com/username/posts/123456789
-     * - https://www.facebook.com/permalink.php?story_fbid=123456789&id=123456789
-     * - https://m.facebook.com/username
-     * - https://fb.com/username
-     * 
-     * @param string $url Facebook URL
-     * @return array ['uid' => string|null, 'username' => string|null, 'type' => string]
+     * Chuẩn hoá URL: trim, thêm protocol nếu thiếu.
      */
-    public static function parseFacebookUrl($url)
+    private static function normalizeUrl(string $url): string
     {
-        if (empty($url)) {
-            return [
-                'uid' => null,
-                'username' => null,
-                'type' => 'invalid',
-                'original_url' => $url,
-            ];
+        $url = trim($url);
+
+        if ($url === '') {
+            return $url;
         }
 
-        // Remove whitespace
-        $url = trim($url);
-        
-        // Add protocol if missing
-        if (!preg_match('/^https?:\/\//', $url)) {
+        if (!preg_match('/^https?:\/\//i', $url)) {
             $url = 'https://' . $url;
         }
 
-        // Parse URL
-        $parsedUrl = parse_url($url);
-        
-        if (!$parsedUrl || !isset($parsedUrl['host'])) {
-            return [
-                'uid' => null,
-                'username' => null,
-                'type' => 'invalid',
-                'original_url' => $url,
-            ];
-        }
+        return $url;
+    }
 
-        // Check if it's a Facebook domain
-        $host = strtolower($parsedUrl['host']);
-        $isFacebookDomain = in_array($host, [
+    /**
+     * Kiểm tra host có phải domain Facebook hợp lệ không.
+     */
+    private static function isFacebookHost(string $host): bool
+    {
+        $host = strtolower($host);
+
+        return in_array($host, [
             'facebook.com',
             'www.facebook.com',
             'm.facebook.com',
             'fb.com',
             'www.fb.com',
-        ]);
-
-        if (!$isFacebookDomain) {
-            return [
-                'uid' => null,
-                'username' => null,
-                'type' => 'invalid',
-                'original_url' => $url,
-            ];
-        }
-
-        $path = $parsedUrl['path'] ?? '';
-        $query = $parsedUrl['query'] ?? '';
-        parse_str($query, $queryParams);
-
-        // Case 1: profile.php?id=123456789
-        if (strpos($path, 'profile.php') !== false && isset($queryParams['id'])) {
-            return [
-                'uid' => $queryParams['id'],
-                'username' => null,
-                'type' => 'profile',
-                'original_url' => $url,
-            ];
-        }
-
-        // Case 2: permalink.php?story_fbid=123456789&id=123456789
-        if (strpos($path, 'permalink.php') !== false) {
-            $uid = $queryParams['id'] ?? $queryParams['story_fbid'] ?? null;
-            return [
-                'uid' => $uid,
-                'username' => null,
-                'type' => 'post',
-                'original_url' => $url,
-            ];
-        }
-
-        // Case 3: /username/posts/123456789
-        if (preg_match('/^\/([^\/]+)\/posts\/(\d+)/', $path, $matches)) {
-            return [
-                'uid' => $matches[2], // Post ID
-                'username' => $matches[1],
-                'type' => 'post',
-                'original_url' => $url,
-            ];
-        }
-
-        // Case 3.1: /reel/123456789 (Facebook Reel)
-        if (preg_match('/^\/reel\/(\d+)/', $path, $matches)) {
-            return [
-                'uid' => $matches[1], // Reel ID
-                'username' => null,
-                'type' => 'reel',
-                'original_url' => $url,
-            ];
-        }
-
-        // Case 3.2: /username/reel/123456789
-        if (preg_match('/^\/([^\/]+)\/reel\/(\d+)/', $path, $matches)) {
-            return [
-                'uid' => $matches[2], // Reel ID
-                'username' => $matches[1],
-                'type' => 'reel',
-                'original_url' => $url,
-            ];
-        }
-
-        // Case 4: /username (profile or page)
-        if (preg_match('/^\/([^\/\?]+)/', $path, $matches)) {
-            $username = $matches[1];
-            
-            // Skip common paths that are not usernames
-            $skipPaths = [
-                'groups', 'pages', 'events', 'watch', 'marketplace', 
-                'help', 'settings', 'login', 'logout', 'register',
-                'about', 'privacy', 'terms', 'developers', 'policies',
-                'reel', 'videos', 'photo', 'photos'
-            ];
-            
-            if (in_array(strtolower($username), $skipPaths)) {
-                return [
-                    'uid' => null,
-                    'username' => null,
-                    'type' => 'invalid',
-                    'original_url' => $url,
-                ];
-            }
-
-            // If it's numeric, it's likely a UID
-            if (is_numeric($username)) {
-                return [
-                    'uid' => $username,
-                    'username' => null,
-                    'type' => 'profile',
-                    'original_url' => $url,
-                ];
-            }
-
-            // Otherwise, it's a username
-            return [
-                'uid' => null,
-                'username' => $username,
-                'type' => 'profile',
-                'original_url' => $url,
-            ];
-        }
-
-        // Case 5: Check query params for id
-        if (isset($queryParams['id'])) {
-            return [
-                'uid' => $queryParams['id'],
-                'username' => null,
-                'type' => 'profile',
-                'original_url' => $url,
-            ];
-        }
-
-        // If we can't parse it, return the original URL
-        return [
-            'uid' => null,
-            'username' => null,
-            'type' => 'unknown',
-            'original_url' => $url,
-        ];
+        ], true);
     }
 
     /**
-     * Extract UID from Facebook URL
-     * Returns UID if found, otherwise returns original URL
-     * 
-     * @param string $url Facebook URL
-     * @return string UID or original URL
+     * Kiểm tra URL có phải link Facebook hợp lệ (chỉ check domain).
      */
-    public static function extractUid($url)
+    public static function isValidFacebookUrl(string $url): bool
     {
-        $parsed = self::parseFacebookUrl($url);
-        
-        // Return UID if found, otherwise return username, otherwise return original URL
-        if ($parsed['uid']) {
-            return $parsed['uid'];
+        $url = self::normalizeUrl($url);
+        if ($url === '') {
+            return false;
         }
-        
-        if ($parsed['username']) {
-            return $parsed['username'];
+
+        $parsed = parse_url($url);
+        if (!$parsed || !isset($parsed['host'])) {
+            return false;
         }
-        
-        return $parsed['original_url'];
+
+        return self::isFacebookHost($parsed['host']);
     }
 
     /**
-     * Check if URL is a valid Facebook URL
-     * 
-     * @param string $url
-     * @return bool
+     * Lấy App Access Token: {APP_ID}|{APP_SECRET}
+     * - App token hầu như không hết hạn (trừ khi đổi secret)
+     * - Nếu thiếu APP_ID/SECRET thì fallback sang FACEBOOK_ACCESS_TOKEN (nếu có)
      */
-    public static function isValidFacebookUrl($url)
+    private static function getAccessToken(): ?string
     {
-        $parsed = self::parseFacebookUrl($url);
-        return $parsed['type'] !== 'invalid';
+        $appId = env('FACEBOOK_APP_ID');
+        $appSecret = env('FACEBOOK_APP_SECRET');
+
+        if ($appId && $appSecret) {
+            return $appId . '|' . $appSecret;
+        }
+
+        $userToken = env('FACEBOOK_ACCESS_TOKEN');
+        return $userToken ?: null;
+    }
+
+    /**
+     * Gọi Facebook Graph API để đổi URL → numeric ID.
+     *
+     * - Dùng duy nhất endpoint: GET https://graph.facebook.com/v18.0/?id={url}&access_token={token}
+     * - Trả về numeric ID (post_id) hoặc null nếu không lấy được
+     */
+    public static function getNumericIdFromUrl(string $url): ?string
+    {
+        $url = self::normalizeUrl($url);
+        if ($url === '' || !self::isValidFacebookUrl($url)) {
+            return null;
+        }
+
+        $accessToken = self::getAccessToken();
+        if (!$accessToken) {
+            return null;
+        }
+
+        $graphUrl = 'https://graph.facebook.com/v18.0/?id='
+            . urlencode($url)
+            . '&access_token=' . $accessToken;
+
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $graphUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($httpCode !== 200 || !$response) {
+                return null;
+            }
+
+            $data = json_decode($response, true);
+            if (!is_array($data) || !isset($data['id'])) {
+                return null;
+            }
+
+            $id = (string) $data['id'];
+
+            // Nhiều trường hợp id dạng pageid_postid → lấy phần sau dấu "_"
+            if (strpos($id, '_') !== false) {
+                $parts = explode('_', $id);
+                $id = end($parts);
+            }
+
+            return ctype_digit($id) ? $id : null;
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
+    /**
+     * API cũ đang dùng trong code: trả về numeric UID nếu có, null nếu không.
+     * Giờ chỉ là wrapper của getNumericIdFromUrl().
+     */
+    public static function extractNumericUid(string $url): ?string
+    {
+        return self::getNumericIdFromUrl($url);
+    }
+
+    /**
+     * Giữ lại cho tương thích: trả về UID (numeric) nếu có, nếu không thì trả URL gốc.
+     * Dùng khi bạn muốn "có gì dùng nấy".
+     */
+    public static function extractUid(string $url): string
+    {
+        $numericId = self::getNumericIdFromUrl($url);
+        if ($numericId !== null) {
+            return $numericId;
+        }
+
+        return self::normalizeUrl($url);
     }
 }
-

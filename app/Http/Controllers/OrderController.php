@@ -112,11 +112,10 @@ class OrderController extends Controller
         // Auto-extract UID from Facebook link if provided
         $uid = $request->uid;
         if ($uid && FacebookHelper::isValidFacebookUrl($uid)) {
-            $extractedUid = FacebookHelper::extractUid($uid);
-            // Only replace if we successfully extracted a UID (not username or original URL)
-            $parsed = FacebookHelper::parseFacebookUrl($uid);
-            if ($parsed['uid']) {
-                $uid = $parsed['uid'];
+            // Gọi đúng 1 lần tới Facebook để đổi URL → numeric ID
+            $extractedNumericUid = FacebookHelper::extractNumericUid($uid);
+            if ($extractedNumericUid) {
+                $uid = $extractedNumericUid;
             }
         }
 
