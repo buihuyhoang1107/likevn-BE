@@ -501,6 +501,61 @@ class ServiceSeeder extends Seeder
                 'category' => 'fanpage_big_like',
                 'description' => 'Dịch vụ tăng Like Fanpage số lượng lớn',
             ],
+            // Telegram services
+            [
+                'name' => 'Telegram - Tăng thành viên/Sub (channel)',
+                'slug' => 'telegram-member-channel',
+                'category' => 'telegram_member_channel',
+                'description' => 'Tăng thành viên/Sub cho channel/group Telegram',
+            ],
+            [
+                'name' => 'Telegram - Tăng view bài viết',
+                'slug' => 'telegram-view-post',
+                'category' => 'telegram_view_post',
+                'description' => 'Tăng view cho bài viết Telegram',
+            ],
+            [
+                'name' => 'Telegram - Tăng member online',
+                'slug' => 'telegram-member-online',
+                'category' => 'telegram_member_online',
+                'description' => 'Tăng member online cho group Telegram',
+            ],
+            [
+                'name' => 'Telegram - Tăng cảm xúc bài viết',
+                'slug' => 'telegram-reaction',
+                'category' => 'telegram_reaction',
+                'description' => 'Tăng reaction cho bài viết Telegram',
+            ],
+            [
+                'name' => 'Telegram - Dịch vụ nâng sao',
+                'slug' => 'telegram-star',
+                'category' => 'telegram_star',
+                'description' => 'Dịch vụ nâng sao Telegram',
+            ],
+            [
+                'name' => 'Telegram - Mua nhóm/kênh mới',
+                'slug' => 'telegram-group-sale',
+                'category' => 'telegram_group_sale',
+                'description' => 'Mua nhóm/kênh Telegram (2k, 3k, 5k, 10k)',
+            ],
+            [
+                'name' => 'Telegram - Mua tài khoản',
+                'slug' => 'telegram-account-sale',
+                'category' => 'telegram_account_sale',
+                'description' => 'Mua tài khoản Telegram (new & cổ)',
+            ],
+            [
+                'name' => 'Telegram - Mua kênh',
+                'slug' => 'telegram-channel-sale',
+                'category' => 'telegram_channel_sale',
+                'description' => 'Mua kênh Telegram',
+            ],
+            [
+                'name' => 'Telegram - Kéo mem theo yêu cầu',
+                'slug' => 'telegram-custom-member',
+                'category' => 'telegram_custom_member',
+                'description' => 'Kéo member vào nhóm theo yêu cầu',
+            ],
         ];
 
         foreach ($services as $service) {

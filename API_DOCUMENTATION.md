@@ -1167,6 +1167,15 @@ Tất cả các lỗi sẽ trả về format:
 - `fanpage_appeal` - Kháng gậy Fanpage
 - `fanpage_care` - Nuôi thuê Fanpage
 - `fanpage_big_like` - Tăng Like Fanpage số lượng lớn
+- `telegram_member_channel` - Tăng thành viên/Sub Telegram
+- `telegram_view_post` - View bài viết Telegram
+- `telegram_member_online` - Member online Telegram
+- `telegram_reaction` - Cảm xúc bài viết Telegram
+- `telegram_star` - Dịch vụ nâng sao Telegram
+- `telegram_group_sale` - Mua nhóm/kênh Telegram
+- `telegram_account_sale` - Mua tài khoản Telegram
+- `telegram_channel_sale` - Mua kênh Telegram
+- `telegram_custom_member` - Kéo mem theo yêu cầu Telegram
 
 ### Loại cảm xúc (emotion)
 - `like` - Like
@@ -1209,6 +1218,59 @@ Tất cả các lỗi sẽ trả về format:
 ## Danh sách dịch vụ & server (chi tiết cho Frontend)
 
 Dưới đây là dữ liệu tham chiếu để FE hiển thị lựa chọn dịch vụ/server, giá và min/max. Giá đã seed sẵn trong DB (đơn vị: ₫/mỗi tương tác).
+
+### Telegram (mới)
+
+#### 1. Tăng thành viên & Sub (channel/group) (`telegram_member_channel`, slug: `telegram-member-channel`)
+- Nhập link channel/group
+- Số lượng: Min 100 - Max 500,000
+- Servers (price_per_unit, ₫):  
+  1277 (45), 604 (30), 493 (30), 502 (35), 324 (65),  
+  505 (100, BH 30d kênh mới), 507 (120, BH 60d kênh mới),  
+  527 (70), 542 (75), 329 (150), 621 (160), 896 (110),  
+  891 (100, hỗ trợ kênh riêng tư), 893 (150, hỗ trợ kênh riêng tư)
+
+#### 2. Tăng view bài viết (`telegram_view_post`, slug: `telegram-view-post`)
+- Nhập link bài viết
+- Số lượng: Min 10 (tuỳ server) - Max 50,000,000
+- Servers (price_per_unit, ₫):  
+  1156 (1), 840 (1), 1099 (1), 354 (1), 846 (1),  
+  1100 (1.5), 895 (1.5), 458 (1.5), 403 (5), 694 (2), 820 (1.5)
+
+#### 3. Tăng member online (`telegram_member_online`, slug: `telegram-member-online`)
+- Nhập link group
+- Số lượng: Min 10 - Max 50,000,000
+- Servers (price_per_unit, ₫):  
+  1278 (45), 605 (30), 494 (30), 501 (35), 323 (65),  
+  506 (100, BH 30d nhóm mới), 508 (120, BH 60d nhóm mới),  
+  526 (70), 541 (75), 330 (150), 622 (160), 897 (110),  
+  892 (100, hỗ trợ nhóm riêng tư), 894 (150, hỗ trợ nhóm riêng tư)
+
+#### 4. Tăng cảm xúc bài viết (`telegram_reaction`, slug: `telegram-reaction`)
+- Nhập link bài viết `https://t.me/username/post_id` (kênh public, không đổi username khi chạy)
+- Số lượng: Min 50 - Max 200,000
+- Servers (price_per_unit, ₫):  
+  869 (30) tích cực random (👍🤩🎉🔥❤️)  
+  700 (35) tích cực random (👍🤩🎉🔥❤️)  
+  701 (35) tiêu cực random (👎😁😢💩🤮)  
+  865 (50) tích cực random; 866 (50) tiêu cực random  
+  867 (35) tích cực random (🐳💯😍❤️‍🔥🕊️🤡); 868 (35) tiêu cực random (🖕😈🥱🥴🌚🍌💔🤨😐)  
+  412 (60) chọn 1 cảm xúc
+
+#### 5. Dịch vụ nâng sao (`telegram_star`, slug: `telegram-star`)
+- Server: TG_STAR_S1 (báo giá, liên hệ hỗ trợ)
+
+#### 6. Mua nhóm/kênh mới (`telegram_group_sale`, slug: `telegram-group-sale`)
+- Server: TG_GROUP_SALE (báo giá, liên hệ hỗ trợ) – gói 2k/3k/5k/10k
+
+#### 7. Mua tài khoản Telegram (`telegram_account_sale`, slug: `telegram-account-sale`)
+- Server: TG_ACCOUNT_SALE (báo giá, liên hệ hỗ trợ) – tài khoản new & cổ
+
+#### 8. Mua kênh Telegram (`telegram_channel_sale`, slug: `telegram-channel-sale`)
+- Server: TG_CHANNEL_SALE (báo giá, liên hệ hỗ trợ)
+
+#### 9. Kéo mem theo yêu cầu (`telegram_custom_member`, slug: `telegram-custom-member`)
+- Server: TG_CUSTOM_MEMBER (báo giá, liên hệ hỗ trợ)
 
 ### I. DV MỞ KHÓA MXH (Menu cấp 1)
 
@@ -2019,7 +2081,6 @@ y đơn
 - Servers:
   - TELEGRAM_REACTION_S1: 10 ₫, active, min 50, max 500,000; Cảm xúc tích cực ngẫu nhiên [👍🤩🎉🔥❤️🥰👏🏻] (ID: 475395)
   - TELEGRAM_REACTION_S2: 10 ₫, active, min 50, max 500,000; Cảm xúc tiêu cực ngẫu nhiên [👎💩🤮😢😱]
-  - TELEGRAM_REACTION_S3: 10 ₫, active, min 50, max 500,000; Cảm xúc tùy chỉnh - Dễ quá tải và hoàn giữa chừng
 
 ### 56. Like Youtube (`youtube_like`, slug: `youtube-like`)
 - Trường cần nhập: `uid` (Link Video Youtube), `quantity`, `note`

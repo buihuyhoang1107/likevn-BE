@@ -166,20 +166,6 @@ class AddTelegramServersToDatabase extends Migration
                         'note' => 'Có thể thiếu và không bảo hành, nên mua dư khi mua. Không hỗ trợ group',
                     ]),
                 ],
-                [
-                    'name' => 'Server 3 (Cảm xúc tùy chỉnh)',
-                    'code' => 'TELEGRAM_REACTION_S3',
-                    'price_per_unit' => 10,
-                    'status' => 'active',
-                    'description' => 'Cảm xúc tùy chỉnh - Dễ quá tải và hoàn giữa chừng',
-                    'min_quantity' => 50,
-                    'max_quantity' => 500000,
-                    'is_active' => true,
-                    'features' => json_encode([
-                        'reaction_type' => 'custom',
-                        'note' => 'Có thể thiếu và không bảo hành, nên mua dư khi mua. Không hỗ trợ group. Dễ quá tải và hoàn giữa chừng',
-                    ]),
-                ],
             ];
             foreach ($servers as $server) {
                 Server::create(array_merge($server, [

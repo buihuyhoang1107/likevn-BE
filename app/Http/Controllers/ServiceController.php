@@ -225,9 +225,20 @@ class ServiceController extends Controller
                 'shopee_live_eye',
             ],
             'telegram' => [
+                // Telegram cũ
                 'telegram_member_sub',
                 'telegram_post_view',
                 'telegram_post_reaction',
+                // Telegram mới (chi tiết hơn)
+                'telegram_member_channel',
+                'telegram_view_post',
+                'telegram_member_online',
+                'telegram_reaction',
+                'telegram_star',
+                'telegram_group_sale',
+                'telegram_account_sale',
+                'telegram_channel_sale',
+                'telegram_custom_member',
             ],
             'youtube' => [
                 'youtube_like',

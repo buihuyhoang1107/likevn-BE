@@ -1273,6 +1273,193 @@ class ServerSeeder extends Seeder
             }
         }
 
+        // Telegram - Tăng thành viên/Sub (channel)
+        $tgMemberChannel = Service::where('slug', 'telegram-member-channel')->first();
+        if ($tgMemberChannel) {
+            $servers = [
+                ['name' => 'Server 1277', 'code' => 'TG_SUB_1277', 'price_per_unit' => 45, 'description' => 'Sub quốc tế giá rẻ, tụt ít, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 604', 'code' => 'TG_SUB_604', 'price_per_unit' => 30, 'description' => 'Sub quốc tế giá rẻ, tụt cao, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 493', 'code' => 'TG_SUB_493', 'price_per_unit' => 30, 'description' => 'Sub quốc tế giá rẻ, có tụt, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 502', 'code' => 'TG_SUB_502', 'price_per_unit' => 35, 'description' => 'Sub quốc tế, có tụt, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 324', 'code' => 'TG_SUB_324', 'price_per_unit' => 65, 'description' => 'Sub quốc tế, tụt ít, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 505', 'code' => 'TG_SUB_505', 'price_per_unit' => 100, 'description' => 'Sub quốc tế, BH 30 ngày cho kênh mới', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 507', 'code' => 'TG_SUB_507', 'price_per_unit' => 120, 'description' => 'Sub quốc tế, BH 60 ngày cho kênh mới', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 527', 'code' => 'TG_SUB_527', 'price_per_unit' => 70, 'description' => 'Sub quốc tế, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 542', 'code' => 'TG_SUB_542', 'price_per_unit' => 75, 'description' => 'Sub quốc tế, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 329', 'code' => 'TG_SUB_329', 'price_per_unit' => 150, 'description' => 'Sub quốc tế, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 621', 'code' => 'TG_SUB_621', 'price_per_unit' => 160, 'description' => 'Sub quốc tế, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 896', 'code' => 'TG_SUB_896', 'price_per_unit' => 110, 'description' => 'Sub quốc tế, không BH', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 891', 'code' => 'TG_SUB_891', 'price_per_unit' => 100, 'description' => 'Sub quốc tế, hỗ trợ kênh riêng tư', 'min_quantity' => 100, 'max_quantity' => 500000],
+                ['name' => 'Server 893', 'code' => 'TG_SUB_893', 'price_per_unit' => 150, 'description' => 'Sub quốc tế, hỗ trợ kênh riêng tư', 'min_quantity' => 100, 'max_quantity' => 500000],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge([
+                    'status' => 'active',
+                    'features' => null,
+                ], $server, [
+                    'service_id' => $tgMemberChannel->id,
+                ]));
+            }
+        }
+
+        // Telegram - Tăng view bài viết
+        $tgView = Service::where('slug', 'telegram-view-post')->first();
+        if ($tgView) {
+            $servers = [
+                ['name' => 'Server 1156', 'code' => 'TG_VIEW_1156', 'price_per_unit' => 1, 'description' => 'Tăng view telegram, min 10', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 840', 'code' => 'TG_VIEW_840', 'price_per_unit' => 1, 'description' => 'Tăng view telegram, min 100', 'min_quantity' => 100, 'max_quantity' => 50000000],
+                ['name' => 'Server 1099', 'code' => 'TG_VIEW_1099', 'price_per_unit' => 1, 'description' => 'Tăng view telegram, min 10', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 354', 'code' => 'TG_VIEW_354', 'price_per_unit' => 1, 'description' => 'Tăng view telegram, min 1000', 'min_quantity' => 1000, 'max_quantity' => 50000000],
+                ['name' => 'Server 846', 'code' => 'TG_VIEW_846', 'price_per_unit' => 1, 'description' => 'Tăng view telegram, min 1000', 'min_quantity' => 1000, 'max_quantity' => 50000000],
+                ['name' => 'Server 1100', 'code' => 'TG_VIEW_1100', 'price_per_unit' => 1.5, 'description' => 'Tăng view telegram, min 10', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 895', 'code' => 'TG_VIEW_895', 'price_per_unit' => 1.5, 'description' => 'Tăng view telegram, min 100', 'min_quantity' => 100, 'max_quantity' => 50000000],
+                ['name' => 'Server 458', 'code' => 'TG_VIEW_458', 'price_per_unit' => 1.5, 'description' => 'Tăng view telegram, min 100', 'min_quantity' => 100, 'max_quantity' => 50000000],
+                ['name' => 'Server 403', 'code' => 'TG_VIEW_403', 'price_per_unit' => 5, 'description' => 'Tăng view telegram, tăng nhanh, min 100', 'min_quantity' => 100, 'max_quantity' => 50000000],
+                ['name' => 'Server 694', 'code' => 'TG_VIEW_694', 'price_per_unit' => 2, 'description' => 'Tăng view telegram giá rẻ', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 820', 'code' => 'TG_VIEW_820', 'price_per_unit' => 1.5, 'description' => 'Tăng view bài viết telegram gần nhất', 'min_quantity' => 10, 'max_quantity' => 50000000],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge([
+                    'status' => 'active',
+                    'features' => null,
+                ], $server, [
+                    'service_id' => $tgView->id,
+                ]));
+            }
+        }
+
+        // Telegram - Tăng member online
+        $tgMemberOnline = Service::where('slug', 'telegram-member-online')->first();
+        if ($tgMemberOnline) {
+            $servers = [
+                ['name' => 'Server 1278', 'code' => 'TG_ONLINE_1278', 'price_per_unit' => 45, 'description' => 'Member quốc tế giá rẻ, tụt ít, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 605', 'code' => 'TG_ONLINE_605', 'price_per_unit' => 30, 'description' => 'Member quốc tế giá rẻ, tụt cao, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 494', 'code' => 'TG_ONLINE_494', 'price_per_unit' => 30, 'description' => 'Member quốc tế giá rẻ, có tụt, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 501', 'code' => 'TG_ONLINE_501', 'price_per_unit' => 35, 'description' => 'Member quốc tế, có tụt, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 323', 'code' => 'TG_ONLINE_323', 'price_per_unit' => 65, 'description' => 'Member quốc tế, tụt ít, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 506', 'code' => 'TG_ONLINE_506', 'price_per_unit' => 100, 'description' => 'Member quốc tế, BH 30 ngày nhóm mới', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 508', 'code' => 'TG_ONLINE_508', 'price_per_unit' => 120, 'description' => 'Member quốc tế, BH 60 ngày cho nhóm mới', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 526', 'code' => 'TG_ONLINE_526', 'price_per_unit' => 70, 'description' => 'Member quốc tế, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 541', 'code' => 'TG_ONLINE_541', 'price_per_unit' => 75, 'description' => 'Member quốc tế, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 330', 'code' => 'TG_ONLINE_330', 'price_per_unit' => 150, 'description' => 'Member quốc tế, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 622', 'code' => 'TG_ONLINE_622', 'price_per_unit' => 160, 'description' => 'Member quốc tế, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 897', 'code' => 'TG_ONLINE_897', 'price_per_unit' => 110, 'description' => 'Member quốc tế, không BH', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 892', 'code' => 'TG_ONLINE_892', 'price_per_unit' => 100, 'description' => 'Member quốc tế, hỗ trợ nhóm riêng tư', 'min_quantity' => 10, 'max_quantity' => 50000000],
+                ['name' => 'Server 894', 'code' => 'TG_ONLINE_894', 'price_per_unit' => 150, 'description' => 'Member quốc tế, hỗ trợ nhóm riêng tư', 'min_quantity' => 10, 'max_quantity' => 50000000],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge([
+                    'status' => 'active',
+                    'features' => null,
+                ], $server, [
+                    'service_id' => $tgMemberOnline->id,
+                ]));
+            }
+        }
+
+        // Telegram - Tăng cảm xúc bài viết
+        $tgReaction = Service::where('slug', 'telegram-reaction')->first();
+        if ($tgReaction) {
+            $servers = [
+                ['name' => 'Server 869', 'code' => 'TG_REACT_869', 'price_per_unit' => 30, 'description' => 'Random cảm xúc tích cực (👍🤩🎉🔥❤️)', 'min_quantity' => 50, 'max_quantity' => 200000],
+                ['name' => 'Server 700', 'code' => 'TG_REACT_700', 'price_per_unit' => 35, 'description' => 'Random cảm xúc tích cực (👍🤩🎉🔥❤️)', 'min_quantity' => 50, 'max_quantity' => 200000],
+                ['name' => 'Server 701', 'code' => 'TG_REACT_701', 'price_per_unit' => 35, 'description' => 'Random cảm xúc tiêu cực (👎😁😢💩🤮)', 'min_quantity' => 50, 'max_quantity' => 200000],
+                ['name' => 'Server 865', 'code' => 'TG_REACT_865', 'price_per_unit' => 50, 'description' => 'Random cảm xúc tích cực (👍🤩🎉🔥❤️)', 'min_quantity' => 50, 'max_quantity' => 200000],
+                ['name' => 'Server 866', 'code' => 'TG_REACT_866', 'price_per_unit' => 50, 'description' => 'Random cảm xúc tiêu cực (👎😁😢💩🤮)', 'min_quantity' => 50, 'max_quantity' => 200000],
+                ['name' => 'Server 867', 'code' => 'TG_REACT_867', 'price_per_unit' => 35, 'description' => 'Random cảm xúc tích cực (🐳💯 😍 ❤️‍🔥🕊️🤡)', 'min_quantity' => 50, 'max_quantity' => 200000],
+                ['name' => 'Server 868', 'code' => 'TG_REACT_868', 'price_per_unit' => 35, 'description' => 'Random cảm xúc tiêu cực (🖕😈🥱🥴🌚🍌💔🤨😐)', 'min_quantity' => 50, 'max_quantity' => 200000],
+                ['name' => 'Server 412', 'code' => 'TG_REACT_412', 'price_per_unit' => 60, 'description' => 'Chọn được một cảm xúc', 'min_quantity' => 50, 'max_quantity' => 200000],
+            ];
+            foreach ($servers as $server) {
+                Server::create(array_merge([
+                    'status' => 'active',
+                    'features' => null,
+                ], $server, [
+                    'service_id' => $tgReaction->id,
+                ]));
+            }
+        }
+
+        // Telegram - Dịch vụ nâng sao
+        $tgStar = Service::where('slug', 'telegram-star')->first();
+        if ($tgStar) {
+            Server::create([
+                'name' => 'Server Star 1',
+                'code' => 'TG_STAR_S1',
+                'price_per_unit' => 0,
+                'status' => 'active',
+                'description' => 'Dịch vụ nâng sao Telegram (cập nhật giá theo thời điểm)',
+                'min_quantity' => 1,
+                'max_quantity' => 100000,
+                'features' => json_encode(['note' => 'Liên hệ hỗ trợ để báo giá']),
+                'service_id' => $tgStar->id,
+            ]);
+        }
+
+        // Telegram - Mua nhóm/kênh mới
+        $tgGroupSale = Service::where('slug', 'telegram-group-sale')->first();
+        if ($tgGroupSale) {
+            Server::create([
+                'name' => 'Server Group Sale',
+                'code' => 'TG_GROUP_SALE',
+                'price_per_unit' => 0,
+                'status' => 'active',
+                'description' => 'Mua nhóm/kênh Telegram (2k, 3k, 5k, 10k) - liên hệ báo giá',
+                'min_quantity' => 1,
+                'max_quantity' => 1,
+                'features' => json_encode(['note' => 'Liên hệ hỗ trợ để báo giá']),
+                'service_id' => $tgGroupSale->id,
+            ]);
+        }
+
+        // Telegram - Mua tài khoản
+        $tgAccountSale = Service::where('slug', 'telegram-account-sale')->first();
+        if ($tgAccountSale) {
+            Server::create([
+                'name' => 'Server Account Sale',
+                'code' => 'TG_ACCOUNT_SALE',
+                'price_per_unit' => 0,
+                'status' => 'active',
+                'description' => 'Mua tài khoản Telegram (new & cổ) - liên hệ báo giá',
+                'min_quantity' => 1,
+                'max_quantity' => 100,
+                'features' => json_encode(['note' => 'Liên hệ hỗ trợ để báo giá']),
+                'service_id' => $tgAccountSale->id,
+            ]);
+        }
+
+        // Telegram - Mua kênh
+        $tgChannelSale = Service::where('slug', 'telegram-channel-sale')->first();
+        if ($tgChannelSale) {
+            Server::create([
+                'name' => 'Server Channel Sale',
+                'code' => 'TG_CHANNEL_SALE',
+                'price_per_unit' => 0,
+                'status' => 'active',
+                'description' => 'Mua kênh Telegram - liên hệ báo giá',
+                'min_quantity' => 1,
+                'max_quantity' => 100,
+                'features' => json_encode(['note' => 'Liên hệ hỗ trợ để báo giá']),
+                'service_id' => $tgChannelSale->id,
+            ]);
+        }
+
+        // Telegram - Kéo mem theo yêu cầu
+        $tgCustomMember = Service::where('slug', 'telegram-custom-member')->first();
+        if ($tgCustomMember) {
+            Server::create([
+                'name' => 'Server Custom Member',
+                'code' => 'TG_CUSTOM_MEMBER',
+                'price_per_unit' => 0,
+                'status' => 'active',
+                'description' => 'Kéo mem vào nhóm theo yêu cầu - liên hệ báo giá',
+                'min_quantity' => 10,
+                'max_quantity' => 500000,
+                'features' => json_encode(['note' => 'Liên hệ hỗ trợ để báo giá']),
+                'service_id' => $tgCustomMember->id,
+            ]);
+        }
+
         // Comment Instagram
         $commentInstagram = Service::where('slug', 'comment-instagram')->first();
         if ($commentInstagram) {
@@ -3541,20 +3728,6 @@ class ServerSeeder extends Seeder
                         'reaction_type' => 'negative',
                         'reactions' => ['👎', '💩', '🤮', '😢', '😱'],
                         'note' => 'Có thể thiếu và không bảo hành, nên mua dư khi mua. Không hỗ trợ group',
-                    ]),
-                ],
-                [
-                    'name' => 'Server 3 (Cảm xúc tùy chỉnh)',
-                    'code' => 'TELEGRAM_REACTION_S3',
-                    'price_per_unit' => 10,
-                    'status' => 'active',
-                    'description' => 'Cảm xúc tùy chỉnh - Dễ quá tải và hoàn giữa chừng',
-                    'min_quantity' => 50,
-                    'max_quantity' => 500000,
-                    'is_active' => true,
-                    'features' => json_encode([
-                        'reaction_type' => 'custom',
-                        'note' => 'Có thể thiếu và không bảo hành, nên mua dư khi mua. Không hỗ trợ group. Dễ quá tải và hoàn giữa chừng',
                     ]),
                 ],
             ];
