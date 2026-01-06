@@ -88,33 +88,10 @@ Lệnh này sẽ tạo dữ liệu mẫu (services, servers) để test.
 
 ## Bước 8: Cấu hình Virtual Host (Tùy chọn - Khuyến nghị)
 
-### Cách 1: Sử dụng trực tiếp (Đơn giản)
+### Sử dụng trực tiếp (Đơn giản)
 
 Truy cập API qua: `http://localhost/api/public/`
 
-### Cách 2: Cấu hình Virtual Host (Chuyên nghiệp)
-
-1. Mở file: `C:\xampp\apache\conf\extra\httpd-vhosts.conf`
-2. Thêm vào cuối file:
-   ```apache
-   <VirtualHost *:80>
-       ServerName api.local
-       DocumentRoot "C:/xampp/htdocs/api/public"
-       <Directory "C:/xampp/htdocs/api/public">
-           AllowOverride All
-           Require all granted
-       </Directory>
-   </VirtualHost>
-   ```
-
-3. Mở file: `C:\Windows\System32\drivers\etc\hosts` (cần quyền Admin)
-4. Thêm dòng:
-   ```
-   127.0.0.1    api.local
-   ```
-
-5. Restart Apache trong XAMPP Control Panel
-6. Truy cập: `http://api.local`
 
 ## Bước 9: Kiểm tra hoạt động
 
@@ -294,15 +271,7 @@ const API_URL = 'http://api.local/api';
 
 ## Lưu ý quan trọng
 
-1. **Không commit file `.env`** vào Git (đã có trong .gitignore)
+1. pull code
 2. **APP_DEBUG=true** chỉ dùng cho local, không dùng cho production
 3. User đầu tiên (id = 1) tự động có quyền admin
 4. Đảm bảo PHP version >= 7.4 (kiểm tra: `php -v`)
-
-## Hỗ trợ
-
-Nếu gặp vấn đề, kiểm tra:
-- Log file: `storage/logs/laravel.log`
-- XAMPP error logs
-- Browser console (F12)
-
